@@ -1,0 +1,624 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Class One Services — One number. Every journey.</title>
+<meta name="description" content="First-class chauffeur and concierge service for artists, executives and discerning clients. 24/7 — Cologne-based, Europe-wide.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#0A0A0B; --graphite:#121214; --hairline:#232327;
+    --ivory:#F2EDE3; --stone:#8E8779; --gold:#C6A15B; --bronze:#A88544;
+    --display:'Cormorant Garamond', Georgia, serif;
+    --body:'Jost', 'Helvetica Neue', Arial, sans-serif;
+    --pad: clamp(1.25rem, 5vw, 4rem);
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  @media (prefers-reduced-motion: reduce){ html{scroll-behavior:auto} }
+  body{
+    background:var(--ink);color:var(--ivory);font-family:var(--body);
+    font-weight:300;font-size:17px;line-height:1.7;-webkit-font-smoothing:antialiased;
+  }
+  a{color:inherit;text-decoration:none}
+  :focus-visible{outline:2px solid var(--gold);outline-offset:3px}
+
+  .eyebrow{font-size:11px;letter-spacing:.38em;text-transform:uppercase;color:var(--gold);font-weight:500}
+  .eyebrow::after{content:"";display:block;width:34px;height:1px;background:var(--gold);margin-top:14px;opacity:.7}
+  h1,h2,h3{font-family:var(--display);font-weight:500;line-height:1.12;letter-spacing:-.005em}
+  h2{font-size:clamp(2rem,4.4vw,3.1rem);margin:1.4rem 0 1rem}
+  .lede{color:var(--stone);max-width:56ch}
+  em{font-style:italic;color:var(--gold)}
+  .section{padding:clamp(4.5rem,9vw,7.5rem) var(--pad)}
+  .shell{max-width:1180px;margin:0 auto}
+
+  /* ---------- signature journey line ---------- */
+  .route{position:fixed;left:30px;top:0;bottom:0;width:1px;background:rgba(255,255,255,.12);z-index:40}
+  .route-fill{position:absolute;left:0;top:0;width:1px;height:0;background:var(--gold)}
+  .route-dot{position:absolute;left:-3px;top:0;width:7px;height:7px;background:var(--gold);transform:rotate(45deg)}
+  @media (max-width:1100px){.route{display:none}}
+
+  /* ---------- logo ---------- */
+  .lockup{display:flex;align-items:center;gap:.8rem}
+  .lgring{
+    width:34px;height:34px;border:1.6px solid var(--gold);border-radius:50%;
+    display:flex;align-items:center;justify-content:center;flex:none;
+    font-family:var(--display);font-weight:600;font-size:17px;color:var(--gold);line-height:1;
+  }
+  .lgtext{display:flex;flex-direction:column;line-height:1}
+  .lgtext .l1{font-family:var(--display);font-weight:600;font-size:19px;letter-spacing:.14em}
+  .lgtext .l2{font-size:8.5px;letter-spacing:.52em;text-transform:uppercase;color:var(--stone);margin-top:4px}
+
+  /* ---------- header ---------- */
+  .top{
+    position:sticky;top:0;z-index:60;display:flex;align-items:center;justify-content:space-between;gap:1rem;
+    padding:.95rem var(--pad);background:rgba(10,10,11,.8);backdrop-filter:blur(12px);
+    border-bottom:1px solid var(--hairline);
+  }
+  .nav{display:flex;gap:2rem;font-size:13px;letter-spacing:.14em;text-transform:uppercase}
+  .nav a{color:var(--stone);transition:color .25s}
+  .nav a:hover{color:var(--ivory)}
+  .top-actions{display:flex;align-items:center;gap:1.4rem}
+  .top-phone{font-size:14px;letter-spacing:.06em}
+  .top-phone span{color:var(--gold);margin-right:.45em}
+  .btn{
+    display:inline-block;border:1px solid var(--gold);padding:.85rem 1.7rem;
+    font-family:var(--body);font-weight:400;font-size:12.5px;letter-spacing:.22em;text-transform:uppercase;
+    cursor:pointer;transition:.25s;background:transparent;color:var(--ivory);
+  }
+  .btn:hover{border-color:var(--ivory)}
+  .btn-solid{background:var(--gold);color:var(--ink);font-weight:500}
+  .btn-solid:hover{background:var(--bronze);border-color:var(--bronze);color:var(--ink)}
+  .btn-sm{padding:.65rem 1.25rem;font-size:11.5px}
+  .burger{display:none;background:none;border:0;cursor:pointer;padding:8px}
+  .burger div{width:26px;height:1px;background:var(--ivory);margin:7px 0;transition:.3s}
+  .mobile-menu{display:none;position:fixed;inset:0;z-index:55;background:var(--ink);padding:7rem var(--pad) 3rem;flex-direction:column;gap:1.6rem}
+  .mobile-menu a{font-family:var(--display);font-size:2rem}
+  .mobile-menu .mm-phone{font-family:var(--body);font-size:1rem;color:var(--gold);margin-top:auto;letter-spacing:.08em}
+  body.menu-open .mobile-menu{display:flex}
+  body.menu-open{overflow:hidden}
+  body.menu-open .burger div:nth-child(1){transform:translateY(8px) rotate(45deg)}
+  body.menu-open .burger div:nth-child(2){opacity:0}
+  body.menu-open .burger div:nth-child(3){transform:translateY(-8px) rotate(-45deg)}
+  @media (max-width:940px){
+    .nav,.top-phone{display:none}
+    .burger{display:block}
+    .top .btn{display:none}
+  }
+
+  /* ---------- hero (photo) ---------- */
+  .hero{
+    position:relative;padding:clamp(4.5rem,9vw,8rem) var(--pad) clamp(4rem,8vw,6rem);
+    background:
+      linear-gradient(180deg, rgba(10,10,11,.78) 0%, rgba(10,10,11,.62) 45%, rgba(10,10,11,.94) 100%),
+      url("https://images.unsplash.com/photo-1605559424843-9e4c228bf1c2?auto=format&fit=crop&w=1800&q=70") center/cover,
+      var(--graphite);
+  }
+  .hero-grid{
+    max-width:1180px;margin:0 auto;display:grid;
+    grid-template-columns:1.15fr .85fr;gap:clamp(2rem,5vw,4.5rem);align-items:center;
+  }
+  .hero h1{font-size:clamp(2.8rem,6.4vw,5rem);margin:1.5rem 0 1.2rem;text-shadow:0 2px 30px rgba(0,0,0,.5)}
+  .hero .lede{color:#B9B2A2;margin-bottom:2.2rem}
+  .hero-ctas{display:flex;gap:1rem;flex-wrap:wrap}
+  .trust{display:flex;flex-wrap:wrap;gap:.6rem 2rem;margin-top:2.8rem;font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:#A79F8E}
+  .trust li{list-style:none;display:flex;align-items:center;gap:.7rem}
+  .trust li::before{content:"";width:4px;height:4px;background:var(--gold);transform:rotate(45deg)}
+
+  .book{background:rgba(14,14,16,.9);backdrop-filter:blur(6px);border:1px solid var(--hairline);padding:2rem 1.8rem 1.6rem;position:relative}
+  .book::before{content:"";position:absolute;top:0;left:1.8rem;width:44px;height:2px;background:var(--gold)}
+  .book h3{font-size:1.7rem;margin-bottom:1.4rem}
+  .field{margin-bottom:1rem}
+  .field label{display:block;font-size:10.5px;letter-spacing:.28em;text-transform:uppercase;color:var(--stone);margin-bottom:.45rem}
+  .field input,.field select{
+    width:100%;background:var(--ink);border:1px solid var(--hairline);color:var(--ivory);
+    font-family:var(--body);font-weight:300;font-size:15px;padding:.75rem .9rem;
+    transition:border-color .25s;border-radius:0;-webkit-appearance:none;appearance:none;
+  }
+  .field select{
+    background-image:linear-gradient(45deg,transparent 50%,var(--gold) 50%),linear-gradient(135deg,var(--gold) 50%,transparent 50%);
+    background-position:calc(100% - 18px) 55%,calc(100% - 13px) 55%;
+    background-size:5px 5px;background-repeat:no-repeat;
+  }
+  .field input:focus,.field select:focus{border-color:var(--gold);outline:none}
+  .field input::placeholder{color:#565048}
+  .f-row{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+  .book .btn{width:100%;margin-top:.4rem}
+  .book-note{font-size:12px;color:var(--stone);margin-top:.9rem;text-align:center;letter-spacing:.03em}
+  @media (max-width:940px){.hero-grid{grid-template-columns:1fr}}
+
+  /* ---------- services ---------- */
+  .cards{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--hairline);border:1px solid var(--hairline);margin-top:3rem}
+  .card{background:var(--ink);padding:2.2rem 1.9rem;position:relative;transition:background .3s}
+  .card::before{content:"";position:absolute;top:0;left:1.9rem;width:0;height:2px;background:var(--gold);transition:width .35s ease}
+  .card:hover{background:var(--graphite)}
+  .card:hover::before{width:44px}
+  .card svg{width:26px;height:26px;stroke:var(--gold);fill:none;stroke-width:1.1;margin-bottom:1.3rem}
+  .card h3{font-size:1.45rem;margin-bottom:.7rem}
+  .card p{font-size:15px;color:var(--stone)}
+  @media (max-width:940px){.cards{grid-template-columns:1fr 1fr}}
+  @media (max-width:640px){.cards{grid-template-columns:1fr}}
+
+  /* ---------- fleet with photos ---------- */
+  .fleet-grid{display:grid;grid-template-columns:1fr 1fr;gap:1.6rem;margin-top:3rem}
+  .fcar{border:1px solid var(--hairline);background:var(--graphite)}
+  .fcar-img{aspect-ratio:16/10;overflow:hidden;position:relative}
+  .fcar-img > div{
+    position:absolute;inset:0;background-size:cover;background-position:center;
+    transition:transform .6s ease;
+  }
+  .fcar:hover .fcar-img > div{transform:scale(1.045)}
+  .fcar-img::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(10,10,11,.05) 40%,rgba(10,10,11,.55) 100%)}
+  .i-business > div{background-image:url("https://images.unsplash.com/photo-1553440569-bcc63803a83d?auto=format&fit=crop&w=1200&q=70");background-color:#17171a}
+  .i-first > div{background-image:url("https://images.unsplash.com/photo-1549317661-bd32c8ce0db2?auto=format&fit=crop&w=1200&q=70");background-color:#17171a}
+  .i-van > div{background-image:url("https://images.unsplash.com/photo-1511919884226-fd3cad34687c?auto=format&fit=crop&w=1200&q=70");background-color:#17171a}
+  .i-lounge > div{background-image:url("https://images.unsplash.com/photo-1563720223185-11003d516935?auto=format&fit=crop&w=1200&q=70");background-color:#17171a}
+  .fcar-body{padding:1.5rem 1.7rem 1.7rem;display:flex;flex-wrap:wrap;align-items:baseline;gap:.4rem 1.2rem}
+  .fcar-name{font-family:var(--display);font-weight:500;font-size:1.7rem}
+  .fcar-model{color:var(--stone);font-size:14px;letter-spacing:.04em}
+  .fcar-specs{width:100%;display:flex;gap:1.5rem;margin-top:.5rem;font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:var(--stone)}
+  .fleet-note{margin-top:1.8rem;font-size:13.5px;color:var(--stone);letter-spacing:.04em}
+  .fleet-note b{color:var(--gold);font-weight:400}
+  @media (max-width:760px){.fleet-grid{grid-template-columns:1fr}}
+
+  /* ---------- experience band ---------- */
+  .exp{
+    min-height:52vh;display:flex;align-items:center;justify-content:center;text-align:center;
+    padding:clamp(5rem,10vw,8rem) var(--pad);
+    background:
+      linear-gradient(rgba(10,10,11,.68),rgba(10,10,11,.78)),
+      url("https://images.unsplash.com/photo-1563720223185-11003d516935?auto=format&fit=crop&w=1800&q=70") center/cover,
+      var(--graphite);
+    border-block:1px solid var(--hairline);
+  }
+  .exp blockquote{font-family:var(--display);font-style:italic;font-weight:500;font-size:clamp(1.7rem,4.4vw,2.9rem);max-width:22ch;line-height:1.25}
+  .exp cite{display:block;font-family:var(--body);font-style:normal;font-size:11px;letter-spacing:.4em;text-transform:uppercase;color:var(--gold);margin-top:1.6rem}
+
+  /* ---------- standard ---------- */
+  .standard{background:var(--graphite);border-bottom:1px solid var(--hairline)}
+  .std-grid{display:grid;grid-template-columns:1fr 1fr;gap:0 4rem;margin-top:2.5rem}
+  .std-item{padding:1.7rem 0;border-top:1px solid var(--hairline)}
+  .std-item dt{font-family:var(--display);font-size:1.5rem;font-weight:500;margin-bottom:.4rem}
+  .std-item dd{color:var(--stone);font-size:15.5px}
+  @media (max-width:760px){.std-grid{grid-template-columns:1fr}}
+
+  /* ---------- artists ---------- */
+  .art-grid{display:grid;grid-template-columns:1.1fr .9fr;gap:clamp(2rem,5vw,4.5rem);align-items:start}
+  .art-copy{border-left:2px solid var(--gold);padding-left:clamp(1.2rem,3vw,2.4rem)}
+  .art-copy p{color:var(--stone);margin-top:1rem;max-width:52ch}
+  .chips{display:flex;flex-wrap:wrap;gap:.7rem;align-content:start;padding-top:1rem}
+  .chip{border:1px solid var(--hairline);padding:.6rem 1.1rem;font-size:12px;letter-spacing:.16em;text-transform:uppercase;transition:.25s}
+  .chip:hover{border-color:var(--gold);color:var(--gold)}
+  @media (max-width:860px){.art-grid{grid-template-columns:1fr}}
+
+  /* ---------- faq ---------- */
+  .faq-list{margin-top:2.5rem;border-top:1px solid var(--hairline);max-width:860px}
+  details{border-bottom:1px solid var(--hairline)}
+  summary{list-style:none;cursor:pointer;padding:1.5rem 3rem 1.5rem 0;font-weight:400;font-size:17px;position:relative;letter-spacing:.02em}
+  summary::-webkit-details-marker{display:none}
+  summary::after{content:"+";position:absolute;right:6px;top:50%;transform:translateY(-50%);font-family:var(--display);font-size:1.6rem;color:var(--gold);transition:transform .3s}
+  details[open] summary::after{transform:translateY(-50%) rotate(45deg)}
+  details p{color:var(--stone);padding:0 0 1.6rem;max-width:60ch;font-size:15.5px}
+
+  /* ---------- contact ---------- */
+  .contact{
+    text-align:center;
+    background:
+      linear-gradient(rgba(10,10,11,.85),rgba(10,10,11,.93)),
+      url("https://images.unsplash.com/photo-1511919884226-fd3cad34687c?auto=format&fit=crop&w=1800&q=70") center/cover,
+      var(--ink);
+    border-top:1px solid var(--hairline);
+  }
+  .contact h2{font-size:clamp(2.4rem,5.5vw,4rem)}
+  .contact-phone{display:inline-block;font-family:var(--display);font-size:clamp(1.5rem,3.4vw,2.2rem);color:var(--gold);margin:1.6rem 0 2.2rem;transition:color .25s}
+  .contact-phone:hover{color:var(--ivory)}
+  .contact-ctas{display:flex;gap:1rem;justify-content:center;flex-wrap:wrap}
+  .contact-mail{display:block;margin-top:2.4rem;font-size:13px;letter-spacing:.2em;text-transform:uppercase;color:var(--stone)}
+  .contact-mail:hover{color:var(--ivory)}
+
+  /* ---------- footer ---------- */
+  footer{border-top:1px solid var(--hairline);padding:3.5rem var(--pad) 2rem;background:var(--ink)}
+  .foot-grid{max-width:1180px;margin:0 auto;display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:2.5rem}
+  .foot-brand p{color:var(--stone);font-size:14px;max-width:30ch;margin-top:1.1rem}
+  .foot-col h4{font-size:10.5px;letter-spacing:.3em;text-transform:uppercase;color:var(--gold);font-weight:500;margin-bottom:1.1rem}
+  .foot-col a{display:block;color:var(--stone);font-size:14.5px;padding:.28rem 0;transition:color .25s}
+  .foot-col a:hover{color:var(--ivory)}
+  .foot-legal{
+    max-width:1180px;margin:3rem auto 0;padding-top:1.4rem;border-top:1px solid var(--hairline);
+    display:flex;justify-content:space-between;gap:1rem;flex-wrap:wrap;
+    font-size:12.5px;color:var(--stone);letter-spacing:.05em;
+  }
+  .foot-legal a{margin-left:1.6rem}
+  .foot-legal a:hover{color:var(--ivory)}
+  @media (max-width:760px){.foot-grid{grid-template-columns:1fr 1fr}}
+  @media (max-width:480px){.foot-grid{grid-template-columns:1fr}}
+
+  /* ---------- motion ---------- */
+  .reveal{opacity:0;transform:translateY(16px);transition:opacity .7s ease,transform .7s ease}
+  .reveal.in{opacity:1;transform:none}
+  @media (prefers-reduced-motion: reduce){
+    .reveal{opacity:1;transform:none;transition:none}
+    .fcar-img > div,.card,.chip{transition:none}
+  }
+  @media (prefers-reduced-motion: no-preference){
+    .hero .eyebrow,.hero h1,.hero .lede,.hero-ctas,.trust{animation:rise .8s ease both}
+    .hero h1{animation-delay:.1s}.hero .lede{animation-delay:.2s}
+    .hero-ctas{animation-delay:.3s}.trust{animation-delay:.42s}
+    .book{animation:rise .8s ease .25s both}
+  }
+  @keyframes rise{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:none}}
+</style>
+</head>
+<body>
+
+<aside class="route" aria-hidden="true">
+  <div class="route-fill" id="routeFill"></div>
+  <div class="route-dot" id="routeDot"></div>
+</aside>
+
+<header class="top">
+  <a href="#" class="lockup" aria-label="Class One Services — home">
+    <span class="lgring">1</span>
+    <span class="lgtext"><span class="l1">CLASS ONE</span><span class="l2">Services</span></span>
+  </a>
+  <nav class="nav" aria-label="Primary">
+    <a href="#services">Services</a>
+    <a href="#fleet">Fleet</a>
+    <a href="#artists">Artists</a>
+    <a href="#faq">FAQ</a>
+    <a href="#contact">Contact</a>
+  </nav>
+  <div class="top-actions">
+    <a class="top-phone" href="tel:+49000000000"><span>24/7</span>+49 (0)000 000 000</a>
+    <a class="btn btn-solid btn-sm" href="#book">Get a quote</a>
+    <button class="burger" id="burger" aria-label="Open menu" aria-expanded="false">
+      <div></div><div></div><div></div>
+    </button>
+  </div>
+</header>
+
+<nav class="mobile-menu" id="mobileMenu" aria-label="Mobile">
+  <a href="#services">Services</a>
+  <a href="#fleet">Fleet</a>
+  <a href="#artists">Artists &amp; Management</a>
+  <a href="#faq">FAQ</a>
+  <a href="#contact">Contact</a>
+  <a class="mm-phone" href="tel:+49000000000">24/7 — +49 (0)000 000 000</a>
+</nav>
+
+<main>
+
+  <!-- ================= HERO ================= -->
+  <section class="hero">
+    <div class="hero-grid">
+      <div>
+        <p class="eyebrow">Chauffeur · Concierge · 24/7</p>
+        <h1>One number. <em>Every journey.</em></h1>
+        <p class="lede">First-class chauffeur and concierge service for artists, executives and discerning clients — from the airport to the stage door, from the clinic to your front door. Cologne-based, on call across Europe.</p>
+        <div class="hero-ctas">
+          <a class="btn btn-solid" href="#book">Request a quote</a>
+          <a class="btn" href="https://wa.me/49000000000" target="_blank" rel="noopener">WhatsApp — 24/7</a>
+        </div>
+        <ul class="trust">
+          <li>On call 24/7</li>
+          <li>Cologne &amp; Europe-wide</li>
+          <li>NDA discretion</li>
+          <li>Fixed pricing</li>
+        </ul>
+      </div>
+
+      <form class="book" id="book" autocomplete="on">
+        <h3>Plan your journey</h3>
+        <div class="field">
+          <label for="svc">Service</label>
+          <select id="svc" name="service">
+            <option>Airport transfer</option>
+            <option>Point to point</option>
+            <option>By the hour / as directed</option>
+            <option>Artist &amp; tour logistics</option>
+            <option>Medical transfer</option>
+            <option>Event / roadshow</option>
+          </select>
+        </div>
+        <div class="f-row">
+          <div class="field">
+            <label for="from">From</label>
+            <input id="from" name="from" type="text" placeholder="CGN Airport" required>
+          </div>
+          <div class="field">
+            <label for="to">To</label>
+            <input id="to" name="to" type="text" placeholder="Hotel, venue…" required>
+          </div>
+        </div>
+        <div class="f-row">
+          <div class="field">
+            <label for="date">Date</label>
+            <input id="date" name="date" type="date" required>
+          </div>
+          <div class="field">
+            <label for="time">Time</label>
+            <input id="time" name="time" type="time" required>
+          </div>
+        </div>
+        <div class="field">
+          <label for="name">Name &amp; phone</label>
+          <input id="name" name="name" type="text" placeholder="So we can confirm within the hour" required>
+        </div>
+        <button class="btn btn-solid" type="submit">Send request via WhatsApp</button>
+        <p class="book-note">Opens WhatsApp with your details pre-filled. Replies within the hour — day or night. <span style="opacity:.55">(demo number)</span></p>
+      </form>
+    </div>
+  </section>
+
+  <!-- ================= SERVICES ================= -->
+  <section class="section" id="services">
+    <div class="shell">
+      <p class="eyebrow reveal">What we do</p>
+      <h2 class="reveal">Whatever moves, we move it.</h2>
+      <p class="lede reveal">A guest, a crew, an instrument, a patient — we plan it, drive it and stay reachable until it's done.</p>
+
+      <div class="cards">
+        <article class="card reveal">
+          <svg viewBox="0 0 24 24"><path d="M2 16l20-6-9 5-2 6-2-4-7-1z"/></svg>
+          <h3>Airport Meet &amp; Greet</h3>
+          <p>Name-board welcome at arrivals, luggage handled, flight tracked live. Delays change nothing — your chauffeur is already there.</p>
+        </article>
+        <article class="card reveal">
+          <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg>
+          <h3>VIP &amp; Executive Chauffeur</h3>
+          <p>By the hour or as directed. One car, one chauffeur, your schedule — for a meeting marathon or a single evening.</p>
+        </article>
+        <article class="card reveal">
+          <svg viewBox="0 0 24 24"><path d="M9 18V6l10-2v12"/><circle cx="7" cy="18" r="2.2"/><circle cx="17" cy="16" r="2.2"/></svg>
+          <h3>Artists, Tours &amp; Productions</h3>
+          <p>Convoys, crew shuttles and equipment vans. Venue to hotel to after-show — rider and timing respected to the minute.</p>
+        </article>
+        <article class="card reveal">
+          <svg viewBox="0 0 24 24"><path d="M12 4v16M4 12h16"/><circle cx="12" cy="12" r="9.5"/></svg>
+          <h3>Medical &amp; Clinic Transfers</h3>
+          <p>Discreet arrivals and gentle returns. Door-to-door accompaniment before and after treatment, in full privacy.</p>
+        </article>
+        <article class="card reveal">
+          <svg viewBox="0 0 24 24"><rect x="3.5" y="5" width="17" height="15.5"/><path d="M3.5 10h17M8 2.8V7M16 2.8V7"/></svg>
+          <h3>Events &amp; Roadshows</h3>
+          <p>Multi-stop days, galas and premieres. We plan the movement so the day runs on rails.</p>
+        </article>
+        <article class="card reveal">
+          <svg viewBox="0 0 24 24"><path d="M12 3l7.5 3v5.5c0 4.6-3.1 8-7.5 9.5-4.4-1.5-7.5-4.9-7.5-9.5V6L12 3z"/></svg>
+          <h3>Security &amp; Discretion</h3>
+          <p>Security-trained drivers through licensed partners. NDAs signed before the first mile, on request.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= FLEET ================= -->
+  <section class="section" id="fleet" style="padding-top:0">
+    <div class="shell">
+      <p class="eyebrow reveal">The fleet</p>
+      <h2 class="reveal">Choose your cabin.</h2>
+
+      <div class="fleet-grid">
+        <article class="fcar reveal">
+          <div class="fcar-img i-business"><div></div></div>
+          <div class="fcar-body">
+            <span class="fcar-name">Business Class</span>
+            <span class="fcar-model">Mercedes-Benz E-Class</span>
+            <div class="fcar-specs"><span>3 guests</span><span>2 cases</span></div>
+          </div>
+        </article>
+        <article class="fcar reveal">
+          <div class="fcar-img i-first"><div></div></div>
+          <div class="fcar-body">
+            <span class="fcar-name">First Class</span>
+            <span class="fcar-model">Mercedes-Benz S-Class</span>
+            <div class="fcar-specs"><span>3 guests</span><span>2 cases</span></div>
+          </div>
+        </article>
+        <article class="fcar reveal">
+          <div class="fcar-img i-van"><div></div></div>
+          <div class="fcar-body">
+            <span class="fcar-name">VIP Van</span>
+            <span class="fcar-model">Mercedes-Benz V-Class</span>
+            <div class="fcar-specs"><span>7 guests</span><span>6 cases</span></div>
+          </div>
+        </article>
+        <article class="fcar reveal">
+          <div class="fcar-img i-lounge"><div></div></div>
+          <div class="fcar-body">
+            <span class="fcar-name">VIP Lounge</span>
+            <span class="fcar-model">Sprinter VIP · crew &amp; backline</span>
+            <div class="fcar-specs"><span>8 guests</span><span>Full luggage</span></div>
+          </div>
+        </article>
+      </div>
+      <p class="fleet-note reveal"><b>Fixed, transparent rates</b> — quoted up front, confirmed before every journey. Preview photography shown; replaced by our own fleet.</p>
+    </div>
+  </section>
+
+  <!-- ================= EXPERIENCE ================= -->
+  <section class="exp">
+    <blockquote class="reveal">
+      "The journey should feel like the destination."
+      <cite>The Class One cabin standard</cite>
+    </blockquote>
+  </section>
+
+  <!-- ================= STANDARD ================= -->
+  <section class="section standard">
+    <div class="shell">
+      <p class="eyebrow reveal">The Class One standard</p>
+      <h2 class="reveal">What first class means here.</h2>
+      <dl class="std-grid">
+        <div class="std-item reveal"><dt>Around the clock</dt><dd>A human answers at 4 a.m. Dispatch never sleeps.</dd></div>
+        <div class="std-item reveal"><dt>One dedicated contact</dt><dd>A single coordinator from first call to final drop-off.</dd></div>
+        <div class="std-item reveal"><dt>Fixed pricing</dt><dd>Quoted before departure. No meters, no surprises.</dd></div>
+        <div class="std-item reveal"><dt>Discretion by default</dt><dd>NDA-backed service for public figures and private matters.</dd></div>
+        <div class="std-item reveal"><dt>Multilingual chauffeurs</dt><dd>At home in German, English and more.</dd></div>
+        <div class="std-item reveal"><dt>Continental reach</dt><dd>Cologne base — journeys arranged anywhere in Europe.</dd></div>
+      </dl>
+    </div>
+  </section>
+
+  <!-- ================= ARTISTS ================= -->
+  <section class="section" id="artists">
+    <div class="shell art-grid">
+      <div class="art-copy reveal">
+        <p class="eyebrow">Artists &amp; management</p>
+        <h2>The show moves. So do we.</h2>
+        <p>We move headliners, crews and instruments without friction: routes advanced before arrival, backstage access coordinated, and a chauffeur who knows when not to talk. One coordinator holds the whole itinerary — your tour manager keeps one number, not twelve.</p>
+      </div>
+      <div class="chips reveal">
+        <span class="chip">Convoys &amp; crew shuttles</span>
+        <span class="chip">Equipment &amp; backline van</span>
+        <span class="chip">Venue–hotel–after-show runs</span>
+        <span class="chip">Rider compliance</span>
+        <span class="chip">NDAs before rollout</span>
+        <span class="chip">Multi-day tour planning</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= FAQ ================= -->
+  <section class="section" id="faq" style="padding-top:0">
+    <div class="shell">
+      <p class="eyebrow reveal">Questions</p>
+      <h2 class="reveal">Asked before. Answered here.</h2>
+      <div class="faq-list reveal">
+        <details>
+          <summary>How fast can you arrange a car?</summary>
+          <p>Often within the hour in and around Cologne, subject to availability. Pre-booked journeys can be arranged anywhere in Europe with notice.</p>
+        </details>
+        <details>
+          <summary>What happens if my flight is delayed?</summary>
+          <p>Every airport pickup is tracked live. Your chauffeur adjusts to the actual landing time — the meet &amp; greet happens when you land, not when you were scheduled to.</p>
+        </details>
+        <details>
+          <summary>Can you sign an NDA?</summary>
+          <p>Yes — before any itinerary details are shared. Discretion is standard for every client; formal confidentiality agreements are available on request.</p>
+        </details>
+        <details>
+          <summary>Do you handle multi-day tours and roadshows?</summary>
+          <p>Yes. One coordinator plans the full itinerary, fleet and timing across cities, and remains your single point of contact throughout.</p>
+        </details>
+        <details>
+          <summary>How does invoicing work for companies?</summary>
+          <p>Corporate accounts receive one consolidated monthly invoice covering all journeys, with per-trip breakdowns for your records.</p>
+        </details>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= CONTACT ================= -->
+  <section class="section contact" id="contact">
+    <div class="shell">
+      <p class="eyebrow reveal" style="display:inline-block">Reach us</p>
+      <h2 class="reveal">Wherever. <em>Whenever.</em></h2>
+      <a class="contact-phone reveal" href="tel:+49000000000">+49 (0)000 000 000</a>
+      <div class="contact-ctas reveal">
+        <a class="btn btn-solid" href="#book">Request a quote</a>
+        <a class="btn" href="https://wa.me/49000000000" target="_blank" rel="noopener">WhatsApp — 24/7</a>
+      </div>
+      <a class="contact-mail reveal" href="mailto:booking@class-one.example">booking@class-one.example</a>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="foot-grid">
+    <div class="foot-brand">
+      <a href="#" class="lockup" aria-label="Class One Services — home">
+        <span class="lgring">1</span>
+        <span class="lgtext"><span class="l1">CLASS ONE</span><span class="l2">Services</span></span>
+      </a>
+      <p>One number. Every journey. Cologne — on call across Europe, 24/7.</p>
+    </div>
+    <div class="foot-col">
+      <h4>Services</h4>
+      <a href="#services">Airport Meet &amp; Greet</a>
+      <a href="#services">VIP Chauffeur</a>
+      <a href="#artists">Artists &amp; Tours</a>
+      <a href="#services">Medical Transfers</a>
+      <a href="#services">Events &amp; Roadshows</a>
+    </div>
+    <div class="foot-col">
+      <h4>Company</h4>
+      <a href="#fleet">Fleet</a>
+      <a href="#faq">FAQ</a>
+      <a href="#contact">Contact</a>
+      <a href="#">Careers</a>
+    </div>
+    <div class="foot-col">
+      <h4>Contact</h4>
+      <a href="tel:+49000000000">+49 (0)000 000 000</a>
+      <a href="mailto:booking@class-one.example">booking@class-one.example</a>
+      <a href="#">Instagram</a>
+      <a href="#">LinkedIn</a>
+    </div>
+  </div>
+  <div class="foot-legal">
+    <span>© 2026 Class One Services, Cologne. All rights reserved.</span>
+    <span>
+      <a href="#">Impressum</a>
+      <a href="#">Datenschutz</a>
+      <a href="#">AGB</a>
+    </span>
+  </div>
+</footer>
+
+<script>
+  var WHATSAPP_NUMBER = "49000000000"; // replace: intl. format, no "+"
+
+  document.getElementById("book").addEventListener("submit", function(e){
+    e.preventDefault();
+    var g = function(id){ return document.getElementById(id).value; };
+    var msg = "Quote request — Class One Services%0A"
+      + "Service: " + encodeURIComponent(g("svc")) + "%0A"
+      + "From: "    + encodeURIComponent(g("from")) + "%0A"
+      + "To: "      + encodeURIComponent(g("to")) + "%0A"
+      + "Date: "    + encodeURIComponent(g("date")) + " " + encodeURIComponent(g("time")) + "%0A"
+      + "Contact: " + encodeURIComponent(g("name"));
+    window.open("https://wa.me/" + WHATSAPP_NUMBER + "?text=" + msg, "_blank");
+  });
+
+  var burger = document.getElementById("burger");
+  burger.addEventListener("click", function(){
+    var open = document.body.classList.toggle("menu-open");
+    burger.setAttribute("aria-expanded", open ? "true" : "false");
+  });
+  document.querySelectorAll("#mobileMenu a").forEach(function(a){
+    a.addEventListener("click", function(){
+      document.body.classList.remove("menu-open");
+      burger.setAttribute("aria-expanded","false");
+    });
+  });
+
+  var fill = document.getElementById("routeFill");
+  var dot  = document.getElementById("routeDot");
+  var ticking = false;
+  function paintRoute(){
+    var doc = document.documentElement;
+    var max = doc.scrollHeight - window.innerHeight;
+    var p = max > 0 ? (window.scrollY / max) : 0;
+    var h = p * window.innerHeight;
+    fill.style.height = h + "px";
+    dot.style.top = Math.max(0, h - 3) + "px";
+    ticking = false;
+  }
+  function onScroll(){ if(!ticking){ ticking = true; requestAnimationFrame(paintRoute); } }
+  window.addEventListener("scroll", onScroll, {passive:true});
+  window.addEventListener("resize", onScroll);
+  paintRoute();
+
+  var io = new IntersectionObserver(function(entries){
+    entries.forEach(function(en){
+      if(en.isIntersecting){ en.target.classList.add("in"); io.unobserve(en.target); }
+    });
+  }, {threshold:.12});
+  document.querySelectorAll(".reveal").forEach(function(el){ io.observe(el); });
+</script>
+</body>
+</html>

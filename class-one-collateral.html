@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Class One — Brand Collateral</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#0A0A0B; --graphite:#121214; --hairline:#232327;
+    --ivory:#F2EDE3; --paper:#F5F1E8; --stone:#8E8779; --gold:#C6A15B;
+    --display:'Cormorant Garamond', Georgia, serif;
+    --body:'Jost', Arial, sans-serif;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{
+    background:#0E0E10;color:var(--ivory);font-family:var(--body);font-weight:300;
+    font-size:16px;line-height:1.65;-webkit-font-smoothing:antialiased;
+    padding:clamp(2rem,6vw,4.5rem) clamp(1.2rem,5vw,3rem) 5rem;
+  }
+  .shell{max-width:1020px;margin:0 auto}
+  .eyebrow{font-size:11px;letter-spacing:.38em;text-transform:uppercase;color:var(--gold);font-weight:500}
+  h1{font-family:var(--display);font-weight:500;font-size:clamp(2rem,6vw,3rem);margin:.9rem 0 .5rem}
+  .intro{color:var(--stone);max-width:56ch;margin-bottom:3.5rem}
+  h2{font-family:var(--display);font-weight:500;font-size:1.7rem}
+  .sec-head{display:flex;align-items:baseline;gap:1rem;border-bottom:1px solid var(--hairline);padding-bottom:.9rem;margin:3.5rem 0 2.2rem}
+  .sec-head span{font-size:11px;letter-spacing:.28em;text-transform:uppercase;color:var(--stone)}
+  .caption{text-align:center;font-size:11.5px;color:var(--stone);letter-spacing:.18em;text-transform:uppercase;margin-top:1.1rem}
+  .specnote{color:var(--stone);font-size:14px;margin-top:2rem;max-width:64ch}
+  .specnote b{color:var(--gold);font-weight:400}
+
+  /* ================= BUSINESS CARDS ================= */
+  .cards-row{display:flex;gap:clamp(1.5rem,4vw,3rem);justify-content:center;flex-wrap:wrap;perspective:1200px}
+  .bc-wrap{width:min(420px,88vw)}
+  .bizcard{
+    width:100%;aspect-ratio:1.586;position:relative;overflow:hidden;
+    box-shadow:0 24px 60px rgba(0,0,0,.55), 0 4px 14px rgba(0,0,0,.4);
+  }
+  .tilt-l{transform:rotate(-1.6deg)}
+  .tilt-r{transform:rotate(1.4deg)}
+  @media (max-width:700px){.tilt-l,.tilt-r{transform:none}}
+
+  /* front */
+  .bc-front{
+    background:radial-gradient(360px 220px at 50% 8%, #1A1A1D 0%, var(--ink) 70%);
+    display:flex;flex-direction:column;align-items:center;justify-content:center;gap:0;
+    border:1px solid #1C1C1F;
+  }
+  .bc-ring{
+    width:15.5%;aspect-ratio:1;border:2px solid var(--gold);border-radius:50%;
+    display:flex;align-items:center;justify-content:center;
+    font-family:var(--display);font-weight:600;color:var(--gold);
+    font-size:clamp(18px,7.4vw,32px);line-height:1;
+  }
+  .bc-name{
+    font-family:var(--display);font-weight:600;color:var(--ivory);
+    font-size:clamp(17px,6.2vw,27px);letter-spacing:.22em;padding-left:.22em;
+    margin-top:6.5%;
+  }
+  .bc-rule{width:11%;height:1px;background:var(--gold);margin:4.5% 0 4%}
+  .bc-sub{
+    font-size:clamp(6px,2.1vw,9px);letter-spacing:.58em;padding-left:.58em;
+    text-transform:uppercase;color:var(--stone);
+  }
+  /* ivory variant */
+  .bc-ivory{background:var(--paper);border-color:#DDD5C4}
+  .bc-ivory .bc-name{color:#141414}
+  .bc-ivory .bc-sub{color:#7A7364}
+
+  /* back */
+  .bc-back{
+    background:var(--ink);border:1px solid #1C1C1F;
+    padding:7% 8%;display:flex;flex-direction:column;
+  }
+  .bc-back::before{content:"";position:absolute;top:0;left:8%;width:12%;height:2px;background:var(--gold)}
+  .bb-name{font-family:var(--display);font-weight:600;font-size:clamp(15px,5.6vw,24px);letter-spacing:.04em}
+  .bb-role{font-size:clamp(6.5px,2.3vw,10px);letter-spacing:.34em;text-transform:uppercase;color:var(--stone);margin-top:1.5%}
+  .bb-contact{margin-top:auto;display:flex;flex-direction:column;gap:2.2%}
+  .bb-line{display:flex;align-items:baseline;gap:4%;font-size:clamp(8px,2.9vw,12.5px);letter-spacing:.05em;color:var(--ivory);white-space:nowrap}
+  .bb-line b{font-weight:500;color:var(--gold);font-size:.82em;letter-spacing:.2em;width:1.2em;flex:none}
+  .bb-foot{
+    display:flex;justify-content:space-between;align-items:center;
+    border-top:1px solid var(--hairline);margin-top:6%;padding-top:4.5%;
+  }
+  .bb-motto{font-family:var(--display);font-style:italic;font-weight:500;color:var(--gold);font-size:clamp(9px,3.3vw,14px)}
+  .bb-badge{
+    border:1px solid var(--gold);color:var(--gold);
+    font-size:clamp(6px,2.2vw,9.5px);letter-spacing:.28em;padding:.45em .8em .45em 1em;
+    text-transform:uppercase;flex:none;
+  }
+
+  /* ================= POSTERS ================= */
+  .posters{display:flex;gap:clamp(1.5rem,4vw,3rem);justify-content:center;flex-wrap:wrap}
+  .poster{
+    width:min(420px,88vw);aspect-ratio:1/1.414;position:relative;overflow:hidden;
+    box-shadow:0 30px 70px rgba(0,0,0,.6), 0 6px 18px rgba(0,0,0,.45);
+    display:flex;flex-direction:column;text-align:center;
+  }
+  /* A — photographic */
+  .p-photo{
+    background:
+      linear-gradient(180deg, rgba(10,10,11,.62) 0%, rgba(10,10,11,.55) 45%, rgba(10,10,11,.93) 100%),
+      url("https://images.unsplash.com/photo-1511919884226-fd3cad34687c?auto=format&fit=crop&w=1200&q=70") center/cover,
+      var(--graphite);
+    padding:9% 8%;color:var(--ivory);
+  }
+  .p-photo::after{content:"";position:absolute;inset:3.2%;border:1px solid rgba(198,161,91,.55);pointer-events:none}
+  .pp-lock{display:flex;flex-direction:column;align-items:center;gap:2.5%}
+  .pp-ring{
+    width:11%;aspect-ratio:1;border:1.6px solid var(--gold);border-radius:50%;
+    display:flex;align-items:center;justify-content:center;
+    font-family:var(--display);font-weight:600;color:var(--gold);font-size:clamp(13px,5vw,22px);
+  }
+  .pp-wm{font-family:var(--display);font-weight:600;font-size:clamp(11px,4vw,17px);letter-spacing:.3em;padding-left:.3em;margin-top:4%}
+  .pp-wms{font-size:clamp(5px,1.8vw,8px);letter-spacing:.6em;padding-left:.6em;text-transform:uppercase;color:var(--stone);margin-top:1.5%}
+  .pp-head{margin:auto 0;padding:6% 0}
+  .pp-head .h-a{font-family:var(--display);font-weight:500;font-size:clamp(26px,9.6vw,44px);line-height:1.08;letter-spacing:.01em}
+  .pp-head .h-b{font-family:var(--display);font-style:italic;font-weight:500;color:var(--gold);font-size:clamp(26px,9.6vw,44px);line-height:1.08}
+  .pp-svcline{font-size:clamp(6.5px,2.3vw,10px);letter-spacing:.3em;text-transform:uppercase;color:#B9B2A2;margin-top:6%}
+  .pp-foot{border-top:1px solid rgba(198,161,91,.4);padding-top:5.5%;display:flex;flex-direction:column;gap:2.5%}
+  .pp-phone{font-family:var(--display);font-weight:500;color:var(--gold);font-size:clamp(15px,5.6vw,25px);letter-spacing:.04em}
+  .pp-meta{font-size:clamp(6px,2.1vw,9px);letter-spacing:.32em;text-transform:uppercase;color:var(--stone)}
+
+  /* B — typographic */
+  .p-type{background:var(--paper);color:#141414;padding:10% 9%}
+  .p-type .giant-ring{
+    position:absolute;width:120%;aspect-ratio:1;border:1px solid rgba(198,161,91,.5);
+    border-radius:50%;left:50%;top:54%;transform:translate(-50%,-50%);pointer-events:none;
+  }
+  .pt-eyebrow{font-size:clamp(6.5px,2.3vw,10px);letter-spacing:.42em;text-transform:uppercase;color:var(--gold);font-weight:500}
+  .pt-head{margin:auto 0;position:relative}
+  .pt-head .h-a{font-family:var(--display);font-weight:500;font-size:clamp(24px,9vw,42px);line-height:1.12}
+  .pt-head .h-b{font-family:var(--display);font-style:italic;font-weight:500;color:var(--gold);font-size:clamp(24px,9vw,42px);line-height:1.12}
+  .pt-motto{font-family:var(--display);font-style:italic;font-size:clamp(10px,3.6vw,16px);color:#6E6555;margin-top:7%}
+  .pt-foot{position:relative;border-top:1px solid #D8CFBC;padding-top:5.5%;display:flex;flex-direction:column;gap:2%}
+  .pt-wm{font-family:var(--display);font-weight:600;font-size:clamp(11px,4vw,16px);letter-spacing:.3em;padding-left:.3em}
+  .pt-phone{font-family:var(--display);font-weight:500;color:var(--gold);font-size:clamp(13px,4.8vw,21px)}
+  .pt-meta{font-size:clamp(6px,2.1vw,9px);letter-spacing:.32em;text-transform:uppercase;color:#8A8172}
+</style>
+</head>
+<body>
+<div class="shell">
+
+  <p class="eyebrow">Brand collateral</p>
+  <h1>Class One Services</h1>
+  <p class="intro">Business card and posters, set in the live brand system — Cormorant Garamond, champagne gold, ink black. Same DNA as the website, ready for print adaptation.</p>
+
+  <!-- ============ CARDS ============ -->
+  <div class="sec-head"><h2>Business card</h2><span>85.6 × 54 mm</span></div>
+
+  <div class="cards-row">
+    <div class="bc-wrap">
+      <div class="bizcard bc-front tilt-l">
+        <div class="bc-ring">1</div>
+        <div class="bc-name">CLASS ONE</div>
+        <div class="bc-rule"></div>
+        <div class="bc-sub">Services</div>
+      </div>
+      <p class="caption">Front</p>
+    </div>
+
+    <div class="bc-wrap">
+      <div class="bizcard bc-back tilt-r">
+        <div class="bb-name">Ali Mustermann</div>
+        <div class="bb-role">Founder &amp; Managing Director</div>
+        <div class="bb-contact">
+          <div class="bb-line"><b>T</b> +49 (0)000 000 000</div>
+          <div class="bb-line"><b>E</b> booking@class-one.example</div>
+          <div class="bb-line"><b>W</b> class-one.example</div>
+        </div>
+        <div class="bb-foot">
+          <span class="bb-motto">One number. Every journey.</span>
+          <span class="bb-badge">24 / 7</span>
+        </div>
+      </div>
+      <p class="caption">Back</p>
+    </div>
+
+    <div class="bc-wrap">
+      <div class="bizcard bc-front bc-ivory">
+        <div class="bc-ring">1</div>
+        <div class="bc-name">CLASS ONE</div>
+        <div class="bc-rule"></div>
+        <div class="bc-sub">Services</div>
+      </div>
+      <p class="caption">Front — ivory variant</p>
+    </div>
+  </div>
+
+  <p class="specnote"><b>Print spec:</b> 85.6 × 54 mm + 3 mm bleed, CMYK. Recommended stock: 400 g/m² uncoated black core ("Luxe"-type), gold as spot color or hot-foil on the ring and rule — foil is what makes this card feel expensive in the hand.</p>
+
+  <!-- ============ POSTERS ============ -->
+  <div class="sec-head"><h2>Posters</h2><span>A-series · A2/A1</span></div>
+
+  <div class="posters">
+    <div class="bc-wrap">
+      <div class="poster p-photo">
+        <div class="pp-lock">
+          <div class="pp-ring">1</div>
+          <div class="pp-wm">CLASS ONE</div>
+          <div class="pp-wms">Services</div>
+        </div>
+        <div class="pp-head">
+          <div class="h-a">ONE NUMBER.</div>
+          <div class="h-b">Every journey.</div>
+          <div class="pp-svcline">Airport · Artists &amp; Tours · Medical · Events</div>
+        </div>
+        <div class="pp-foot">
+          <div class="pp-phone">+49 (0)000 000 000</div>
+          <div class="pp-meta">WhatsApp 24/7 &nbsp;·&nbsp; class-one.example &nbsp;·&nbsp; Cologne</div>
+        </div>
+      </div>
+      <p class="caption">Poster A — photographic</p>
+    </div>
+
+    <div class="bc-wrap">
+      <div class="poster p-type">
+        <div class="giant-ring"></div>
+        <div class="pt-eyebrow">Chauffeur · Concierge · 24/7</div>
+        <div class="pt-head">
+          <div class="h-a">First-class transport.</div>
+          <div class="h-b">Around the clock.</div>
+          <div class="pt-motto">One number. Every journey.</div>
+        </div>
+        <div class="pt-foot">
+          <div class="pt-wm">CLASS ONE</div>
+          <div class="pt-phone">+49 (0)000 000 000</div>
+          <div class="pt-meta">class-one.example &nbsp;·&nbsp; Cologne &nbsp;·&nbsp; Europe-wide</div>
+        </div>
+      </div>
+      <p class="caption">Poster B — typographic</p>
+    </div>
+  </div>
+
+  <p class="specnote"><b>Usage:</b> Poster A for hotels, FBO lounges and event venues; Poster B for clinics, offices and print ads where a quieter tone fits. Swap the preview photo for your own fleet shot before production.</p>
+
+</div>
+</body>
+</html>
