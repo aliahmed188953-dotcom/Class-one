@@ -1,0 +1,118 @@
+---
+import Logo from './Logo.astro';
+import { site } from '../data/site';
+
+const year = new Date().getFullYear();
+---
+
+<footer>
+  <div class="foot-grid">
+    <div class="foot-brand">
+      <Logo />
+      <p>One number. Every journey. Cologne — on call across Europe, 24/7.</p>
+    </div>
+    <nav class="foot-col" aria-label="Footer — services">
+      <h2>Services</h2>
+      <a href="/#services">Airport Meet &amp; Greet</a>
+      <a href="/#services">VIP Chauffeur</a>
+      <a href="/#artists">Artists &amp; Tours</a>
+      <a href="/#services">Medical Transfers</a>
+      <a href="/#services">Events &amp; Roadshows</a>
+    </nav>
+    <nav class="foot-col" aria-label="Footer — company">
+      <h2>Company</h2>
+      <a href="/#fleet">Fleet</a>
+      <a href="/#faq">FAQ</a>
+      <a href="/#contact">Contact</a>
+      <!-- TODO [TBD]: careers page — placeholder link kept from the prototype -->
+      <a href="#">Careers</a>
+    </nav>
+    <nav class="foot-col" aria-label="Footer — contact">
+      <h2>Contact</h2>
+      <!-- TODO [TBD]: placeholder phone / email — set in src/data/site.ts -->
+      <a href={`tel:${site.phoneE164}`}>{site.phoneDisplay}</a>
+      <a href={`mailto:${site.email}`}>{site.email}</a>
+      <!-- TODO [TBD]: social profiles — set URLs in src/data/site.ts -->
+      <a href={site.socials.instagram || '#'}>Instagram</a>
+      <a href={site.socials.linkedin || '#'}>LinkedIn</a>
+    </nav>
+  </div>
+  <div class="foot-legal">
+    <span>© {year} Class One Services, Cologne. All rights reserved.</span>
+    <span>
+      <a href="/impressum">Impressum</a>
+      <a href="/datenschutz">Datenschutz</a>
+      <!-- TODO [TBD]: AGB page — placeholder link kept from the prototype -->
+      <a href="#">AGB</a>
+    </span>
+  </div>
+</footer>
+
+<style>
+  footer {
+    border-top: 1px solid var(--hairline);
+    padding: 3.5rem var(--pad) 2rem;
+    background: var(--ink);
+  }
+  .foot-grid {
+    max-width: 1180px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr 1fr;
+    gap: 2.5rem;
+  }
+  .foot-brand p {
+    color: var(--stone);
+    font-size: 14px;
+    max-width: 30ch;
+    margin-top: 1.1rem;
+  }
+  /* Semantically h2 (heading order), styled exactly like the prototype's h4. */
+  .foot-col h2 {
+    font-size: 10.5px;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--gold);
+    font-weight: 500;
+    margin: 0 0 1.1rem;
+  }
+  .foot-col a {
+    display: block;
+    color: var(--stone);
+    font-size: 14.5px;
+    padding: 0.28rem 0;
+    transition: color 0.25s;
+  }
+  .foot-col a:hover {
+    color: var(--ivory);
+  }
+  .foot-legal {
+    max-width: 1180px;
+    margin: 3rem auto 0;
+    padding-top: 1.4rem;
+    border-top: 1px solid var(--hairline);
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+    flex-wrap: wrap;
+    font-size: 12.5px;
+    color: var(--stone);
+    letter-spacing: 0.05em;
+  }
+  .foot-legal a {
+    margin-left: 1.6rem;
+  }
+  .foot-legal a:hover {
+    color: var(--ivory);
+  }
+  @media (max-width: 760px) {
+    .foot-grid {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+  @media (max-width: 480px) {
+    .foot-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

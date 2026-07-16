@@ -1,0 +1,30 @@
+---
+import Base from '../layouts/Base.astro';
+import Header from '../components/Header.astro';
+import Hero from '../components/Hero.astro';
+import Services from '../components/Services.astro';
+import Fleet from '../components/Fleet.astro';
+import Experience from '../components/Experience.astro';
+import Standard from '../components/Standard.astro';
+import Artists from '../components/Artists.astro';
+import Faq from '../components/Faq.astro';
+import Contact from '../components/Contact.astro';
+import Footer from '../components/Footer.astro';
+import StickyBar from '../components/StickyBar.astro';
+---
+
+<Base preloadHero>
+  <Header />
+  <main id="main">
+    <Hero />
+    <Services />
+    <Fleet />
+    <Experience />
+    <Standard />
+    <Artists />
+    <Faq />
+    <Contact />
+  </main>
+  <Footer />
+  <StickyBar />
+</Base>

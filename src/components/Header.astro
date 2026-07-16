@@ -1,0 +1,160 @@
+---
+import Logo from './Logo.astro';
+import { site } from '../data/site';
+---
+
+<header class="top">
+  <Logo />
+  <nav class="nav" aria-label="Primary">
+    <a href="/#services">Services</a>
+    <a href="/#fleet">Fleet</a>
+    <a href="/#artists">Artists</a>
+    <a href="/#faq">FAQ</a>
+    <a href="/#contact">Contact</a>
+  </nav>
+  <div class="top-actions">
+    <!-- TODO [TBD]: placeholder phone number — set the real one in src/data/site.ts -->
+    <a class="top-phone" href={`tel:${site.phoneE164}`}
+      ><span>24/7</span>{site.phoneDisplay}</a
+    >
+    <a class="btn btn-solid btn-sm" href="/#book">Get a quote</a>
+    <button
+      class="burger"
+      id="burger"
+      aria-label="Open menu"
+      aria-expanded="false"
+      aria-controls="mobileMenu"
+    >
+      <div></div><div></div><div></div>
+    </button>
+  </div>
+</header>
+
+<nav class="mobile-menu" id="mobileMenu" aria-label="Mobile">
+  <a href="/#services">Services</a>
+  <a href="/#fleet">Fleet</a>
+  <a href="/#artists">Artists &amp; Management</a>
+  <a href="/#faq">FAQ</a>
+  <a href="/#contact">Contact</a>
+  <a class="mm-phone" href={`tel:${site.phoneE164}`}
+    >24/7 — {site.phoneDisplay}</a
+  >
+</nav>
+
+<script>
+  const burger = document.getElementById('burger');
+  if (burger) {
+    burger.addEventListener('click', () => {
+      const open = document.body.classList.toggle('menu-open');
+      burger.setAttribute('aria-expanded', open ? 'true' : 'false');
+    });
+    document.querySelectorAll('#mobileMenu a').forEach((a) => {
+      a.addEventListener('click', () => {
+        document.body.classList.remove('menu-open');
+        burger.setAttribute('aria-expanded', 'false');
+      });
+    });
+  }
+</script>
+
+<style>
+  .top {
+    position: sticky;
+    top: 0;
+    z-index: 60;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: 0.95rem var(--pad);
+    background: rgba(10, 10, 11, 0.8);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--hairline);
+  }
+  .nav {
+    display: flex;
+    gap: 2rem;
+    font-size: 13px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+  }
+  .nav a {
+    color: var(--stone);
+    transition: color 0.25s;
+  }
+  .nav a:hover {
+    color: var(--ivory);
+  }
+  .top-actions {
+    display: flex;
+    align-items: center;
+    gap: 1.4rem;
+  }
+  .top-phone {
+    font-size: 14px;
+    letter-spacing: 0.06em;
+  }
+  .top-phone span {
+    color: var(--gold);
+    margin-right: 0.45em;
+  }
+  .burger {
+    display: none;
+    background: none;
+    border: 0;
+    cursor: pointer;
+    padding: 8px;
+  }
+  .burger div {
+    width: 26px;
+    height: 1px;
+    background: var(--ivory);
+    margin: 7px 0;
+    transition: 0.3s;
+  }
+  .mobile-menu {
+    display: none;
+    position: fixed;
+    inset: 0;
+    z-index: 55;
+    background: var(--ink);
+    padding: 7rem var(--pad) 3rem;
+    flex-direction: column;
+    gap: 1.6rem;
+  }
+  .mobile-menu a {
+    font-family: var(--display);
+    font-size: 2rem;
+  }
+  .mobile-menu .mm-phone {
+    font-family: var(--body);
+    font-size: 1rem;
+    color: var(--gold);
+    margin-top: auto;
+    letter-spacing: 0.08em;
+  }
+  :global(body.menu-open) .mobile-menu {
+    display: flex;
+  }
+  :global(body.menu-open) .burger div:nth-child(1) {
+    transform: translateY(8px) rotate(45deg);
+  }
+  :global(body.menu-open) .burger div:nth-child(2) {
+    opacity: 0;
+  }
+  :global(body.menu-open) .burger div:nth-child(3) {
+    transform: translateY(-8px) rotate(-45deg);
+  }
+  @media (max-width: 940px) {
+    .nav,
+    .top-phone {
+      display: none;
+    }
+    .burger {
+      display: block;
+    }
+    .top .btn {
+      display: none;
+    }
+  }
+</style>

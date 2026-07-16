@@ -1,0 +1,74 @@
+---
+import Legal from '../layouts/Legal.astro';
+import { site } from '../data/site';
+---
+
+<!-- TODO [TBD]: Alle mit [TODO: …] markierten Angaben vor Launch ersetzen und
+     die Erklärung rechtlich prüfen lassen. -->
+<Legal
+  heading="Datenschutzerklärung"
+  eyebrow="Rechtliches"
+  title={`Datenschutz — ${site.name}`}
+  description="Datenschutzerklärung der Class One Services, Köln — Umgang mit personenbezogenen Daten auf dieser Website."
+>
+  <h2>1. Verantwortlicher</h2>
+  <p>
+    <span class="todo">[TODO: Firmenname / Inhaber:in]</span><br />
+    <span class="todo">[TODO: Straße und Hausnummer]</span><br />
+    <span class="todo">[TODO: PLZ]</span> Köln<br />
+    E-Mail: <span class="todo">[TODO: E-Mail-Adresse]</span>
+  </p>
+
+  <h2>2. Keine Cookies, kein Tracking</h2>
+  <p>
+    Diese Website setzt keine Cookies, verwendet keine Analyse- oder
+    Tracking-Dienste und bindet keine Werbenetzwerke ein. Es wird kein
+    Nutzerprofil erstellt.
+  </p>
+
+  <h2>3. Hosting</h2>
+  <p>
+    Diese Website wird bei <span class="todo"
+      >[TODO: Hosting-Anbieter, z.&nbsp;B. Vercel Inc., 340 S Lemon Ave #4133,
+      Walnut, CA 91789, USA]</span
+    > gehostet. Beim Aufruf der Seiten verarbeitet der Hoster technisch notwendige
+    Server-Logdaten (z.&nbsp;B. IP-Adresse, Zeitpunkt des Abrufs) auf Grundlage
+    von Art. 6 Abs. 1 lit. f DSGVO, um die Website sicher und stabil bereitzustellen.
+  </p>
+
+  <h2>4. Anfrageformular (Formspree)</h2>
+  <p>
+    Wenn Sie unser Buchungsformular nutzen, werden die von Ihnen eingegebenen
+    Daten (Service, Strecke, Datum, Name, Kontaktdaten, Nachricht) über den
+    Dienst Formspree Inc. (USA) an uns übermittelt. Die Verarbeitung erfolgt
+    auf Grundlage Ihrer Einwilligung (Art. 6 Abs. 1 lit. a DSGVO), die Sie mit
+    dem Absenden des Formulars erteilen. Wir verwenden die Daten
+    ausschließlich zur Bearbeitung Ihrer Anfrage.
+    <span class="todo"
+      >[TODO: Formspree-Vertragsdetails / AV-Vertrag prüfen und ergänzen]</span
+    >
+  </p>
+
+  <h2>5. Kontakt per WhatsApp, Telefon oder E-Mail</h2>
+  <p>
+    Kontaktieren Sie uns per WhatsApp (WhatsApp Ireland Ltd.), Telefon oder
+    E-Mail, verarbeiten wir Ihre Angaben zur Bearbeitung der Anfrage (Art. 6
+    Abs. 1 lit. b DSGVO). Für WhatsApp gelten ergänzend die
+    Datenschutzhinweise von WhatsApp.
+  </p>
+
+  <h2>6. Speicherdauer</h2>
+  <p>
+    Anfragedaten speichern wir nur so lange, wie es für die Bearbeitung und
+    etwaige Anschlussfragen erforderlich ist, längstens gemäß den gesetzlichen
+    Aufbewahrungspflichten.
+  </p>
+
+  <h2>7. Ihre Rechte</h2>
+  <p>
+    Sie haben das Recht auf Auskunft, Berichtigung, Löschung, Einschränkung
+    der Verarbeitung, Datenübertragbarkeit sowie Widerruf erteilter
+    Einwilligungen mit Wirkung für die Zukunft. Außerdem besteht ein
+    Beschwerderecht bei einer Datenschutz-Aufsichtsbehörde.
+  </p>
+</Legal>

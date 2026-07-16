@@ -1,0 +1,212 @@
+---
+import { site } from '../data/site';
+import { images } from '../data/images';
+import '../styles/global.css';
+
+interface Props {
+  title?: string;
+  description?: string;
+  /** Preload the hero background image (index page only — it is the LCP). */
+  preloadHero?: boolean;
+  /** Utility pages (404) are kept out of the index. */
+  noindex?: boolean;
+}
+
+const {
+  title = site.title,
+  description = site.description,
+  preloadHero = false,
+  noindex = false,
+} = Astro.props;
+
+const canonical = new URL(Astro.url.pathname, Astro.site);
+const ogImage = new URL('/og.jpg', Astro.site);
+
+const sameAs = Object.values(site.socials).filter(Boolean);
+const jsonLd = JSON.stringify({
+  '@context': 'https://schema.org',
+  '@type': 'LocalBusiness',
+  '@id': new URL('/#business', Astro.site).href,
+  name: site.name,
+  url: Astro.site?.href,
+  // TODO [TBD]: placeholder contact data — set the real values in src/data/site.ts
+  telephone: site.phoneE164,
+  email: site.email,
+  slogan: site.motto,
+  description: site.description,
+  image: ogImage.href,
+  address: {
+    '@type': 'PostalAddress',
+    addressLocality: site.city,
+    addressCountry: 'DE',
+  },
+  areaServed: [
+    { '@type': 'City', name: 'Cologne' },
+    { '@type': 'Place', name: 'Europe' },
+  ],
+  openingHoursSpecification: {
+    '@type': 'OpeningHoursSpecification',
+    dayOfWeek: [
+      'Monday',
+      'Tuesday',
+      'Wednesday',
+      'Thursday',
+      'Friday',
+      'Saturday',
+      'Sunday',
+    ],
+    opens: '00:00',
+    closes: '23:59',
+  },
+  ...(sameAs.length > 0 ? { sameAs } : {}), // TODO [TBD]: fills in once socials are set
+});
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    {noindex && <meta name="robots" content="noindex" />}
+    <meta name="generator" content={Astro.generator} />
+
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="icon" href="/favicon-32x32.png" type="image/png" sizes="32x32" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <meta name="theme-color" content="#0A0A0B" />
+
+    <link
+      rel="preload"
+      href="/fonts/cormorant-garamond-latin.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin
+    />
+    <link
+      rel="preload"
+      href="/fonts/cormorant-garamond-italic-latin.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin
+    />
+    <link
+      rel="preload"
+      href="/fonts/jost-latin.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin
+    />
+    {
+      preloadHero && (
+        <link rel="preload" as="image" href={images.hero.src} fetchpriority="high" />
+      )
+    }
+
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content={site.name} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={ogImage} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content={`${site.name} — ${site.motto}`} />
+    <meta property="og:locale" content="en_US" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImage} />
+
+    <script type="application/ld+json" set:html={jsonLd} />
+  </head>
+  <body>
+    <a class="skip-link" href="#main">Skip to content</a>
+
+    <aside class="route" aria-hidden="true">
+      <div class="route-fill" id="routeFill"></div>
+      <div class="route-dot" id="routeDot"></div>
+    </aside>
+
+    <slot />
+
+    <script>
+      // Signature journey line — the gold rail fills with scroll progress.
+      const fill = document.getElementById('routeFill');
+      const dot = document.getElementById('routeDot');
+      let ticking = false;
+
+      function paintRoute() {
+        if (!fill || !dot) return;
+        const doc = document.documentElement;
+        const max = doc.scrollHeight - window.innerHeight;
+        const p = max > 0 ? window.scrollY / max : 0;
+        const h = p * window.innerHeight;
+        fill.style.height = h + 'px';
+        dot.style.top = Math.max(0, h - 3) + 'px';
+        ticking = false;
+      }
+      function onScroll() {
+        if (!ticking) {
+          ticking = true;
+          requestAnimationFrame(paintRoute);
+        }
+      }
+      window.addEventListener('scroll', onScroll, { passive: true });
+      window.addEventListener('resize', onScroll);
+      paintRoute();
+
+      // Scroll-reveal observer (reduced-motion users get everything visible
+      // immediately via the CSS override in global.css).
+      const io = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((en) => {
+            if (en.isIntersecting) {
+              en.target.classList.add('in');
+              io.unobserve(en.target);
+            }
+          });
+        },
+        { threshold: 0.12 }
+      );
+      document.querySelectorAll('.reveal').forEach((el) => io.observe(el));
+    </script>
+  </body>
+</html>
+
+<style>
+  /* ---------- signature journey line ---------- */
+  .route {
+    position: fixed;
+    left: 30px;
+    top: 0;
+    bottom: 0;
+    width: 1px;
+    background: rgba(255, 255, 255, 0.12);
+    z-index: 40;
+  }
+  .route-fill {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 1px;
+    height: 0;
+    background: var(--gold);
+  }
+  .route-dot {
+    position: absolute;
+    left: -3px;
+    top: 0;
+    width: 7px;
+    height: 7px;
+    background: var(--gold);
+    transform: rotate(45deg);
+  }
+  @media (max-width: 1100px) {
+    .route {
+      display: none;
+    }
+  }
+</style>

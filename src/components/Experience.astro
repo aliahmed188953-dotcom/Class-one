@@ -1,0 +1,44 @@
+---
+import { images } from '../data/images';
+---
+
+<section class="exp" style={`--exp-img:url(${images.experience.src})`}>
+  <blockquote class="reveal">
+    "The journey should feel like the destination."
+    <cite>The Class One cabin standard</cite>
+  </blockquote>
+</section>
+
+<style>
+  .exp {
+    min-height: 52vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: clamp(5rem, 10vw, 8rem) var(--pad);
+    background:
+      linear-gradient(rgba(10, 10, 11, 0.68), rgba(10, 10, 11, 0.78)),
+      var(--exp-img) center/cover,
+      var(--graphite);
+    border-block: 1px solid var(--hairline);
+  }
+  .exp blockquote {
+    font-family: var(--display);
+    font-style: italic;
+    font-weight: 500;
+    font-size: clamp(1.7rem, 4.4vw, 2.9rem);
+    max-width: 22ch;
+    line-height: 1.25;
+  }
+  .exp cite {
+    display: block;
+    font-family: var(--body);
+    font-style: normal;
+    font-size: 11px;
+    letter-spacing: 0.4em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-top: 1.6rem;
+  }
+</style>

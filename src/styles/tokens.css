@@ -1,0 +1,22 @@
+/* ============================================================
+   Class One Services — design tokens
+   Source: approved design prototype (class-one-website.html).
+   Do not change without design sign-off.
+   ============================================================ */
+:root {
+  --ink: #0a0a0b;
+  --graphite: #121214;
+  --hairline: #232327;
+  --ivory: #f2ede3;
+  --stone: #8e8779;
+  --gold: #c6a15b;
+  --bronze: #a88544;
+
+  /* Added for the booking form's inline error state (the prototype had no
+     error UI) — muted terracotta, tuned to sit beside the gold. */
+  --error: #c96f5e;
+
+  --display: 'Cormorant Garamond', Georgia, serif;
+  --body: 'Jost', 'Helvetica Neue', Arial, sans-serif;
+  --pad: clamp(1.25rem, 5vw, 4rem);
+}

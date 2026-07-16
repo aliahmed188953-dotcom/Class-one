@@ -1,0 +1,48 @@
+---
+import Legal from '../layouts/Legal.astro';
+import { site } from '../data/site';
+---
+
+<!-- TODO [TBD]: Alle mit [TODO: …] markierten Angaben vor Launch ersetzen (Impressumspflicht!). -->
+<Legal
+  heading="Impressum"
+  eyebrow="Rechtliches"
+  title={`Impressum — ${site.name}`}
+  description="Impressum und Anbieterkennzeichnung der Class One Services, Köln."
+>
+  <h2>Angaben gemäß § 5 DDG</h2>
+  <p>
+    <span class="todo">[TODO: Firmenname / Inhaber:in]</span><br />
+    <span class="todo">[TODO: Straße und Hausnummer]</span><br />
+    <span class="todo">[TODO: PLZ]</span> Köln
+  </p>
+
+  <h2>Kontakt</h2>
+  <p>
+    Telefon: <span class="todo">[TODO: Telefonnummer]</span><br />
+    E-Mail: <span class="todo">[TODO: E-Mail-Adresse]</span>
+  </p>
+
+  <h2>Umsatzsteuer-ID</h2>
+  <p>
+    Umsatzsteuer-Identifikationsnummer gemäß § 27 a Umsatzsteuergesetz:<br />
+    <span class="todo">[TODO: USt-IdNr. — falls vorhanden, sonst Abschnitt entfernen]</span>
+  </p>
+
+  <h2>Verantwortlich für den Inhalt nach § 18 Abs. 2 MStV</h2>
+  <p>
+    <span class="todo">[TODO: Name, Anschrift]</span>
+  </p>
+
+  <h2>EU-Streitschlichtung</h2>
+  <p>
+    Die Europäische Kommission stellt eine Plattform zur
+    Online-Streitbeilegung (OS) bereit:
+    <a
+      href="https://ec.europa.eu/consumers/odr/"
+      target="_blank"
+      rel="noopener">https://ec.europa.eu/consumers/odr/</a
+    >. Wir sind nicht bereit oder verpflichtet, an Streitbeilegungsverfahren
+    vor einer Verbraucherschlichtungsstelle teilzunehmen.
+  </p>
+</Legal>

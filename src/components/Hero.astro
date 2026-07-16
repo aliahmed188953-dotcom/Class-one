@@ -1,0 +1,100 @@
+---
+import BookingCard from './BookingCard.astro';
+import { images } from '../data/images';
+import { waLink } from '../data/site';
+---
+
+<section class="hero" style={`--hero-img:url(${images.hero.src})`}>
+  <div class="hero-grid">
+    <div>
+      <p class="eyebrow">Chauffeur · Concierge · 24/7</p>
+      <h1>One number. <em>Every journey.</em></h1>
+      <p class="lede">
+        First-class chauffeur and concierge service for artists, executives and
+        discerning clients — from the airport to the stage door, from the
+        clinic to your front door. Cologne-based, on call across Europe.
+      </p>
+      <div class="hero-ctas">
+        <a class="btn btn-solid" href="#book">Request a quote</a>
+        <!-- TODO [TBD]: demo WhatsApp number — set the real one in src/data/site.ts -->
+        <a class="btn" href={waLink} target="_blank" rel="noopener"
+          >WhatsApp — 24/7</a
+        >
+      </div>
+      <ul class="trust">
+        <li>On call 24/7</li>
+        <li>Cologne &amp; Europe-wide</li>
+        <li>NDA discretion</li>
+        <li>Fixed pricing</li>
+      </ul>
+    </div>
+
+    <BookingCard />
+  </div>
+</section>
+
+<style>
+  .hero {
+    position: relative;
+    padding: clamp(4.5rem, 9vw, 8rem) var(--pad) clamp(4rem, 8vw, 6rem);
+    background:
+      linear-gradient(
+        180deg,
+        rgba(10, 10, 11, 0.78) 0%,
+        rgba(10, 10, 11, 0.62) 45%,
+        rgba(10, 10, 11, 0.94) 100%
+      ),
+      var(--hero-img) center/cover,
+      var(--graphite);
+  }
+  .hero-grid {
+    max-width: 1180px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1.15fr 0.85fr;
+    gap: clamp(2rem, 5vw, 4.5rem);
+    align-items: center;
+  }
+  .hero h1 {
+    font-size: clamp(2.8rem, 6.4vw, 5rem);
+    margin: 1.5rem 0 1.2rem;
+    text-shadow: 0 2px 30px rgba(0, 0, 0, 0.5);
+  }
+  .hero .lede {
+    color: #b9b2a2;
+    margin-bottom: 2.2rem;
+  }
+  .hero-ctas {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+  .trust {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.6rem 2rem;
+    margin-top: 2.8rem;
+    font-size: 12px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: #a79f8e;
+  }
+  .trust li {
+    list-style: none;
+    display: flex;
+    align-items: center;
+    gap: 0.7rem;
+  }
+  .trust li::before {
+    content: '';
+    width: 4px;
+    height: 4px;
+    background: var(--gold);
+    transform: rotate(45deg);
+  }
+  @media (max-width: 940px) {
+    .hero-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

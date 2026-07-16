@@ -1,0 +1,153 @@
+---
+import { images } from '../data/images';
+
+// TODO [TBD]: confirm the launch fleet — prototype line-up kept for now.
+// Photos + alt text live in src/data/images.ts (one-file swap later).
+const fleet = [
+  {
+    img: images.fleet.business,
+    name: 'Business Class',
+    model: 'Mercedes-Benz E-Class',
+    specs: ['3 guests', '2 cases'],
+  },
+  {
+    img: images.fleet.first,
+    name: 'First Class',
+    model: 'Mercedes-Benz S-Class',
+    specs: ['3 guests', '2 cases'],
+  },
+  {
+    img: images.fleet.van,
+    name: 'VIP Van',
+    model: 'Mercedes-Benz V-Class',
+    specs: ['7 guests', '6 cases'],
+  },
+  {
+    img: images.fleet.lounge,
+    name: 'VIP Lounge',
+    model: 'Sprinter VIP · crew & backline',
+    specs: ['8 guests', 'Full luggage'],
+  },
+];
+---
+
+<section class="section" id="fleet" style="padding-top:0">
+  <div class="shell">
+    <p class="eyebrow reveal">The fleet</p>
+    <h2 class="reveal">Choose your cabin.</h2>
+
+    <div class="fleet-grid">
+      {
+        fleet.map((car) => (
+          <article class="fcar reveal">
+            <div class="fcar-img">
+              <img
+                src={car.img.src}
+                alt={car.img.alt}
+                width={car.img.width}
+                height={car.img.height}
+                loading="lazy"
+                decoding="async"
+              />
+            </div>
+            <div class="fcar-body">
+              <span class="fcar-name">{car.name}</span>
+              <span class="fcar-model">{car.model}</span>
+              <div class="fcar-specs">
+                {car.specs.map((s) => (
+                  <span>{s}</span>
+                ))}
+              </div>
+            </div>
+          </article>
+        ))
+      }
+    </div>
+    <p class="fleet-note reveal">
+      <b>Fixed, transparent rates</b> — quoted up front, confirmed before every
+      journey. Preview photography shown; replaced by our own fleet.
+    </p>
+  </div>
+</section>
+
+<style>
+  .fleet-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.6rem;
+    margin-top: 3rem;
+  }
+  .fcar {
+    border: 1px solid var(--hairline);
+    background: var(--graphite);
+  }
+  .fcar-img {
+    aspect-ratio: 16/10;
+    overflow: hidden;
+    position: relative;
+  }
+  .fcar-img img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    background-color: #17171a;
+    transition: transform 0.6s ease;
+  }
+  .fcar:hover .fcar-img img {
+    transform: scale(1.045);
+  }
+  .fcar-img::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      180deg,
+      rgba(10, 10, 11, 0.05) 40%,
+      rgba(10, 10, 11, 0.55) 100%
+    );
+  }
+  .fcar-body {
+    padding: 1.5rem 1.7rem 1.7rem;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 0.4rem 1.2rem;
+  }
+  .fcar-name {
+    font-family: var(--display);
+    font-weight: 500;
+    font-size: 1.7rem;
+  }
+  .fcar-model {
+    color: var(--stone);
+    font-size: 14px;
+    letter-spacing: 0.04em;
+  }
+  .fcar-specs {
+    width: 100%;
+    display: flex;
+    gap: 1.5rem;
+    margin-top: 0.5rem;
+    font-size: 11px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--stone);
+  }
+  .fleet-note {
+    margin-top: 1.8rem;
+    font-size: 13.5px;
+    color: var(--stone);
+    letter-spacing: 0.04em;
+  }
+  .fleet-note b {
+    color: var(--gold);
+    font-weight: 400;
+  }
+  @media (max-width: 760px) {
+    .fleet-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

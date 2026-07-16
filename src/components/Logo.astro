@@ -1,0 +1,55 @@
+---
+/** Ring-1 lockup — proportions per the brand collateral reference. */
+interface Props {
+  href?: string;
+}
+const { href = '/' } = Astro.props;
+---
+
+<a href={href} class="lockup" aria-label="Class One Services — home">
+  <span class="lgring" aria-hidden="true">1</span>
+  <span class="lgtext"
+    ><span class="l1">CLASS ONE</span><span class="l2">Services</span></span
+  >
+</a>
+
+<style>
+  .lockup {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+  }
+  .lgring {
+    width: 34px;
+    height: 34px;
+    border: 1.6px solid var(--gold);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex: none;
+    font-family: var(--display);
+    font-weight: 600;
+    font-size: 17px;
+    color: var(--gold);
+    line-height: 1;
+  }
+  .lgtext {
+    display: flex;
+    flex-direction: column;
+    line-height: 1;
+  }
+  .lgtext .l1 {
+    font-family: var(--display);
+    font-weight: 600;
+    font-size: 19px;
+    letter-spacing: 0.14em;
+  }
+  .lgtext .l2 {
+    font-size: 8.5px;
+    letter-spacing: 0.52em;
+    text-transform: uppercase;
+    color: var(--stone);
+    margin-top: 4px;
+  }
+</style>

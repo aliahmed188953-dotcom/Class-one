@@ -1,0 +1,68 @@
+---
+import { images } from '../data/images';
+import { site, waLink } from '../data/site';
+---
+
+<section
+  class="section contact"
+  id="contact"
+  style={`--contact-img:url(${images.contact.src})`}
+>
+  <div class="shell">
+    <p class="eyebrow reveal" style="display:inline-block">Reach us</p>
+    <h2 class="reveal">Wherever. <em>Whenever.</em></h2>
+    <!-- TODO [TBD]: placeholder phone / WhatsApp / email — set in src/data/site.ts -->
+    <a class="contact-phone reveal" href={`tel:${site.phoneE164}`}
+      >{site.phoneDisplay}</a
+    >
+    <div class="contact-ctas reveal">
+      <a class="btn btn-solid" href="/#book">Request a quote</a>
+      <a class="btn" href={waLink} target="_blank" rel="noopener"
+        >WhatsApp — 24/7</a
+      >
+    </div>
+    <a class="contact-mail reveal" href={`mailto:${site.email}`}>{site.email}</a>
+  </div>
+</section>
+
+<style>
+  .contact {
+    text-align: center;
+    background:
+      linear-gradient(rgba(10, 10, 11, 0.85), rgba(10, 10, 11, 0.93)),
+      var(--contact-img) center/cover,
+      var(--ink);
+    border-top: 1px solid var(--hairline);
+  }
+  .contact h2 {
+    font-size: clamp(2.4rem, 5.5vw, 4rem);
+  }
+  .contact-phone {
+    display: inline-block;
+    font-family: var(--display);
+    font-size: clamp(1.5rem, 3.4vw, 2.2rem);
+    color: var(--gold);
+    margin: 1.6rem 0 2.2rem;
+    transition: color 0.25s;
+  }
+  .contact-phone:hover {
+    color: var(--ivory);
+  }
+  .contact-ctas {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+  .contact-mail {
+    display: block;
+    margin-top: 2.4rem;
+    font-size: 13px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--stone);
+  }
+  .contact-mail:hover {
+    color: var(--ivory);
+  }
+</style>

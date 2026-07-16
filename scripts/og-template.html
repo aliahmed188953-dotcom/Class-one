@@ -1,0 +1,89 @@
+<!doctype html>
+<!--
+  Class One Services — Open Graph image source (1200×630).
+  Layout derived from "Poster A — photographic" in class-one-collateral.html.
+
+  Regenerate public/og.jpg after editing (from the repo root):
+
+    chromium - -headless - -screenshot=og-raw.png - -window-size=1400,800 \
+      - -force-device-scale-factor=1 scripts/og-template.html
+    (remove the spaces in the flags; then crop to 1200×630 and save as
+     public/og.jpg — any image tool works)
+
+  Notes:
+  - The Unsplash photo layer falls back to the brand graphite radial when
+    offline; swap it for a real fleet shot before production (same note as
+    the poster spec in the collateral).
+  - TODO [TBD]: once the real phone number + domain exist (src/data/site.ts),
+    add them to the footer line below and regenerate — the poster layout
+    carries them under the gold hairline.
+-->
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<style>
+  @font-face{
+    font-family:'Cormorant Garamond';font-style:normal;font-weight:300 700;
+    src:url('../public/fonts/cormorant-garamond-latin.woff2') format('woff2');
+  }
+  @font-face{
+    font-family:'Cormorant Garamond';font-style:italic;font-weight:500;
+    src:url('../public/fonts/cormorant-garamond-italic-latin.woff2') format('woff2');
+  }
+  @font-face{
+    font-family:'Jost';font-style:normal;font-weight:100 900;
+    src:url('../public/fonts/jost-latin.woff2') format('woff2');
+  }
+  :root{
+    --ink:#0A0A0B; --graphite:#121214; --ivory:#F2EDE3; --stone:#8E8779; --gold:#C6A15B;
+    --display:'Cormorant Garamond', Georgia, serif;
+    --body:'Jost', Arial, sans-serif;
+  }
+  html,body{margin:0;padding:0;background:#000;overflow:hidden}
+  .og{
+    width:1200px;height:630px;position:relative;overflow:hidden;
+    color:var(--ivory);text-align:center;
+    background:
+      linear-gradient(180deg, rgba(10,10,11,.62) 0%, rgba(10,10,11,.55) 45%, rgba(10,10,11,.93) 100%),
+      url("https://images.unsplash.com/photo-1511919884226-fd3cad34687c?auto=format&fit=crop&w=1800&q=70") center/cover,
+      radial-gradient(900px 520px at 50% 8%, #1A1A1D 0%, var(--ink) 70%),
+      var(--graphite);
+    display:flex;flex-direction:column;align-items:center;justify-content:space-between;
+    padding:52px 80px 46px;box-sizing:border-box;
+  }
+  .og::after{content:"";position:absolute;inset:24px;border:1px solid rgba(198,161,91,.55);pointer-events:none}
+  .lock{display:flex;flex-direction:column;align-items:center}
+  .ring{
+    width:58px;height:58px;border:2px solid var(--gold);border-radius:50%;
+    display:flex;align-items:center;justify-content:center;
+    font-family:var(--display);font-weight:600;color:var(--gold);font-size:30px;line-height:1;
+  }
+  .wm{font-family:var(--display);font-weight:600;font-size:24px;letter-spacing:.3em;padding-left:.3em;margin-top:14px}
+  .wms{font-size:11px;letter-spacing:.6em;padding-left:.6em;text-transform:uppercase;color:var(--stone);margin-top:7px}
+  .head{margin:8px 0}
+  .h-a{font-family:var(--display);font-weight:500;font-size:96px;line-height:1.06;letter-spacing:.01em}
+  .h-b{font-family:var(--display);font-style:italic;font-weight:500;color:var(--gold);font-size:96px;line-height:1.06}
+  .svcline{font-size:17px;letter-spacing:.3em;text-transform:uppercase;color:#B9B2A2;margin-top:26px}
+  .foot{
+    width:100%;border-top:1px solid rgba(198,161,91,.4);padding-top:22px;
+    font-size:15px;letter-spacing:.32em;text-transform:uppercase;color:var(--stone);
+  }
+</style>
+</head>
+<body>
+<div class="og">
+  <div class="lock">
+    <div class="ring">1</div>
+    <div class="wm">CLASS ONE</div>
+    <div class="wms">Services</div>
+  </div>
+  <div class="head">
+    <div class="h-a">ONE NUMBER.</div>
+    <div class="h-b">Every journey.</div>
+    <div class="svcline">Airport · Artists &amp; Tours · Medical · Events</div>
+  </div>
+  <!-- TODO [TBD]: prepend the real phone + domain here once known -->
+  <div class="foot">WhatsApp 24/7 &nbsp;·&nbsp; Cologne &nbsp;·&nbsp; Europe-wide</div>
+</div>
+</body>
+</html>

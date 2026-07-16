@@ -1,0 +1,70 @@
+---
+import Base from './Base.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import StickyBar from '../components/StickyBar.astro';
+
+interface Props {
+  /** Page heading (rendered as h1). */
+  heading: string;
+  eyebrow: string;
+  title: string;
+  description: string;
+}
+const { heading, eyebrow, title, description } = Astro.props;
+---
+
+<Base {title} {description}>
+  <Header />
+  <main id="main">
+    <section class="section legal">
+      <div class="shell">
+        <p class="eyebrow">{eyebrow}</p>
+        <h1>{heading}</h1>
+        <div class="legal-body">
+          <slot />
+        </div>
+      </div>
+    </section>
+  </main>
+  <Footer />
+  <StickyBar />
+</Base>
+
+<style>
+  .legal h1 {
+    font-size: clamp(2.2rem, 5vw, 3.4rem);
+    margin: 1.4rem 0 1rem;
+  }
+  .legal-body {
+    max-width: 70ch;
+    margin-top: 2.5rem;
+  }
+  .legal-body :global(h2) {
+    font-size: 1.6rem;
+    margin: 2.6rem 0 0.7rem;
+  }
+  .legal-body :global(p) {
+    color: var(--stone);
+    font-size: 15.5px;
+    margin: 0.6rem 0;
+  }
+  .legal-body :global(a) {
+    color: var(--gold);
+    text-decoration: underline;
+    text-underline-offset: 2px;
+    transition: color 0.25s;
+  }
+  .legal-body :global(a:hover) {
+    color: var(--ivory);
+  }
+  /* Visible placeholder chips — every one must be replaced before launch. */
+  .legal-body :global(.todo) {
+    display: inline-block;
+    border: 1px dashed var(--gold);
+    color: var(--gold);
+    padding: 0 0.5em;
+    font-size: 0.92em;
+    letter-spacing: 0.04em;
+  }
+</style>

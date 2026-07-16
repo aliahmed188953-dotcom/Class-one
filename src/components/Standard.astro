@@ -1,0 +1,74 @@
+---
+const items = [
+  {
+    dt: 'Around the clock',
+    dd: 'A human answers at 4 a.m. Dispatch never sleeps.',
+  },
+  {
+    dt: 'One dedicated contact',
+    dd: 'A single coordinator from first call to final drop-off.',
+  },
+  { dt: 'Fixed pricing', dd: 'Quoted before departure. No meters, no surprises.' },
+  {
+    dt: 'Discretion by default',
+    dd: 'NDA-backed service for public figures and private matters.',
+  },
+  {
+    dt: 'Multilingual chauffeurs',
+    dd: 'At home in German, English and more.',
+  },
+  {
+    dt: 'Continental reach',
+    dd: 'Cologne base — journeys arranged anywhere in Europe.',
+  },
+];
+---
+
+<section class="section standard">
+  <div class="shell">
+    <p class="eyebrow reveal">The Class One standard</p>
+    <h2 class="reveal">What first class means here.</h2>
+    <dl class="std-grid">
+      {
+        items.map((it) => (
+          <div class="std-item reveal">
+            <dt>{it.dt}</dt>
+            <dd>{it.dd}</dd>
+          </div>
+        ))
+      }
+    </dl>
+  </div>
+</section>
+
+<style>
+  .standard {
+    background: var(--graphite);
+    border-bottom: 1px solid var(--hairline);
+  }
+  .std-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0 4rem;
+    margin-top: 2.5rem;
+  }
+  .std-item {
+    padding: 1.7rem 0;
+    border-top: 1px solid var(--hairline);
+  }
+  .std-item dt {
+    font-family: var(--display);
+    font-size: 1.5rem;
+    font-weight: 500;
+    margin-bottom: 0.4rem;
+  }
+  .std-item dd {
+    color: var(--stone);
+    font-size: 15.5px;
+  }
+  @media (max-width: 760px) {
+    .std-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

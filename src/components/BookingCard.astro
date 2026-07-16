@@ -1,0 +1,378 @@
+---
+import { bookingOptions } from '../data/services';
+import { site, formspreeEndpoint } from '../data/site';
+---
+
+<!-- TODO [TBD]: Formspree form ID + WhatsApp number are placeholders — set both in src/data/site.ts -->
+<form
+  class="book"
+  id="book"
+  method="POST"
+  action={formspreeEndpoint || undefined}
+  autocomplete="on"
+  data-endpoint={formspreeEndpoint}
+  data-whatsapp={site.whatsapp}
+>
+  <h2 class="book-title">Plan your journey</h2>
+
+  <input type="hidden" name="_subject" value="Quote request — Class One Services" />
+
+  <!-- Honeypot — humans never see it, bots fill it and get silently dropped. -->
+  <p class="hp" aria-hidden="true">
+    <label for="hp-field">Leave this field empty</label>
+    <input
+      id="hp-field"
+      type="text"
+      name="_gotcha"
+      tabindex="-1"
+      autocomplete="off"
+    />
+  </p>
+
+  <div class="field">
+    <label for="svc">Service</label>
+    <select id="svc" name="service">
+      {bookingOptions.map((o) => <option>{o}</option>)}
+    </select>
+  </div>
+  <div class="f-row">
+    <div class="field">
+      <label for="from">From</label>
+      <input id="from" name="from" type="text" placeholder="CGN Airport" required />
+    </div>
+    <div class="field">
+      <label for="to">To</label>
+      <input id="to" name="to" type="text" placeholder="Hotel, venue…" required />
+    </div>
+  </div>
+  <div class="f-row">
+    <div class="field">
+      <label for="date">Date</label>
+      <input id="date" name="date" type="date" required />
+    </div>
+    <div class="field">
+      <label for="time">Time</label>
+      <input id="time" name="time" type="time" required />
+    </div>
+  </div>
+  <div class="f-row">
+    <div class="field">
+      <label for="name">Name</label>
+      <input
+        id="name"
+        name="name"
+        type="text"
+        placeholder="Full name"
+        autocomplete="name"
+        required
+      />
+    </div>
+    <div class="field">
+      <label for="contact">Phone or email</label>
+      <input
+        id="contact"
+        name="contact"
+        type="text"
+        placeholder="So we can confirm within the hour"
+        required
+      />
+    </div>
+  </div>
+  <div class="field">
+    <label for="notes">Notes <span class="opt">(optional)</span></label>
+    <textarea
+      id="notes"
+      name="notes"
+      rows="2"
+      placeholder="Flight number, luggage, special requests…"></textarea>
+  </div>
+
+  <label class="consent">
+    <input type="checkbox" name="consent" value="given" required />
+    <span
+      >I agree that my details are used to handle this request. <a
+        href="/datenschutz">Privacy policy</a
+      >.</span
+    >
+  </label>
+
+  <button class="btn btn-solid" type="submit">Request a quote</button>
+  <button class="btn btn-wa" type="button" id="waSend"
+    >Send via WhatsApp instead</button
+  >
+
+  <p class="form-status" role="status" aria-live="polite"></p>
+  <!-- TODO [TBD]: remove "(demo number)" once the real WhatsApp number is set -->
+  <p class="book-note">
+    Replies within the hour — day or night. WhatsApp opens with your details
+    pre-filled. <span class="dim">(demo number)</span>
+  </p>
+</form>
+
+<script>
+  const form = document.getElementById('book') as HTMLFormElement | null;
+
+  if (form) {
+    const endpoint = form.dataset.endpoint || '';
+    const whatsapp = form.dataset.whatsapp || '';
+    const status = form.querySelector('.form-status') as HTMLElement;
+    const submitBtn = form.querySelector(
+      'button[type="submit"]'
+    ) as HTMLButtonElement;
+
+    const field = (name: string) =>
+      form.elements.namedItem(name) as
+        | HTMLInputElement
+        | HTMLSelectElement
+        | HTMLTextAreaElement
+        | null;
+    const val = (name: string) => field(name)?.value.trim() ?? '';
+
+    const setStatus = (msg: string, kind: 'ok' | 'err') => {
+      status.textContent = msg;
+      status.classList.remove('ok', 'err');
+      status.classList.add(kind);
+    };
+
+    // Primary: POST to Formspree — no page reload, inline success/error.
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+
+      // Honeypot tripped → pretend success, send nothing.
+      if (val('_gotcha')) {
+        form.reset();
+        setStatus(
+          'Request received — we reply within the hour, day or night.',
+          'ok'
+        );
+        return;
+      }
+
+      if (!endpoint) {
+        // TODO [TBD]: goes away once the Formspree ID is set in src/data/site.ts
+        setStatus(
+          'Direct requests are not live yet — please use the WhatsApp button or call us.',
+          'err'
+        );
+        return;
+      }
+
+      submitBtn.disabled = true;
+      submitBtn.textContent = 'Sending…';
+      try {
+        const res = await fetch(endpoint, {
+          method: 'POST',
+          body: new FormData(form),
+          headers: { Accept: 'application/json' },
+        });
+        if (!res.ok) throw new Error(String(res.status));
+        form.reset();
+        setStatus(
+          'Request received — we reply within the hour, day or night.',
+          'ok'
+        );
+      } catch {
+        setStatus(
+          'Something went wrong — please try again, or send your request via WhatsApp.',
+          'err'
+        );
+      } finally {
+        submitBtn.disabled = false;
+        submitBtn.textContent = 'Request a quote';
+      }
+    });
+
+    // Secondary: same data, prefilled into a wa.me deep link.
+    document.getElementById('waSend')?.addEventListener('click', () => {
+      if (!form.reportValidity()) return;
+      const lines = [
+        'Quote request — Class One Services',
+        `Service: ${val('service')}`,
+        `From: ${val('from')}`,
+        `To: ${val('to')}`,
+        `Date: ${val('date')} ${val('time')}`,
+        `Name: ${val('name')}`,
+        `Contact: ${val('contact')}`,
+      ];
+      const notes = val('notes');
+      if (notes) lines.push(`Notes: ${notes}`);
+      window.open(
+        `https://wa.me/${whatsapp}?text=${encodeURIComponent(lines.join('\n'))}`,
+        '_blank',
+        'noopener'
+      );
+    });
+  }
+</script>
+
+<style>
+  .book {
+    background: rgba(14, 14, 16, 0.9);
+    backdrop-filter: blur(6px);
+    border: 1px solid var(--hairline);
+    padding: 2rem 1.8rem 1.6rem;
+    position: relative;
+  }
+  .book::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 1.8rem;
+    width: 44px;
+    height: 2px;
+    background: var(--gold);
+  }
+  /* Semantically an h2 (heading order), styled exactly like the prototype's h3. */
+  .book .book-title {
+    font-size: 1.7rem;
+    margin: 0 0 1.4rem;
+  }
+  .field {
+    margin-bottom: 1rem;
+  }
+  .field label {
+    display: block;
+    font-size: 10.5px;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+    color: var(--stone);
+    margin-bottom: 0.45rem;
+  }
+  .field label .opt {
+    letter-spacing: 0.14em;
+    opacity: 0.75;
+    text-transform: none;
+  }
+  .field input,
+  .field select,
+  .field textarea {
+    width: 100%;
+    background: var(--ink);
+    border: 1px solid var(--hairline);
+    color: var(--ivory);
+    font-family: var(--body);
+    font-weight: 300;
+    font-size: 15px;
+    padding: 0.75rem 0.9rem;
+    transition: border-color 0.25s;
+    border-radius: 0;
+    -webkit-appearance: none;
+    appearance: none;
+  }
+  .field textarea {
+    resize: vertical;
+    min-height: 3.4em;
+  }
+  .field select {
+    background-image: linear-gradient(45deg, transparent 50%, var(--gold) 50%),
+      linear-gradient(135deg, var(--gold) 50%, transparent 50%);
+    background-position:
+      calc(100% - 18px) 55%,
+      calc(100% - 13px) 55%;
+    background-size: 5px 5px;
+    background-repeat: no-repeat;
+  }
+  .field input:focus,
+  .field select:focus,
+  .field textarea:focus {
+    border-color: var(--gold);
+    outline: none;
+  }
+  .field input::placeholder,
+  .field textarea::placeholder {
+    color: #565048;
+  }
+  .f-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+  }
+  /* Let paired fields shrink below the inputs' intrinsic width — without
+     this the card overflows narrow viewports (≤ ~430px). */
+  .f-row .field {
+    min-width: 0;
+  }
+
+  /* Honeypot — visually removed, still in the submitted form data. */
+  .hp {
+    position: absolute !important;
+    left: -9999px;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+  }
+
+  .consent {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.7rem;
+    margin: 0.2rem 0 1rem;
+    font-size: 12.5px;
+    line-height: 1.55;
+    letter-spacing: 0.03em;
+    color: var(--stone);
+    cursor: pointer;
+  }
+  .consent input {
+    width: 15px;
+    height: 15px;
+    margin-top: 3px;
+    flex: none;
+    accent-color: var(--gold);
+    cursor: pointer;
+  }
+  .consent a {
+    color: var(--gold);
+    text-decoration: underline;
+    text-underline-offset: 2px;
+    transition: color 0.25s;
+  }
+  .consent a:hover {
+    color: var(--ivory);
+  }
+
+  .book .btn {
+    width: 100%;
+    margin-top: 0.4rem;
+  }
+  .book .btn-wa {
+    margin-top: 0.7rem;
+  }
+  .book .btn:disabled {
+    opacity: 0.6;
+    cursor: wait;
+  }
+
+  .form-status {
+    display: none;
+    margin-top: 1rem;
+    padding: 0.7rem 0.9rem;
+    border: 1px solid;
+    font-size: 13.5px;
+    letter-spacing: 0.04em;
+    text-align: center;
+  }
+  .form-status.ok {
+    display: block;
+    color: var(--gold);
+    border-color: var(--gold);
+    background: rgba(198, 161, 91, 0.08);
+  }
+  .form-status.err {
+    display: block;
+    color: var(--error);
+    border-color: var(--error);
+    background: rgba(201, 111, 94, 0.08);
+  }
+
+  .book-note {
+    font-size: 12px;
+    color: var(--stone);
+    margin-top: 0.9rem;
+    text-align: center;
+    letter-spacing: 0.03em;
+  }
+  .book-note .dim {
+    opacity: 0.55;
+  }
+</style>

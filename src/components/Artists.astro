@@ -1,0 +1,70 @@
+---
+const chips = [
+  'Convoys & crew shuttles',
+  'Equipment & backline van',
+  'Venue–hotel–after-show runs',
+  'Rider compliance',
+  'NDAs before rollout',
+  'Multi-day tour planning',
+];
+---
+
+<section class="section" id="artists">
+  <div class="shell art-grid">
+    <div class="art-copy reveal">
+      <p class="eyebrow">Artists &amp; management</p>
+      <h2>The show moves. So do we.</h2>
+      <p>
+        We move headliners, crews and instruments without friction: routes
+        advanced before arrival, backstage access coordinated, and a chauffeur
+        who knows when not to talk. One coordinator holds the whole itinerary —
+        your tour manager keeps one number, not twelve.
+      </p>
+    </div>
+    <div class="chips reveal">
+      {chips.map((c) => <span class="chip">{c}</span>)}
+    </div>
+  </div>
+</section>
+
+<style>
+  .art-grid {
+    display: grid;
+    grid-template-columns: 1.1fr 0.9fr;
+    gap: clamp(2rem, 5vw, 4.5rem);
+    align-items: start;
+  }
+  .art-copy {
+    border-left: 2px solid var(--gold);
+    padding-left: clamp(1.2rem, 3vw, 2.4rem);
+  }
+  .art-copy p {
+    color: var(--stone);
+    margin-top: 1rem;
+    max-width: 52ch;
+  }
+  .chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.7rem;
+    align-content: start;
+    padding-top: 1rem;
+  }
+  .chip {
+    border: 1px solid var(--hairline);
+    padding: 0.6rem 1.1rem;
+    font-size: 12px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    transition: 0.25s;
+  }
+  .chip:hover {
+    border-color: var(--gold);
+    color: var(--gold);
+  }
+  @media (max-width: 860px) {
+    .art-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

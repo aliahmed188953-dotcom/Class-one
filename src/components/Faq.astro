@@ -1,0 +1,84 @@
+---
+const faqs = [
+  {
+    q: 'How fast can you arrange a car?',
+    a: 'Often within the hour in and around Cologne, subject to availability. Pre-booked journeys can be arranged anywhere in Europe with notice.',
+  },
+  {
+    q: 'What happens if my flight is delayed?',
+    a: 'Every airport pickup is tracked live. Your chauffeur adjusts to the actual landing time — the meet & greet happens when you land, not when you were scheduled to.',
+  },
+  {
+    q: 'Can you sign an NDA?',
+    a: 'Yes — before any itinerary details are shared. Discretion is standard for every client; formal confidentiality agreements are available on request.',
+  },
+  {
+    q: 'Do you handle multi-day tours and roadshows?',
+    a: 'Yes. One coordinator plans the full itinerary, fleet and timing across cities, and remains your single point of contact throughout.',
+  },
+  {
+    q: 'How does invoicing work for companies?',
+    a: 'Corporate accounts receive one consolidated monthly invoice covering all journeys, with per-trip breakdowns for your records.',
+  },
+];
+---
+
+<section class="section" id="faq" style="padding-top:0">
+  <div class="shell">
+    <p class="eyebrow reveal">Questions</p>
+    <h2 class="reveal">Asked before. Answered here.</h2>
+    <div class="faq-list reveal">
+      {
+        faqs.map((f) => (
+          <details>
+            <summary>{f.q}</summary>
+            <p>{f.a}</p>
+          </details>
+        ))
+      }
+    </div>
+  </div>
+</section>
+
+<style>
+  .faq-list {
+    margin-top: 2.5rem;
+    border-top: 1px solid var(--hairline);
+    max-width: 860px;
+  }
+  details {
+    border-bottom: 1px solid var(--hairline);
+  }
+  summary {
+    list-style: none;
+    cursor: pointer;
+    padding: 1.5rem 3rem 1.5rem 0;
+    font-weight: 400;
+    font-size: 17px;
+    position: relative;
+    letter-spacing: 0.02em;
+  }
+  summary::-webkit-details-marker {
+    display: none;
+  }
+  summary::after {
+    content: '+';
+    position: absolute;
+    right: 6px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-family: var(--display);
+    font-size: 1.6rem;
+    color: var(--gold);
+    transition: transform 0.3s;
+  }
+  details[open] summary::after {
+    transform: translateY(-50%) rotate(45deg);
+  }
+  details p {
+    color: var(--stone);
+    padding: 0 0 1.6rem;
+    max-width: 60ch;
+    font-size: 15.5px;
+  }
+</style>

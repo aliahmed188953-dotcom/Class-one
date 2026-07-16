@@ -1,0 +1,53 @@
+---
+import Base from '../layouts/Base.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import StickyBar from '../components/StickyBar.astro';
+import { site } from '../data/site';
+---
+
+<Base title={`Page not found — ${site.name}`} noindex>
+  <Header />
+  <main id="main">
+    <section class="section nf">
+      <div class="shell">
+        <p class="eyebrow" style="display:inline-block">404</p>
+        <h1>Wrong turn.</h1>
+        <p class="lede">
+          This page doesn't exist — but every journey has a way back.
+        </p>
+        <div class="nf-ctas">
+          <a class="btn btn-solid" href="/">Back to start</a>
+          <a class="btn" href="/#book">Request a quote</a>
+        </div>
+      </div>
+    </section>
+  </main>
+  <Footer />
+  <StickyBar />
+</Base>
+
+<style>
+  .nf {
+    min-height: 58vh;
+    display: flex;
+    align-items: center;
+    text-align: center;
+  }
+  .nf .shell {
+    width: 100%;
+  }
+  .nf h1 {
+    font-size: clamp(2.8rem, 6.4vw, 5rem);
+    margin: 1.4rem 0 1rem;
+  }
+  .nf .lede {
+    margin: 0 auto 2.2rem;
+  }
+  .nf-ctas {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+</style>
