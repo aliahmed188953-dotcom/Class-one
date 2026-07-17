@@ -1,0 +1,96 @@
+---
+import { Picture } from 'astro:assets';
+import { images } from '../data/images';
+---
+
+<!-- Recent-production strip. The artist is deliberately never named. -->
+<section class="section casestudy" style="padding-top:0">
+  <div class="shell">
+    <p class="eyebrow reveal">Recent production</p>
+    <h2 class="reveal">Arena show — Rotterdam, July 2026</h2>
+    <p class="lede reveal">
+      Convoy runs, crew shuttles and backline load-in — timed to the minute,
+      moved without friction.
+    </p>
+    <div class="cs-grid">
+      {
+        images.caseStudy.map((shot) => (
+          <figure class="cs-item reveal">
+            <Picture
+              src={shot.image}
+              alt={shot.alt}
+              widths={[480, 800, 1200]}
+              sizes="(max-width: 640px) 100vw, (max-width: 940px) 50vw, 373px"
+              formats={['avif', 'webp']}
+              fallbackFormat="jpg"
+              loading="lazy"
+              decoding="async"
+            />
+          </figure>
+        ))
+      }
+    </div>
+  </div>
+</section>
+
+<style>
+  .cs-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.6rem;
+    margin-top: 3rem;
+  }
+  .cs-item {
+    margin: 0;
+    border: 1px solid var(--hairline);
+    background: var(--graphite);
+    aspect-ratio: 3/2;
+    overflow: hidden;
+    position: relative;
+  }
+  .cs-item :global(img) {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.6s ease;
+  }
+  .cs-item:hover :global(img) {
+    transform: scale(1.045);
+  }
+  .cs-item::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      180deg,
+      rgba(10, 10, 11, 0.05) 55%,
+      rgba(10, 10, 11, 0.45) 100%
+    );
+    pointer-events: none;
+  }
+  @media (max-width: 940px) {
+    .cs-grid {
+      grid-template-columns: 1fr 1fr;
+    }
+    .cs-item:last-child {
+      grid-column: span 2;
+      aspect-ratio: 3/1.6;
+    }
+  }
+  @media (max-width: 640px) {
+    .cs-grid {
+      grid-template-columns: 1fr;
+    }
+    .cs-item:last-child {
+      grid-column: auto;
+      aspect-ratio: 3/2;
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .cs-item :global(img) {
+      transition: none;
+    }
+  }
+</style>

@@ -3,6 +3,10 @@ node_modules/
 dist/
 .astro/
 
+# photo originals (unprocessed; some shots are rights-restricted —
+# only the processed, plate-blurred derivatives in src/assets/photos ship)
+/photos/
+
 # environment & secrets
 .env
 .env.*

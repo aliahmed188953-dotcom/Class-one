@@ -1,4 +1,7 @@
 ---
+import { Picture } from 'astro:assets';
+import { images } from '../data/images';
+
 const chips = [
   'Convoys & crew shuttles',
   'Equipment & backline van',
@@ -10,6 +13,18 @@ const chips = [
 ---
 
 <section class="section" id="artists">
+  <div class="art-bg" aria-hidden="true">
+    <Picture
+      src={images.artists.image}
+      alt=""
+      widths={[768, 1200, 1600]}
+      sizes="100vw"
+      formats={['avif', 'webp']}
+      fallbackFormat="jpg"
+      loading="lazy"
+      decoding="async"
+    />
+  </div>
   <div class="shell art-grid">
     <div class="art-copy reveal">
       <p class="eyebrow">Artists &amp; management</p>
@@ -28,7 +43,35 @@ const chips = [
 </section>
 
 <style>
+  /* Own photography behind a heavy scrim — copy stays fully readable. */
+  #artists {
+    position: relative;
+    overflow: hidden;
+  }
+  .art-bg {
+    position: absolute;
+    inset: 0;
+  }
+  .art-bg :global(img) {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center 64%;
+  }
+  .art-bg::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      180deg,
+      rgba(10, 10, 11, 0.93) 0%,
+      rgba(10, 10, 11, 0.86) 55%,
+      rgba(10, 10, 11, 0.93) 100%
+    );
+  }
   .art-grid {
+    position: relative;
+    z-index: 1;
     display: grid;
     grid-template-columns: 1.1fr 0.9fr;
     gap: clamp(2rem, 5vw, 4.5rem);

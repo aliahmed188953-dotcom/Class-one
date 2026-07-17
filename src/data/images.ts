@@ -1,17 +1,30 @@
 /**
- * Every image on the site lives in this one file — swap in real fleet
- * photography later by editing only these entries.
+ * Every image on the site lives in this one file.
  *
- * All photos are Unsplash previews for now (kept from the approved
- * prototype). `width`/`height` are layout hints for the 16:10 fleet
- * frames; the CSS `aspect-ratio` + `object-fit: cover` do the actual
- * cropping, so replacement photos of any size will render identically.
+ * Two kinds of entries:
+ *  - Remote Unsplash previews (kept from the prototype for the sedan fleet
+ *    cards, hero and contact backgrounds) — plain URL + alt.
+ *  - Local photography (Rotterdam production set, license plates blurred,
+ *    masters in src/assets/photos/) — imported so Astro's asset pipeline
+ *    emits AVIF/WebP + responsive sizes at build time.
  */
-export interface SiteImage {
+import vanDuskVenue from '../assets/photos/van-dusk-venue.jpg';
+import cabinDoorDusk from '../assets/photos/cabin-door-dusk.jpg';
+import convoyDusk from '../assets/photos/convoy-dusk.jpg';
+import fleetLineup from '../assets/photos/fleet-lineup.jpg';
+import vanLoadIn from '../assets/photos/van-load-in.jpg';
+import coordinators from '../assets/photos/coordinators.jpg';
+
+export interface RemoteImage {
   src: string;
   alt: string;
   width: number;
   height: number;
+}
+
+export interface LocalImage {
+  image: ImageMetadata;
+  alt: string;
 }
 
 export const images = {
@@ -23,7 +36,7 @@ export const images = {
     height: 1200,
   },
 
-  /** Fleet cards — rendered as real <img> elements (lazy, 16:10 frame). */
+  /** Fleet cards — sedans stay Unsplash previews; the VIP Van is our own. */
   fleet: {
     business: {
       src: 'https://images.unsplash.com/photo-1553440569-bcc63803a83d?auto=format&fit=crop&w=1200&q=70',
@@ -38,10 +51,8 @@ export const images = {
       height: 750,
     },
     van: {
-      src: 'https://images.unsplash.com/photo-1511919884226-fd3cad34687c?auto=format&fit=crop&w=1200&q=70',
-      alt: 'VIP Van — Mercedes-Benz V-Class',
-      width: 1200,
-      height: 750,
+      image: vanDuskVenue,
+      alt: 'Class One Mercedes-Benz V-Class vans at dusk outside the venue, sliding door open',
     },
     lounge: {
       src: 'https://images.unsplash.com/photo-1563720223185-11003d516935?auto=format&fit=crop&w=1200&q=70',
@@ -51,13 +62,33 @@ export const images = {
     },
   },
 
-  /** Experience quote band background (decorative CSS background). */
+  /** Experience quote band background — V-Class cabin glowing at dusk. */
   experience: {
-    src: 'https://images.unsplash.com/photo-1563720223185-11003d516935?auto=format&fit=crop&w=1800&q=70',
-    alt: 'First-class cabin seating in warm light',
-    width: 1800,
-    height: 1200,
+    image: cabinDoorDusk,
+    alt: 'Open V-Class door revealing the lit cream leather cabin at dusk',
   },
+
+  /** Artists & Management section background (heavy scrim over it). */
+  artists: {
+    image: convoyDusk,
+    alt: 'Chauffeur convoy of V-Class vans waiting at the venue at dusk',
+  },
+
+  /** Case-study strip — Rotterdam production, July 2026. */
+  caseStudy: [
+    {
+      image: fleetLineup,
+      alt: 'Three Mercedes-Benz V-Class vans with chauffeurs lined up outside the production studio',
+    },
+    {
+      image: vanLoadIn,
+      alt: 'Crew van at the load-in, rear doors side, before the show',
+    },
+    {
+      image: coordinators,
+      alt: 'Two Class One coordinators talking between runs',
+    },
+  ],
 
   /** Contact section background (decorative CSS background). */
   contact: {

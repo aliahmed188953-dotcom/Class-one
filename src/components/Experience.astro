@@ -1,8 +1,21 @@
 ---
+import { Picture } from 'astro:assets';
 import { images } from '../data/images';
 ---
 
-<section class="exp" style={`--exp-img:url(${images.experience.src})`}>
+<section class="exp">
+  <div class="exp-bg" aria-hidden="true">
+    <Picture
+      src={images.experience.image}
+      alt=""
+      widths={[768, 1200, 1600]}
+      sizes="100vw"
+      formats={['avif', 'webp']}
+      fallbackFormat="jpg"
+      loading="lazy"
+      decoding="async"
+    />
+  </div>
   <blockquote class="reveal">
     "The journey should feel like the destination."
     <cite>The Class One cabin standard</cite>
@@ -11,19 +24,37 @@ import { images } from '../data/images';
 
 <style>
   .exp {
+    position: relative;
     min-height: 52vh;
     display: flex;
     align-items: center;
     justify-content: center;
     text-align: center;
     padding: clamp(5rem, 10vw, 8rem) var(--pad);
-    background:
-      linear-gradient(rgba(10, 10, 11, 0.68), rgba(10, 10, 11, 0.78)),
-      var(--exp-img) center/cover,
-      var(--graphite);
+    background: var(--graphite);
     border-block: 1px solid var(--hairline);
+    overflow: hidden;
+  }
+  /* Our own photography, served responsive — same scrim as the prototype. */
+  .exp-bg {
+    position: absolute;
+    inset: 0;
+  }
+  .exp-bg :global(img) {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center 58%;
+  }
+  .exp-bg::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(rgba(10, 10, 11, 0.68), rgba(10, 10, 11, 0.78));
   }
   .exp blockquote {
+    position: relative;
+    z-index: 1;
     font-family: var(--display);
     font-style: italic;
     font-weight: 500;

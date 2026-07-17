@@ -1,5 +1,9 @@
 ---
-/** Ring-1 lockup — proportions per the brand collateral reference. */
+/**
+ * Numéro lockup — "Nº1" set in Cormorant Garamond 600, champagne gold.
+ * U+00BA (º) carries the classic numéro underline natively in this font;
+ * lining-nums raises the 1 to cap height beside the N.
+ */
 interface Props {
   href?: string;
 }
@@ -7,7 +11,7 @@ const { href = '/' } = Astro.props;
 ---
 
 <a href={href} class="lockup" aria-label="Class One Services — home">
-  <span class="lgring" aria-hidden="true">1</span>
+  <span class="lgmark" aria-hidden="true">Nº1</span>
   <span class="lgtext"
     ><span class="l1">CLASS ONE</span><span class="l2">Services</span></span
   >
@@ -19,20 +23,16 @@ const { href = '/' } = Astro.props;
     align-items: center;
     gap: 0.8rem;
   }
-  .lgring {
-    width: 34px;
-    height: 34px;
-    border: 1.6px solid var(--gold);
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex: none;
+  .lgmark {
     font-family: var(--display);
     font-weight: 600;
-    font-size: 17px;
-    color: var(--gold);
+    font-size: 36px;
     line-height: 1;
+    color: var(--gold);
+    font-variant-numeric: lining-nums;
+    letter-spacing: 0.01em;
+    flex: none;
+    transform: translateY(-0.04em); /* optical centering against the text block */
   }
   .lgtext {
     display: flex;

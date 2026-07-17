@@ -8,7 +8,7 @@ Motto: **One number. Every journey.**
 | Path | Purpose |
 |---|---|
 | `src/` | The website — pages, components, styles, data (see below) |
-| `public/` | Static assets — self-hosted fonts, favicons, OG image, robots.txt |
+| `public/` | Static assets — self-hosted fonts, favicons (Nº1 numéro mark), OG image, robots.txt |
 | `scripts/og-template.html` | Source for the 1200×630 Open Graph image |
 | `class-one-website.html` | Approved design prototype — the design source of truth |
 | `class-one-collateral.html` | Brand collateral (business card, posters) — logo reference |

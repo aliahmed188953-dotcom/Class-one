@@ -1,8 +1,10 @@
 ---
+import { Picture } from 'astro:assets';
 import { images } from '../data/images';
 
 // TODO [TBD]: confirm the launch fleet — prototype line-up kept for now.
 // Photos + alt text live in src/data/images.ts (one-file swap later).
+// Sedans use Unsplash previews; the VIP Van card is our own photography.
 const fleet = [
   {
     img: images.fleet.business,
@@ -17,7 +19,7 @@ const fleet = [
     specs: ['3 guests', '2 cases'],
   },
   {
-    img: images.fleet.van,
+    local: images.fleet.van,
     name: 'VIP Van',
     model: 'Mercedes-Benz V-Class',
     specs: ['7 guests', '6 cases'],
@@ -41,14 +43,27 @@ const fleet = [
         fleet.map((car) => (
           <article class="fcar reveal">
             <div class="fcar-img">
-              <img
-                src={car.img.src}
-                alt={car.img.alt}
-                width={car.img.width}
-                height={car.img.height}
-                loading="lazy"
-                decoding="async"
-              />
+              {car.local ? (
+                <Picture
+                  src={car.local.image}
+                  alt={car.local.alt}
+                  widths={[480, 800, 1200, 1600]}
+                  sizes="(max-width: 760px) 100vw, 578px"
+                  formats={['avif', 'webp']}
+                  fallbackFormat="jpg"
+                  loading="lazy"
+                  decoding="async"
+                />
+              ) : (
+                <img
+                  src={car.img.src}
+                  alt={car.img.alt}
+                  width={car.img.width}
+                  height={car.img.height}
+                  loading="lazy"
+                  decoding="async"
+                />
+              )}
             </div>
             <div class="fcar-body">
               <span class="fcar-name">{car.name}</span>
@@ -86,7 +101,8 @@ const fleet = [
     overflow: hidden;
     position: relative;
   }
-  .fcar-img img {
+  /* :global so the rule also reaches the img rendered by <Picture>. */
+  .fcar-img :global(img) {
     position: absolute;
     inset: 0;
     width: 100%;
@@ -95,7 +111,7 @@ const fleet = [
     background-color: #17171a;
     transition: transform 0.6s ease;
   }
-  .fcar:hover .fcar-img img {
+  .fcar:hover .fcar-img :global(img) {
     transform: scale(1.045);
   }
   .fcar-img::after {

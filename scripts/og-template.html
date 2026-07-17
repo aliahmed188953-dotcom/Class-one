@@ -53,10 +53,9 @@
   }
   .og::after{content:"";position:absolute;inset:24px;border:1px solid rgba(198,161,91,.55);pointer-events:none}
   .lock{display:flex;flex-direction:column;align-items:center}
-  .ring{
-    width:58px;height:58px;border:2px solid var(--gold);border-radius:50%;
-    display:flex;align-items:center;justify-content:center;
-    font-family:var(--display);font-weight:600;color:var(--gold);font-size:30px;line-height:1;
+  .mark{
+    font-family:var(--display);font-weight:600;color:var(--gold);
+    font-size:64px;line-height:1;font-variant-numeric:lining-nums;letter-spacing:.01em;
   }
   .wm{font-family:var(--display);font-weight:600;font-size:24px;letter-spacing:.3em;padding-left:.3em;margin-top:14px}
   .wms{font-size:11px;letter-spacing:.6em;padding-left:.6em;text-transform:uppercase;color:var(--stone);margin-top:7px}
@@ -73,7 +72,7 @@
 <body>
 <div class="og">
   <div class="lock">
-    <div class="ring">1</div>
+    <div class="mark">Nº1</div>
     <div class="wm">CLASS ONE</div>
     <div class="wms">Services</div>
   </div>
