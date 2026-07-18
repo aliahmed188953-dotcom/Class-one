@@ -1,100 +1,143 @@
 /**
- * Every image on the site lives in this one file.
+ * Every image on the site lives in this one file — all of it our own
+ * photography now (v2 library, per photos/SELECTS.md; no stock imagery).
+ * Masters live in src/assets/photos/<shoot>/ with license plates blurred;
+ * Astro's asset pipeline emits AVIF/WebP + responsive sizes at build time.
  *
- * Two kinds of entries:
- *  - Remote Unsplash previews (kept from the prototype for the sedan fleet
- *    cards, hero and contact backgrounds) — plain URL + alt.
- *  - Local photography (Rotterdam production set, license plates blurred,
- *    masters in src/assets/photos/) — imported so Astro's asset pipeline
- *    emits AVIF/WebP + responsive sizes at build time.
+ * The artist in the Rotterdam production set is deliberately never named,
+ * in copy or alt text.
  */
-import vanDuskVenue from '../assets/photos/van-dusk-venue.jpg';
-import cabinDoorDusk from '../assets/photos/cabin-door-dusk.jpg';
-import convoyDusk from '../assets/photos/convoy-dusk.jpg';
-import fleetLineup from '../assets/photos/fleet-lineup.jpg';
-import vanLoadIn from '../assets/photos/van-load-in.jpg';
-import coordinators from '../assets/photos/coordinators.jpg';
-
-export interface RemoteImage {
-  src: string;
-  alt: string;
-  width: number;
-  height: number;
-}
+import heroSunset from '../assets/photos/rotterdam/chauffeur-sunset.jpg';
+import vclassFront from '../assets/photos/rotterdam/venue-vclass-front.jpg';
+import vclass01 from '../assets/photos/rotterdam/venue-vclass-01.jpg';
+import vclass02 from '../assets/photos/rotterdam/venue-vclass-02.jpg';
+import fleetSunset01 from '../assets/photos/rotterdam/fleet-sunset-01.jpg';
+import fleetSunset02 from '../assets/photos/rotterdam/fleet-sunset-02.jpg';
+import fleetSunset03 from '../assets/photos/rotterdam/fleet-sunset-03.jpg';
+import chauffeurDoor01 from '../assets/photos/rotterdam/chauffeur-door-01.jpg';
+import artistGroup01 from '../assets/photos/rotterdam/artist-group-01.jpg';
+import teamFleetLineup from '../assets/photos/rotterdam/team-fleet-lineup.jpg';
+import venueLineup02 from '../assets/photos/rotterdam/venue-lineup-02.jpg';
+import teamVan01 from '../assets/photos/rotterdam/team-van-01.jpg';
+import sClassFront from '../assets/photos/villa/s-class-front.jpg';
+import gClass01 from '../assets/photos/villa/g-class-01.jpg';
+import gClassCarport from '../assets/photos/villa/g-class-carport.jpg';
+import vClassDuoFront from '../assets/photos/villa/v-class-duo-front.jpg';
+import loungeCard from '../assets/photos/transporter/interior-lounge-02.jpg';
+import lounge03 from '../assets/photos/transporter/interior-lounge-03.jpg';
+import loungeRed from '../assets/photos/transporter/interior-lounge-05-red.jpg';
+import studioFront from '../assets/photos/transporter/studio-front.jpg';
+import studioSide from '../assets/photos/transporter/studio-side.jpg';
+import cockpit from '../assets/photos/transporter/cockpit.jpg';
+import grilleDetail from '../assets/photos/transporter/grille-detail.jpg';
 
 export interface LocalImage {
   image: ImageMetadata;
   alt: string;
+  /** CSS object-position implementing the focal-point notes in SELECTS.md. */
+  focal?: string;
+}
+
+export interface FleetVehicle {
+  card: LocalImage;
+  gallery: LocalImage[];
 }
 
 export const images = {
-  /** Hero background (decorative CSS background behind the dark gradient). */
+  /** Hero — golden hour, chauffeur + V-Class (focal: car nose, chauffeur in frame). */
   hero: {
-    src: 'https://images.unsplash.com/photo-1605559424843-9e4c228bf1c2?auto=format&fit=crop&w=1800&q=70',
-    alt: 'Black chauffeur-driven sedan at night',
-    width: 1800,
-    height: 1200,
-  },
+    image: heroSunset,
+    alt: 'Chauffeur at the open V-Class door at golden hour outside the venue',
+    focal: 'center 74%',
+  } satisfies LocalImage,
 
-  /** Fleet cards — sedans stay Unsplash previews; the VIP Van is our own. */
+  /** Fleet cards + per-vehicle lightbox galleries. */
   fleet: {
-    business: {
-      src: 'https://images.unsplash.com/photo-1553440569-bcc63803a83d?auto=format&fit=crop&w=1200&q=70',
-      alt: 'Business Class — Mercedes-Benz E-Class sedan',
-      width: 1200,
-      height: 750,
+    vclass: {
+      card: {
+        image: vclassFront,
+        alt: 'Mercedes-Benz V-Class, grille and star with your chauffeur alongside',
+        focal: 'center 42%',
+      },
+      gallery: [
+        { image: vclass01, alt: 'Three V-Class vans lined up outside the production studio' },
+        { image: vclass02, alt: 'V-Class vans staged rear-on at the venue entrance' },
+        { image: fleetSunset01, alt: 'V-Class convoy at the venue at sunset' },
+        { image: chauffeurDoor01, alt: 'Chauffeur presenting the open V-Class door and cream leather cabin' },
+        { image: heroSunset, alt: 'Chauffeur at the open V-Class door at golden hour' },
+      ],
     },
-    first: {
-      src: 'https://images.unsplash.com/photo-1549317661-bd32c8ce0db2?auto=format&fit=crop&w=1200&q=70',
-      alt: 'First Class — Mercedes-Benz S-Class sedan',
-      width: 1200,
-      height: 750,
+    sclass: {
+      card: {
+        image: sClassFront,
+        alt: 'Mercedes-Benz S-Class, front view with star and headlights',
+        focal: 'center 46%',
+      },
+      gallery: [
+        { image: sClassFront, alt: 'Mercedes-Benz S-Class, front view with star and headlights' },
+      ],
     },
-    van: {
-      image: vanDuskVenue,
-      alt: 'Class One Mercedes-Benz V-Class vans at dusk outside the venue, sliding door open',
+    transporter: {
+      card: {
+        image: loungeCard,
+        alt: 'Premium transporter lounge — quilted leather seating under a starlight ceiling',
+        focal: 'center 55%',
+      },
+      gallery: [
+        { image: studioFront, alt: 'Premium transporter, studio front view' },
+        { image: studioSide, alt: 'Premium transporter, studio side profile' },
+        { image: lounge03, alt: 'Lounge seating with starlight ceiling, facing rear' },
+        { image: loungeRed, alt: 'Lounge interior in red ambient lighting' },
+        { image: cockpit, alt: 'Cockpit with burl wood trim and cognac leather' },
+        { image: grilleDetail, alt: 'Chrome grille detail with Mercedes star' },
+      ],
     },
-    lounge: {
-      src: 'https://images.unsplash.com/photo-1563720223185-11003d516935?auto=format&fit=crop&w=1200&q=70',
-      alt: 'VIP Lounge — Sprinter VIP cabin seating for crew and backline',
-      width: 1200,
-      height: 750,
+    gclass: {
+      card: {
+        image: gClass01,
+        alt: 'Mercedes-Benz G-Class SUV at a private villa, front three-quarter view',
+        focal: '60% 32%',
+      },
+      gallery: [
+        { image: gClass01, alt: 'Mercedes-Benz G-Class SUV at a private villa' },
+        { image: gClassCarport, alt: 'G-Class under the villa carport' },
+        { image: vClassDuoFront, alt: 'G-Class and V-Class duo on the villa forecourt' },
+      ],
     },
-  },
+  } satisfies Record<string, FleetVehicle>,
 
-  /** Experience quote band background — V-Class cabin glowing at dusk. */
+  /** Experience quote band — starlight lounge in red ambient light, heavy scrim. */
   experience: {
-    image: cabinDoorDusk,
-    alt: 'Open V-Class door revealing the lit cream leather cabin at dusk',
-  },
+    image: loungeRed,
+    alt: 'Starlight-ceiling lounge interior in red ambient light',
+    focal: 'center 40%',
+  } satisfies LocalImage,
 
-  /** Artists & Management section background (heavy scrim over it). */
+  /** Artists & Management background — sunset fleet, heavy scrim. */
   artists: {
-    image: convoyDusk,
-    alt: 'Chauffeur convoy of V-Class vans waiting at the venue at dusk',
-  },
+    image: fleetSunset02,
+    alt: 'Chauffeurs and V-Class fleet at the venue at sunset',
+    focal: 'center 62%',
+  } satisfies LocalImage,
 
-  /** Case-study strip — Rotterdam production, July 2026. */
+  /** Case-study strip (Rotterdam production) — featured shot first. */
   caseStudy: [
     {
-      image: fleetLineup,
-      alt: 'Three Mercedes-Benz V-Class vans with chauffeurs lined up outside the production studio',
+      image: artistGroup01,
+      alt: 'VIP arrival — guests with their chauffeur-driven V-Class in the venue car park',
+      featured: true,
     },
-    {
-      image: vanLoadIn,
-      alt: 'Crew van at the load-in, rear doors side, before the show',
-    },
-    {
-      image: coordinators,
-      alt: 'Two Class One coordinators talking between runs',
-    },
+    { image: teamFleetLineup, alt: 'Three V-Class vans and chauffeurs outside the production studio', featured: false },
+    { image: chauffeurDoor01, alt: 'Chauffeur presenting the open V-Class door, cream leather cabin', featured: false },
+    { image: fleetSunset01, alt: 'V-Class convoy at the venue at sunset', featured: false },
+    { image: venueLineup02, alt: 'Chauffeurs waiting with the vans at dusk', featured: false },
+    { image: teamVan01, alt: 'Vans staged at the venue entrance before load-in', featured: false },
   ],
 
-  /** Contact section background (decorative CSS background). */
+  /** Contact section background — sunset fleet, darkened. */
   contact: {
-    src: 'https://images.unsplash.com/photo-1511919884226-fd3cad34687c?auto=format&fit=crop&w=1800&q=70',
-    alt: 'VIP van on the road at night',
-    width: 1800,
-    height: 1200,
-  },
+    image: fleetSunset03,
+    alt: 'V-Class fleet at dusk outside the venue',
+    focal: 'center 68%',
+  } satisfies LocalImage,
 } as const;

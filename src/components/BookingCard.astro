@@ -35,6 +35,25 @@ import { site, formspreeEndpoint } from '../data/site';
       {bookingOptions.map((o) => <option>{o}</option>)}
     </select>
   </div>
+  <div class="field">
+    <label for="vehicle">Vehicle</label>
+    <select id="vehicle" name="vehicle">
+      <option>V-Class</option>
+      <option>S-Class</option>
+      <option>Premium Transporter</option>
+      <option>G-Class</option>
+      <option>Other (on request)</option>
+    </select>
+  </div>
+  <div class="field" id="vehicleWish" hidden>
+    <label for="vehicle_wish">Which car would you like?</label>
+    <input
+      id="vehicle_wish"
+      name="vehicle_wish"
+      type="text"
+      placeholder="e.g. Maybach, Range Rover, classic car…"
+    />
+  </div>
   <div class="f-row">
     <div class="field">
       <label for="from">From</label>
@@ -134,6 +153,25 @@ import { site, formspreeEndpoint } from '../data/site';
       status.classList.add(kind);
     };
 
+    // Vehicle select: "Other (on request)" reveals the free-text wish field.
+    const vehicleSel = field('vehicle') as HTMLSelectElement | null;
+    const wishWrap = document.getElementById('vehicleWish');
+    const syncWish = () => {
+      if (wishWrap && vehicleSel)
+        wishWrap.hidden = vehicleSel.value !== 'Other (on request)';
+    };
+    vehicleSel?.addEventListener('change', syncWish);
+    form.addEventListener('reset', () => setTimeout(syncWish));
+
+    // Fleet CTA card ("Request a vehicle") preselects Vehicle = Other.
+    document.addEventListener('click', (e) => {
+      const trigger = (e.target as Element).closest('[data-prefill-vehicle]');
+      if (trigger && vehicleSel) {
+        vehicleSel.value = trigger.getAttribute('data-prefill-vehicle') || '';
+        syncWish();
+      }
+    });
+
     // Primary: POST to Formspree — no page reload, inline success/error.
     form.addEventListener('submit', async (e) => {
       e.preventDefault();
@@ -185,9 +223,11 @@ import { site, formspreeEndpoint } from '../data/site';
     // Secondary: same data, prefilled into a wa.me deep link.
     document.getElementById('waSend')?.addEventListener('click', () => {
       if (!form.reportValidity()) return;
+      const wish = val('vehicle_wish');
       const lines = [
         'Quote request — Class One Services',
         `Service: ${val('service')}`,
+        `Vehicle: ${val('vehicle')}${wish ? ` — ${wish}` : ''}`,
         `From: ${val('from')}`,
         `To: ${val('to')}`,
         `Date: ${val('date')} ${val('time')}`,

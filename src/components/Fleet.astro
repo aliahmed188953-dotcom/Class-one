@@ -1,36 +1,57 @@
 ---
-import { Picture } from 'astro:assets';
-import { images } from '../data/images';
+import { Picture, getImage } from 'astro:assets';
+import { images, type LocalImage } from '../data/images';
+import Lightbox from './Lightbox.astro';
 
-// TODO [TBD]: confirm the launch fleet — prototype line-up kept for now.
-// Photos + alt text live in src/data/images.ts (one-file swap later).
-// Sedans use Unsplash previews; the VIP Van card is our own photography.
+// The real fleet (v2 photo library) — no stock imagery.
+// Specs carried over from the approved design where the vehicle matches;
+// TODO [TBD]: confirm guests/cases for the G-Class (no approved data yet).
 const fleet = [
   {
-    img: images.fleet.business,
-    name: 'Business Class',
-    model: 'Mercedes-Benz E-Class',
-    specs: ['3 guests', '2 cases'],
-  },
-  {
-    img: images.fleet.first,
-    name: 'First Class',
-    model: 'Mercedes-Benz S-Class',
-    specs: ['3 guests', '2 cases'],
-  },
-  {
-    local: images.fleet.van,
-    name: 'VIP Van',
+    key: 'vclass',
+    ...images.fleet.vclass,
+    name: 'V-Class',
     model: 'Mercedes-Benz V-Class',
     specs: ['7 guests', '6 cases'],
   },
   {
-    img: images.fleet.lounge,
-    name: 'VIP Lounge',
-    model: 'Sprinter VIP · crew & backline',
+    key: 'sclass',
+    ...images.fleet.sclass,
+    name: 'S-Class',
+    model: 'Mercedes-Benz S-Class',
+    specs: ['3 guests', '2 cases'],
+  },
+  {
+    key: 'transporter',
+    ...images.fleet.transporter,
+    name: 'Premium Transporter',
+    model: 'Starlight VIP lounge',
     specs: ['8 guests', 'Full luggage'],
   },
+  {
+    key: 'gclass',
+    ...images.fleet.gclass,
+    name: 'G-Class SUV',
+    model: 'Mercedes-Benz G-Class',
+    specs: [],
+  },
 ];
+
+// Pre-render optimized lightbox images (capped at source width — no upscale).
+const galleries: Record<string, { src: string; alt: string }[]> = {};
+for (const v of fleet) {
+  galleries[v.key] = await Promise.all(
+    v.gallery.map(async (g: LocalImage) => {
+      const img = await getImage({
+        src: g.image,
+        width: Math.min(1600, g.image.width),
+        format: 'webp',
+        quality: 80,
+      });
+      return { src: img.src, alt: g.alt };
+    })
+  );
+}
 ---
 
 <section class="section" id="fleet" style="padding-top:0">
@@ -43,47 +64,66 @@ const fleet = [
         fleet.map((car) => (
           <article class="fcar reveal">
             <div class="fcar-img">
-              {car.local ? (
-                <Picture
-                  src={car.local.image}
-                  alt={car.local.alt}
-                  widths={[480, 800, 1200, 1600]}
-                  sizes="(max-width: 760px) 100vw, 578px"
-                  formats={['avif', 'webp']}
-                  fallbackFormat="jpg"
-                  loading="lazy"
-                  decoding="async"
-                />
-              ) : (
-                <img
-                  src={car.img.src}
-                  alt={car.img.alt}
-                  width={car.img.width}
-                  height={car.img.height}
-                  loading="lazy"
-                  decoding="async"
-                />
-              )}
+              <Picture
+                src={car.card.image}
+                alt={car.card.alt}
+                widths={[480, 800, 1200, 1600].filter(
+                  (w) => w <= car.card.image.width
+                )}
+                sizes="(max-width: 760px) 100vw, 578px"
+                formats={['avif', 'webp']}
+                fallbackFormat="jpg"
+                loading="lazy"
+                decoding="async"
+                style={car.card.focal ? `object-position:${car.card.focal}` : undefined}
+              />
             </div>
             <div class="fcar-body">
               <span class="fcar-name">{car.name}</span>
               <span class="fcar-model">{car.model}</span>
-              <div class="fcar-specs">
-                {car.specs.map((s) => (
-                  <span>{s}</span>
-                ))}
-              </div>
+              {car.specs.length > 0 && (
+                <div class="fcar-specs">
+                  {car.specs.map((s) => (
+                    <span>{s}</span>
+                  ))}
+                </div>
+              )}
+              <button
+                class="fcar-gallery"
+                type="button"
+                data-gallery={car.key}
+                aria-label={`View ${car.name} gallery`}
+              >
+                View gallery
+              </button>
             </div>
           </article>
         ))
       }
+
+      <!-- CTA card — almost any vehicle, sourced on request. -->
+      <article class="fcar fcar-cta reveal">
+        <span class="fcar-name">Your car of choice</span>
+        <p>
+          Almost any vehicle, sourced on request — from executive sedans to
+          something more exotic.
+        </p>
+        <a
+          class="btn btn-sm"
+          href="#book"
+          data-prefill-vehicle="Other (on request)">Request a vehicle</a
+        >
+      </article>
     </div>
     <p class="fleet-note reveal">
       <b>Fixed, transparent rates</b> — quoted up front, confirmed before every
-      journey. Preview photography shown; replaced by our own fleet.
+      journey. If your preferred car isn't listed, we source it — almost any
+      vehicle on request.
     </p>
   </div>
 </section>
+
+<Lightbox galleries={galleries} />
 
 <style>
   .fleet-grid {
@@ -123,6 +163,7 @@ const fleet = [
       rgba(10, 10, 11, 0.05) 40%,
       rgba(10, 10, 11, 0.55) 100%
     );
+    pointer-events: none;
   }
   .fcar-body {
     padding: 1.5rem 1.7rem 1.7rem;
@@ -130,6 +171,7 @@ const fleet = [
     flex-wrap: wrap;
     align-items: baseline;
     gap: 0.4rem 1.2rem;
+    position: relative;
   }
   .fcar-name {
     font-family: var(--display);
@@ -142,7 +184,6 @@ const fleet = [
     letter-spacing: 0.04em;
   }
   .fcar-specs {
-    width: 100%;
     display: flex;
     gap: 1.5rem;
     margin-top: 0.5rem;
@@ -150,6 +191,51 @@ const fleet = [
     letter-spacing: 0.22em;
     text-transform: uppercase;
     color: var(--stone);
+  }
+  .fcar-specs,
+  .fcar-gallery {
+    width: 100%;
+  }
+  .fcar-gallery {
+    margin-top: 0.6rem;
+    padding: 0;
+    background: none;
+    border: 0;
+    text-align: left;
+    cursor: pointer;
+    font-family: var(--body);
+    font-weight: 500;
+    font-size: 11px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--gold);
+    transition: color 0.25s;
+  }
+  .fcar-gallery::after {
+    content: ' →';
+  }
+  .fcar-gallery:hover {
+    color: var(--ivory);
+  }
+
+  /* CTA card — gold hairline, no photo, centered, spans the full row. */
+  .fcar-cta {
+    grid-column: 1 / -1;
+    border: 1px solid var(--gold);
+    background: var(--ink);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    gap: 1.1rem;
+    padding: 2.6rem 2rem;
+    min-height: 0;
+  }
+  .fcar-cta p {
+    color: var(--stone);
+    font-size: 15px;
+    max-width: 34ch;
   }
   .fleet-note {
     margin-top: 1.8rem;
@@ -164,6 +250,10 @@ const fleet = [
   @media (max-width: 760px) {
     .fleet-grid {
       grid-template-columns: 1fr;
+    }
+    .fcar-cta {
+      min-height: 0;
+      padding: 2.4rem 1.5rem;
     }
   }
 </style>

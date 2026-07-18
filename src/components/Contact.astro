@@ -1,13 +1,23 @@
 ---
+import { Picture } from 'astro:assets';
 import { images } from '../data/images';
 import { site, waLink } from '../data/site';
 ---
 
-<section
-  class="section contact"
-  id="contact"
-  style={`--contact-img:url(${images.contact.src})`}
->
+<section class="section contact" id="contact">
+  <div class="contact-bg" aria-hidden="true">
+    <Picture
+      src={images.contact.image}
+      alt=""
+      widths={[768, 1200, 1600].filter((w) => w <= images.contact.image.width)}
+      sizes="100vw"
+      formats={['avif', 'webp']}
+      fallbackFormat="jpg"
+      loading="lazy"
+      decoding="async"
+      style={`object-position:${images.contact.focal}`}
+    />
+  </div>
   <div class="shell">
     <p class="eyebrow reveal" style="display:inline-block">Reach us</p>
     <h2 class="reveal">Wherever. <em>Whenever.</em></h2>
@@ -27,12 +37,31 @@ import { site, waLink } from '../data/site';
 
 <style>
   .contact {
+    position: relative;
     text-align: center;
-    background:
-      linear-gradient(rgba(10, 10, 11, 0.85), rgba(10, 10, 11, 0.93)),
-      var(--contact-img) center/cover,
-      var(--ink);
+    background: var(--ink);
     border-top: 1px solid var(--hairline);
+    overflow: hidden;
+  }
+  /* Own photography, darkened — same overlay values as the prototype. */
+  .contact-bg {
+    position: absolute;
+    inset: 0;
+  }
+  .contact-bg :global(img) {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  .contact-bg::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(rgba(10, 10, 11, 0.85), rgba(10, 10, 11, 0.93));
+  }
+  .contact .shell {
+    position: relative;
+    z-index: 1;
   }
   .contact h2 {
     font-size: clamp(2.4rem, 5.5vw, 4rem);

@@ -1,9 +1,12 @@
 ---
 import { Picture } from 'astro:assets';
 import { images } from '../data/images';
+
+// Rolling production strip — featured shot leads at ~1.4x. The artist is
+// deliberately never named in copy or alt text.
+const tiles = images.caseStudy;
 ---
 
-<!-- Recent-production strip. The artist is deliberately never named. -->
 <section class="section casestudy" style="padding-top:0">
   <div class="shell">
     <p class="eyebrow reveal">Recent production</p>
@@ -12,21 +15,28 @@ import { images } from '../data/images';
       Convoy runs, crew shuttles and backline load-in — timed to the minute,
       moved without friction.
     </p>
-    <div class="cs-grid">
+  </div>
+
+  <div class="cs-marquee reveal" role="region" aria-label="Production photos">
+    <div class="cs-track">
       {
-        images.caseStudy.map((shot) => (
-          <figure class="cs-item reveal">
-            <Picture
-              src={shot.image}
-              alt={shot.alt}
-              widths={[480, 800, 1200]}
-              sizes="(max-width: 640px) 100vw, (max-width: 940px) 50vw, 373px"
-              formats={['avif', 'webp']}
-              fallbackFormat="jpg"
-              loading="lazy"
-              decoding="async"
-            />
-          </figure>
+        [false, true].map((dup) => (
+          <div class={`cs-set${dup ? ' cs-dup' : ''}`} aria-hidden={dup ? 'true' : undefined}>
+            {tiles.map((t) => (
+              <figure class={`cs-item${t.featured ? ' cs-featured' : ''}`}>
+                <Picture
+                  src={t.image}
+                  alt={dup ? '' : t.alt}
+                  widths={[420, 640, 900].filter((w) => w <= t.image.width)}
+                  sizes="(max-width: 640px) 80vw, 460px"
+                  formats={['avif', 'webp']}
+                  fallbackFormat="jpg"
+                  loading="lazy"
+                  decoding="async"
+                />
+              </figure>
+            ))}
+          </div>
         ))
       }
     </div>
@@ -34,19 +44,36 @@ import { images } from '../data/images';
 </section>
 
 <style>
-  .cs-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 1.6rem;
+  .cs-marquee {
     margin-top: 3rem;
+    overflow: hidden;
+    border-block: 1px solid var(--hairline);
+    padding: 1.6rem 0;
+  }
+  .cs-track {
+    display: flex;
+    width: max-content;
+  }
+  .cs-set {
+    display: flex;
+    align-items: center;
+    gap: 1.6rem;
+    padding-right: 1.6rem;
   }
   .cs-item {
     margin: 0;
+    height: 300px;
+    aspect-ratio: 3/2;
     border: 1px solid var(--hairline);
     background: var(--graphite);
-    aspect-ratio: 3/2;
     overflow: hidden;
     position: relative;
+    flex: none;
+  }
+  /* Featured lead shot — ~1.4x, portrait crop. */
+  .cs-featured {
+    height: 420px;
+    aspect-ratio: 3/4;
   }
   .cs-item :global(img) {
     position: absolute;
@@ -54,10 +81,6 @@ import { images } from '../data/images';
     width: 100%;
     height: 100%;
     object-fit: cover;
-    transition: transform 0.6s ease;
-  }
-  .cs-item:hover :global(img) {
-    transform: scale(1.045);
   }
   .cs-item::after {
     content: '';
@@ -65,32 +88,42 @@ import { images } from '../data/images';
     inset: 0;
     background: linear-gradient(
       180deg,
-      rgba(10, 10, 11, 0.05) 55%,
-      rgba(10, 10, 11, 0.45) 100%
+      rgba(10, 10, 11, 0.03) 60%,
+      rgba(10, 10, 11, 0.38) 100%
     );
     pointer-events: none;
   }
-  @media (max-width: 940px) {
-    .cs-grid {
-      grid-template-columns: 1fr 1fr;
+
+  /* Slow auto-roll; pause on hover or keyboard focus within. */
+  @media (prefers-reduced-motion: no-preference) {
+    .cs-track {
+      animation: cs-roll 60s linear infinite;
     }
-    .cs-item:last-child {
-      grid-column: span 2;
-      aspect-ratio: 3/1.6;
+    .cs-marquee:hover .cs-track,
+    .cs-marquee:focus-within .cs-track {
+      animation-play-state: paused;
+    }
+  }
+  @keyframes cs-roll {
+    to {
+      transform: translateX(-50%);
+    }
+  }
+  /* Reduced motion: static, manually scrollable, no duplicate set. */
+  @media (prefers-reduced-motion: reduce) {
+    .cs-marquee {
+      overflow-x: auto;
+    }
+    .cs-dup {
+      display: none;
     }
   }
   @media (max-width: 640px) {
-    .cs-grid {
-      grid-template-columns: 1fr;
+    .cs-item {
+      height: 220px;
     }
-    .cs-item:last-child {
-      grid-column: auto;
-      aspect-ratio: 3/2;
-    }
-  }
-  @media (prefers-reduced-motion: reduce) {
-    .cs-item :global(img) {
-      transition: none;
+    .cs-featured {
+      height: 300px;
     }
   }
 </style>

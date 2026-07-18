@@ -1,13 +1,10 @@
 ---
 import { site } from '../data/site';
-import { images } from '../data/images';
 import '../styles/global.css';
 
 interface Props {
   title?: string;
   description?: string;
-  /** Preload the hero background image (index page only — it is the LCP). */
-  preloadHero?: boolean;
   /** Utility pages (404) are kept out of the index. */
   noindex?: boolean;
 }
@@ -15,7 +12,6 @@ interface Props {
 const {
   title = site.title,
   description = site.description,
-  preloadHero = false,
   noindex = false,
 } = Astro.props;
 
@@ -99,12 +95,6 @@ const jsonLd = JSON.stringify({
       type="font/woff2"
       crossorigin
     />
-    {
-      preloadHero && (
-        <link rel="preload" as="image" href={images.hero.src} fetchpriority="high" />
-      )
-    }
-
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content={site.name} />
     <meta property="og:title" content={title} />

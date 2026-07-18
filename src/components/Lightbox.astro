@@ -1,0 +1,168 @@
+---
+/**
+ * Vehicle gallery lightbox — one reusable <dialog>, galleries passed in as
+ * pre-optimized {src, alt} lists keyed by vehicle. Vanilla, keyboard-friendly:
+ * Esc closes, arrows navigate, backdrop click closes, focus returns.
+ */
+interface Props {
+  galleries: Record<string, { src: string; alt: string }[]>;
+}
+const { galleries } = Astro.props;
+---
+
+<dialog class="lightbox" id="lightbox" aria-label="Vehicle gallery">
+  <button class="lb-close" type="button" data-lb-close aria-label="Close gallery"
+    >×</button
+  >
+  <button class="lb-nav lb-prev" type="button" data-lb-prev aria-label="Previous photo"
+    >‹</button
+  >
+  <figure>
+    <img id="lbImage" src="" alt="" />
+    <figcaption>
+      <span id="lbCaption"></span>
+      <span class="lb-count" id="lbCount"></span>
+    </figcaption>
+  </figure>
+  <button class="lb-nav lb-next" type="button" data-lb-next aria-label="Next photo"
+    >›</button
+  >
+</dialog>
+
+<script is:inline define:vars={{ galleries }}>
+  const dlg = document.getElementById('lightbox');
+  const img = document.getElementById('lbImage');
+  const cap = document.getElementById('lbCaption');
+  const count = document.getElementById('lbCount');
+  let items = [];
+  let index = 0;
+  let returnFocus = null;
+
+  function show(i) {
+    index = (i + items.length) % items.length;
+    const item = items[index];
+    img.src = item.src;
+    img.alt = item.alt;
+    cap.textContent = item.alt;
+    count.textContent = items.length > 1 ? `${index + 1} / ${items.length}` : '';
+  }
+
+  document.querySelectorAll('[data-gallery]').forEach((btn) => {
+    btn.addEventListener('click', () => {
+      const key = btn.getAttribute('data-gallery');
+      items = galleries[key] || [];
+      if (!items.length || !dlg) return;
+      returnFocus = btn;
+      show(0);
+      dlg.showModal();
+    });
+  });
+
+  if (dlg) {
+    dlg.querySelector('[data-lb-close]').addEventListener('click', () => dlg.close());
+    dlg.querySelector('[data-lb-prev]').addEventListener('click', () => show(index - 1));
+    dlg.querySelector('[data-lb-next]').addEventListener('click', () => show(index + 1));
+    dlg.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowLeft') show(index - 1);
+      if (e.key === 'ArrowRight') show(index + 1);
+    });
+    // Backdrop click closes (clicks on the dialog element itself, not children).
+    dlg.addEventListener('click', (e) => {
+      if (e.target === dlg) dlg.close();
+    });
+    dlg.addEventListener('close', () => {
+      img.src = '';
+      if (returnFocus) returnFocus.focus();
+    });
+  }
+</script>
+
+<style>
+  .lightbox {
+    margin: auto; /* the global reset removes the UA's dialog centering */
+    border: 0;
+    padding: 0;
+    background: transparent;
+    max-width: min(92vw, 1200px);
+    max-height: 92vh;
+    overflow: visible;
+  }
+  .lightbox::backdrop {
+    background: rgba(5, 5, 6, 0.92);
+    backdrop-filter: blur(4px);
+  }
+  .lightbox figure {
+    margin: 0;
+  }
+  .lightbox img {
+    display: block;
+    max-width: min(92vw, 1200px);
+    max-height: 80vh;
+    width: auto;
+    height: auto;
+    margin: 0 auto;
+    border: 1px solid var(--hairline);
+    background: var(--graphite);
+  }
+  .lightbox figcaption {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: 0.9rem 0.2rem 0;
+    color: var(--stone);
+    font-family: var(--body);
+    font-weight: 300;
+    font-size: 13px;
+    letter-spacing: 0.05em;
+  }
+  .lb-count {
+    color: var(--gold);
+    letter-spacing: 0.2em;
+  }
+  .lb-close,
+  .lb-nav {
+    position: fixed;
+    z-index: 2;
+    background: rgba(10, 10, 11, 0.7);
+    border: 1px solid var(--hairline);
+    color: var(--ivory);
+    font-family: var(--display);
+    cursor: pointer;
+    transition: 0.25s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .lb-close:hover,
+  .lb-nav:hover {
+    border-color: var(--gold);
+    color: var(--gold);
+  }
+  .lb-close {
+    top: 18px;
+    right: 18px;
+    width: 44px;
+    height: 44px;
+    font-size: 26px;
+    line-height: 1;
+  }
+  .lb-nav {
+    top: 50%;
+    transform: translateY(-50%);
+    width: 46px;
+    height: 64px;
+    font-size: 34px;
+  }
+  .lb-prev {
+    left: 14px;
+  }
+  .lb-next {
+    right: 14px;
+  }
+  @media (max-width: 640px) {
+    .lb-nav {
+      width: 38px;
+      height: 54px;
+    }
+  }
+</style>

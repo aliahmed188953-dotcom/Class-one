@@ -8,12 +8,13 @@ import { images } from '../data/images';
     <Picture
       src={images.experience.image}
       alt=""
-      widths={[768, 1200, 1600]}
+      widths={[768, 1024, 1600].filter((w) => w <= images.experience.image.width)}
       sizes="100vw"
       formats={['avif', 'webp']}
       fallbackFormat="jpg"
       loading="lazy"
       decoding="async"
+      style={`object-position:${images.experience.focal}`}
     />
   </div>
   <blockquote class="reveal">
@@ -44,7 +45,6 @@ import { images } from '../data/images';
     width: 100%;
     height: 100%;
     object-fit: cover;
-    object-position: center 58%;
   }
   .exp-bg::after {
     content: '';
