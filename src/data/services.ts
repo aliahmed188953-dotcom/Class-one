@@ -7,6 +7,12 @@ export interface Service {
   text: string;
   /** Inner SVG markup for the 24×24 line icon (stroked in gold via CSS). */
   icon: string;
+  /**
+   * Optional id linking this card to an image header + lightbox gallery
+   * (see images.<id> and buildGalleries). Only the airport card uses one;
+   * every other card stays icon-only.
+   */
+  id?: string;
 }
 
 export const services: Service[] = [
@@ -14,6 +20,7 @@ export const services: Service[] = [
     title: 'Airport Meet & Greet',
     text: 'Name-board welcome at arrivals, luggage handled, flight tracked live. Delays change nothing — your chauffeur is already there.',
     icon: '<path d="M2 16l20-6-9 5-2 6-2-4-7-1z"/>',
+    id: 'airport',
   },
   {
     title: 'VIP & Executive Chauffeur',

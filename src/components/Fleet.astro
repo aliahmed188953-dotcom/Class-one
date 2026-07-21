@@ -1,9 +1,9 @@
 ---
-import { Picture, getImage } from 'astro:assets';
-import { images, type LocalImage } from '../data/images';
-import Lightbox from './Lightbox.astro';
+import { Picture } from 'astro:assets';
+import { images } from '../data/images';
 
-// The real fleet (v2 photo library) — no stock imagery.
+// The real fleet (v3 photo library) — no stock imagery. Per-vehicle "View
+// gallery" buttons open the shared page-level lightbox (see src/pages/index).
 // Specs carried over from the approved design where the vehicle matches;
 // TODO [TBD]: confirm guests/cases for the G-Class (no approved data yet).
 const fleet = [
@@ -36,22 +36,6 @@ const fleet = [
     specs: [],
   },
 ];
-
-// Pre-render optimized lightbox images (capped at source width — no upscale).
-const galleries: Record<string, { src: string; alt: string }[]> = {};
-for (const v of fleet) {
-  galleries[v.key] = await Promise.all(
-    v.gallery.map(async (g: LocalImage) => {
-      const img = await getImage({
-        src: g.image,
-        width: Math.min(1600, g.image.width),
-        format: 'webp',
-        quality: 80,
-      });
-      return { src: img.src, alt: g.alt };
-    })
-  );
-}
 ---
 
 <section class="section" id="fleet" style="padding-top:0">
@@ -122,8 +106,6 @@ for (const v of fleet) {
     </p>
   </div>
 </section>
-
-<Lightbox galleries={galleries} />
 
 <style>
   .fleet-grid {

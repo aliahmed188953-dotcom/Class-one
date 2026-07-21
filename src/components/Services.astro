@@ -1,5 +1,7 @@
 ---
+import { Picture } from 'astro:assets';
 import { services } from '../data/services';
+import { images } from '../data/images';
 ---
 
 <section class="section" id="services">
@@ -13,13 +15,46 @@ import { services } from '../data/services';
 
     <div class="cards">
       {
-        services.map((s) => (
-          <article class="card reveal">
-            <svg viewBox="0 0 24 24" aria-hidden="true" set:html={s.icon} />
-            <h3>{s.title}</h3>
-            <p>{s.text}</p>
-          </article>
-        ))
+        services.map((s) =>
+          s.id === 'airport' ? (
+            <article class="card card-img reveal">
+              <div class="card-header">
+                <Picture
+                  src={images.airport.card.image}
+                  alt={images.airport.card.alt}
+                  widths={[400, 700, 1000].filter(
+                    (w) => w <= images.airport.card.image.width
+                  )}
+                  sizes="(max-width: 640px) 100vw, (max-width: 940px) 50vw, 380px"
+                  formats={['avif', 'webp']}
+                  fallbackFormat="jpg"
+                  loading="lazy"
+                  decoding="async"
+                  style={`object-position:${images.airport.card.focal}`}
+                />
+              </div>
+              <div class="card-body">
+                <svg viewBox="0 0 24 24" aria-hidden="true" set:html={s.icon} />
+                <h3>{s.title}</h3>
+                <p>{s.text}</p>
+                <button
+                  class="card-gallery"
+                  type="button"
+                  data-gallery="airport"
+                  aria-label={`View ${s.title} gallery`}
+                >
+                  View gallery
+                </button>
+              </div>
+            </article>
+          ) : (
+            <article class="card reveal">
+              <svg viewBox="0 0 24 24" aria-hidden="true" set:html={s.icon} />
+              <h3>{s.title}</h3>
+              <p>{s.text}</p>
+            </article>
+          )
+        )
       }
     </div>
   </div>
@@ -49,6 +84,7 @@ import { services } from '../data/services';
     height: 2px;
     background: var(--gold);
     transition: width 0.35s ease;
+    z-index: 1;
   }
   .card:hover {
     background: var(--graphite);
@@ -71,6 +107,66 @@ import { services } from '../data/services';
   .card p {
     font-size: 15px;
     color: var(--stone);
+  }
+
+  /* Airport card: image header above the usual icon/title/copy body. */
+  .card-img {
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+  }
+  .card-header {
+    aspect-ratio: 16/10;
+    overflow: hidden;
+    position: relative;
+  }
+  .card-header :global(img) {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.6s ease;
+  }
+  .card-img:hover .card-header :global(img) {
+    transform: scale(1.045);
+  }
+  .card-header::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      180deg,
+      rgba(10, 10, 11, 0.05) 55%,
+      rgba(10, 10, 11, 0.55) 100%
+    );
+    pointer-events: none;
+  }
+  .card-body {
+    padding: 2.2rem 1.9rem;
+  }
+  .card-gallery {
+    margin-top: 1.1rem;
+    padding: 0;
+    background: none;
+    border: 0;
+    cursor: pointer;
+    font-family: var(--body);
+    font-weight: 500;
+    font-size: 11px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--gold);
+    transition: color 0.25s;
+  }
+  .card-gallery::after {
+    content: ' →';
+  }
+  .card-gallery:hover {
+    color: var(--ivory);
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .card-header :global(img) {
+      transition: none;
+    }
   }
   @media (max-width: 940px) {
     .cards {

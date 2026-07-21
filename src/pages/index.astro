@@ -12,6 +12,11 @@ import Faq from '../components/Faq.astro';
 import Contact from '../components/Contact.astro';
 import Footer from '../components/Footer.astro';
 import StickyBar from '../components/StickyBar.astro';
+import Lightbox from '../components/Lightbox.astro';
+import { buildGalleries } from '../lib/galleries';
+
+// One shared lightbox for the whole page — fleet vehicles + the airport card.
+const galleries = await buildGalleries();
 ---
 
 <Base>
@@ -29,4 +34,5 @@ import StickyBar from '../components/StickyBar.astro';
   </main>
   <Footer />
   <StickyBar />
+  <Lightbox galleries={galleries} />
 </Base>
