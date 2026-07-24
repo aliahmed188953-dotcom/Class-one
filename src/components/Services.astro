@@ -1,7 +1,6 @@
 ---
 import { Picture } from 'astro:assets';
 import { services } from '../data/services';
-import { images } from '../data/images';
 ---
 
 <section class="section" id="services">
@@ -16,35 +15,35 @@ import { images } from '../data/images';
     <div class="cards">
       {
         services.map((s) =>
-          s.id === 'airport' ? (
+          s.image ? (
             <article class="card card-img reveal">
               <div class="card-header">
                 <Picture
-                  src={images.airport.card.image}
-                  alt={images.airport.card.alt}
-                  widths={[400, 700, 1000].filter(
-                    (w) => w <= images.airport.card.image.width
-                  )}
+                  src={s.image.image}
+                  alt={s.image.alt}
+                  widths={[400, 700, 1000].filter((w) => w <= s.image!.image.width)}
                   sizes="(max-width: 640px) 100vw, (max-width: 940px) 50vw, 380px"
                   formats={['avif', 'webp']}
                   fallbackFormat="jpg"
                   loading="lazy"
                   decoding="async"
-                  style={`object-position:${images.airport.card.focal}`}
+                  style={s.image.focal ? `object-position:${s.image.focal}` : undefined}
                 />
               </div>
               <div class="card-body">
                 <svg viewBox="0 0 24 24" aria-hidden="true" set:html={s.icon} />
                 <h3>{s.title}</h3>
                 <p>{s.text}</p>
-                <button
-                  class="card-gallery"
-                  type="button"
-                  data-gallery="airport"
-                  aria-label={`View ${s.title} gallery`}
-                >
-                  View gallery
-                </button>
+                {s.galleryKey && (
+                  <button
+                    class="card-gallery"
+                    type="button"
+                    data-gallery={s.galleryKey}
+                    aria-label={`View ${s.title} gallery`}
+                  >
+                    View gallery
+                  </button>
+                )}
               </div>
             </article>
           ) : (

@@ -10,7 +10,11 @@ const tiles = images.caseStudy;
 <section class="section casestudy" style="padding-top:0">
   <div class="shell">
     <p class="eyebrow reveal">Recent production</p>
-    <h2 class="reveal">Arena show — Rotterdam, July 2026</h2>
+    <div class="cs-title reveal">
+      <h2>Arena show — Rotterdam, July 2026</h2>
+      <span class="cs-stat">43+ V-Classes · one operation</span>
+    </div>
+    <!-- TODO [TBD]: credentials subline — add once the exact wording is supplied. -->
     <p class="lede reveal">
       Convoy runs, crew shuttles and backline load-in — timed to the minute,
       moved without friction.
@@ -44,6 +48,33 @@ const tiles = images.caseStudy;
 </section>
 
 <style>
+  /* Title + gold stat chip, side by side (wraps on narrow screens). */
+  .cs-title {
+    display: flex;
+    align-items: baseline;
+    flex-wrap: wrap;
+    gap: 0.9rem 1.4rem;
+  }
+  .cs-title h2 {
+    margin: 1.4rem 0 1rem;
+  }
+  .cs-stat {
+    flex: none;
+    border: 1px solid var(--gold);
+    color: var(--gold);
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    padding: 0.5rem 0.9rem;
+    white-space: nowrap;
+  }
+  @media (max-width: 520px) {
+    .cs-stat {
+      white-space: normal;
+    }
+  }
+
   .cs-marquee {
     margin-top: 3rem;
     overflow: hidden;

@@ -44,6 +44,15 @@ import sprinterInterior from '../assets/photos/transporter/sprinter-interior.jpg
 // Airport
 import airportLineup from '../assets/photos/airport/airport-lineup.jpg';
 import airportLot from '../assets/photos/airport/airport-lot.jpg';
+// Services headers
+import artistGroup02 from '../assets/photos/rotterdam/artist-group-02.jpg';
+import eventsBackstage from '../assets/photos/services/events-backstage.jpg';
+import waldorfPickup from '../assets/photos/services/waldorf-pickup.jpg';
+// S-Class showroom cover (licensed stock — TODO [TBD]: replace with our own showroom shot)
+import sClassShowroom from '../assets/photos/services/s-class-showroom.jpg';
+// Our own S-Class fleet shots (Milan) — plates blurred
+import sClassMilan01 from '../assets/photos/services/s-class-milan-01.jpg';
+import sClassMilan02 from '../assets/photos/services/s-class-milan-02.jpg';
 
 export interface LocalImage {
   image: ImageMetadata;
@@ -93,13 +102,17 @@ export const images = {
       ],
     },
     sclass: {
+      // Showroom cover (licensed stock; dealer board cropped out), focal grille + star.
       card: {
-        image: sClassFront,
-        alt: 'Mercedes-Benz S-Class, front view with star and headlights',
-        focal: 'center 46%',
+        image: sClassShowroom,
+        alt: 'Mercedes-Benz S-Class in the showroom, front view with grille and star',
+        focal: 'center 44%',
       },
       gallery: [
+        { image: sClassShowroom, alt: 'Mercedes-Benz S-Class in the showroom, front with grille and star' },
         { image: sClassFront, alt: 'Mercedes-Benz S-Class, front view with star and headlights' },
+        { image: sClassMilan01, alt: 'Class One Mercedes-Benz S-Class on a luxury shopping street' },
+        { image: sClassMilan02, alt: 'Class One Mercedes-Benz S-Class on a boutique-lined avenue' },
       ],
     },
     transporter: {
@@ -139,6 +152,39 @@ export const images = {
       { image: airportLot, alt: 'Chauffeur assisting a guest with luggage beside the V-Class fleet on the apron' },
     ],
   } satisfies Gallery,
+
+  /**
+   * Header images for the remaining service cards (16:10, icon + title over a
+   * dark scrim).
+   */
+  services: {
+    vip: {
+      image: waldorfPickup,
+      alt: 'Class One chauffeurs with two V-Class vans at the hotel entrance',
+      focal: 'center 60%',
+    },
+    artists: {
+      image: artistGroup02,
+      alt: 'Guests arriving with their Class One chauffeurs at the venue',
+      focal: 'center 40%',
+    },
+    medical: {
+      image: vcLounge01,
+      alt: 'V-Class lounge cabin — discreet, comfortable seating',
+      focal: 'center 52%',
+    },
+    events: {
+      // TODO [TBD]: licensed backstage stock — swap for our own when available.
+      image: eventsBackstage,
+      alt: 'Stage decking, truss and flight cases at a night-time load-in',
+      focal: 'center 60%',
+    },
+    security: {
+      image: gClassCarport,
+      alt: 'Mercedes-Benz G-Class under a villa carport at night',
+      focal: 'center 50%',
+    },
+  } satisfies Record<string, LocalImage>,
 
   /** Experience quote band — clean starlight-ceiling lounge, heavy scrim. */
   experience: {
