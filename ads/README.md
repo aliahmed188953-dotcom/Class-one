@@ -25,7 +25,7 @@ they exist; never ship placeholders.
 | `01_airport.jpg` / `_story` / `_display` | Airport transfer (A) | `airport/airport-lineup.jpg` | Your chauffeur / *is already there.* |
 | `01_airport_b.jpg` / `_story` | Airport transfer (B) | same photo | Flight delayed? / *The price holds.* |
 | `02_executive.jpg` / `_story` / `_display` | Executive chauffeur | `services/waldorf-pickup.jpg` | From the terminal / *to the lobby.* |
-| `03_tours.jpg` / `_story` | Artists & tours (A) | `rotterdam/team-fleet-lineup.jpg` | 43 vehicles. / *One point of contact.* |
+| `03_tours.jpg` / `_story` | Artists & tours (A) | `rotterdam/team-fleet-lineup.jpg` | Whole convoys. / *One point of contact.* |
 | `03_tours_b.jpg` / `_story` | Artists & tours (B) | same photo | Your tour manager / *keeps one number.* |
 | `04_trust.jpg` / `_story` | Trust / credentials | `rotterdam/chauffeur-sunset.jpg` | For schedules that / *allow no mistakes.* |
 | `05_cabin.jpg` / `_story` | V-Class cabin | `v-class/interior-lounge-04.jpg` | The journey / *is the destination.* |
@@ -36,7 +36,7 @@ they exist; never ship placeholders.
 | Pair | A — angle | B — angle |
 |---|---|---|
 | Airport | **Benefit-led**: reassurance on arrival | **Proof-led**: the delay/price mechanic, concrete |
-| Tours | **Proof-led**: fleet size, single contact | **Benefit-led**: the tour manager's own workload |
+| Tours | **Proof-led**: scope of the operation, single contact | **Benefit-led**: the tour manager's own workload |
 
 Run A and B in the same ad set, same budget, same audience. Judge on
 cost per qualified enquiry, not CTR.
@@ -86,8 +86,8 @@ business can evidence, and no client is named.
 - **CTA button:** Book now
 
 ### 03 — Artists & tours (A)
-- **Primary text:** Convoys, crew shuttles and backline in one plan. 43 vehicles and one coordinator who holds the whole itinerary — from load-in to after-show, on the minute.
-- **Headline:** 43 vehicles. One point of contact
+- **Primary text:** Crew shuttles, backline and guest cars planned as one movement, with a single coordinator holding the whole itinerary — from load-in to after-show, on the minute.
+- **Headline:** Whole convoys. One point of contact
 - **Description:** Tour and production logistics
 - **CTA button:** Learn more
 
@@ -138,5 +138,7 @@ Clean on first inspection: `v-class/interior-lounge-04.jpg`,
   remains recognisable to anyone who knows it. Confirm that is acceptable.
 - **Team members are identifiable** in the tours, executive and trust
   creatives — GDPR consent applies (per `photos/PHOTOS.md`).
-- **"43 vehicles"** is used as a proof point in `03_tours`. It must be
-  accurate at the time of running, or the claim should be softened.
+- **No fleet count appears in any creative.** An earlier draft used
+  "43 vehicles"; the figure is illustrative rather than fixed, so it was
+  replaced with "Whole convoys." Keep it that way — a specific total moves
+  with the season and cannot be stood behind in an ad.

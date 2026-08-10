@@ -41,7 +41,12 @@ set weight via `set_variation_by_axes`.
 
 Lead with the client's benefit, not the company's features.
 Good: "Your chauffeur is already there." Bad: "Premium luxury transportation solutions."
-Proof beats adjectives: "43 vehicles. One point of contact." outperforms "Large fleet."
+Proof beats adjectives: "Whole convoys. One point of contact." outperforms "Large fleet."
+
+Never put a fleet count in copy. The figure moves with the season and with
+vehicles on hire, so any specific number is a claim that cannot be stood
+behind. Convey scale through what is operated ("whole convoys", "crew
+shuttles and backline in one plan"), not through a total.
 
 Approved credential line (categories only, no names):
 "Trusted with touring artists, royal delegations and senior political figures."
