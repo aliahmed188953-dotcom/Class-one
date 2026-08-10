@@ -1,36 +1,48 @@
 /**
  * Single source of truth for company facts, contact data and site metadata.
- * Every value marked [TBD] is a placeholder carried over from the design
- * prototype — replace it here and it updates everywhere (header, booking
- * card, contact, footer, JSON-LD, legal pages).
+ * Values marked TODO [TBD] are still unassigned — replace them here and they
+ * update everywhere (header, booking card, contact, footer, JSON-LD, legal
+ * pages). Never ship a placeholder as if it were real.
  */
 export const site = {
   name: 'Class One Services',
   motto: 'One number. Every journey.',
 
-  // TODO [TBD]: real production domain — also update astro.config.mjs and public/robots.txt
-  url: 'https://class-one.example',
+  /** Confirmed production domain. */
+  url: 'https://class-one-services.com',
 
-  // TODO [TBD]: real phone number — display format + E.164 (used for tel: links)
+  // TODO [TBD]: phone number not yet assigned — display format + E.164 for
+  // tel: links. Until then the header, contact block and sticky bar show a
+  // visibly incomplete number; see the placeholder report before launch.
   phoneDisplay: '+49 (0)000 000 000',
   phoneE164: '+49000000000',
 
-  // TODO [TBD]: WhatsApp number — international digits, no "+" (prototype demo number kept)
+  // TODO [TBD]: WhatsApp number not yet assigned — international digits, no "+".
   whatsapp: '49000000000',
 
-  // TODO [TBD]: real booking email (prototype placeholder kept)
-  email: 'booking@class-one.example',
+  /** Public booking address — site, footer and form replies. */
+  email: 'booking@class-one-services.com',
+
+  /**
+   * Personal address for the Impressum's "Kontakt" block only (§ 5 DDG
+   * requires a named responsible person). Deliberately not used anywhere
+   * else on the site, so it stays off scraper-friendly surfaces.
+   */
+  legalEmail: 'haythamali.ahmed@class-one-services.com',
 
   // TODO [TBD]: Formspree form ID (free account at formspree.io, e.g. 'mqkrzvbw').
   // While this is empty the booking form shows its inline error state and
-  // points people to WhatsApp/phone instead — nothing is silently lost.
+  // points people to WhatsApp instead — nothing is silently lost.
   formspreeId: '',
 
-  serviceArea: 'Cologne & Europe-wide',
+  serviceArea: 'Cologne — Europe-wide',
   city: 'Cologne',
 
+  /** Quote only — no prices are shown anywhere on the site. */
+  pricing: 'quote-only',
+
   // TODO [TBD]: social profile URLs — used in the footer and JSON-LD sameAs.
-  // Leave empty to keep the prototype's placeholder links.
+  // Leave empty and the footer keeps neutral placeholder links.
   socials: {
     instagram: '', // e.g. 'https://www.instagram.com/classoneservices'
     linkedin: '', // e.g. 'https://www.linkedin.com/company/class-one-services'
@@ -48,3 +60,9 @@ export const waLink = `https://wa.me/${site.whatsapp}`;
 export const formspreeEndpoint = site.formspreeId
   ? `https://formspree.io/f/${site.formspreeId}`
   : '';
+
+/**
+ * True while the phone/WhatsApp numbers are still placeholders. Components use
+ * this to avoid presenting an unusable number as if it were dialable.
+ */
+export const phoneUnassigned = site.phoneE164 === '+49000000000';

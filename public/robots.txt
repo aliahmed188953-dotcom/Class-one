@@ -1,7 +1,6 @@
-# Class One Services — https://class-one.example
-# TODO [TBD]: replace with the real production domain (see src/data/site.ts)
+# Class One Services — https://class-one-services.com
 
 User-agent: *
 Allow: /
 
-Sitemap: https://class-one.example/sitemap.xml
+Sitemap: https://class-one-services.com/sitemap.xml

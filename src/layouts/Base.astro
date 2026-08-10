@@ -1,5 +1,5 @@
 ---
-import { site } from '../data/site';
+import { site, phoneUnassigned } from '../data/site';
 import '../styles/global.css';
 
 interface Props {
@@ -25,8 +25,10 @@ const jsonLd = JSON.stringify({
   '@id': new URL('/#business', Astro.site).href,
   name: site.name,
   url: Astro.site?.href,
-  // TODO [TBD]: placeholder contact data — set the real values in src/data/site.ts
-  telephone: site.phoneE164,
+  // `telephone` is deliberately omitted while the number is unassigned —
+  // publishing a placeholder as structured data would feed search engines a
+  // fact that is not true. It appears automatically once site.ts is filled in.
+  ...(phoneUnassigned ? {} : { telephone: site.phoneE164 }),
   email: site.email,
   slogan: site.motto,
   description: site.description,

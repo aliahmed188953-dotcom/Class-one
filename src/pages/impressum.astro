@@ -3,46 +3,82 @@ import Legal from '../layouts/Legal.astro';
 import { site } from '../data/site';
 ---
 
-<!-- TODO [TBD]: Alle mit [TODO: …] markierten Angaben vor Launch ersetzen (Impressumspflicht!). -->
+<!--
+  TODO [TBD]: Diese Seite ist NOCH NICHT impressumskonform.
+  Alle mit [TODO: …] markierten Angaben müssen vor dem Launch durch die
+  echten Daten ersetzt werden (Impressumspflicht nach § 5 DDG).
+  Bestätigt und eingetragen: Domain, Kontakt-E-Mail.
+  Offen: Firmierung, Anschrift, Telefon, USt-IdNr., ggf. Registerdaten.
+-->
 <Legal
   heading="Impressum"
   eyebrow="Rechtliches"
   title={`Impressum — ${site.name}`}
   description="Impressum und Anbieterkennzeichnung der Class One Services, Köln."
 >
+  <div class="todo-block">
+    <h2>Vor Launch zu vervollständigen</h2>
+    <p>
+      Diese Seite enthält noch Platzhalter und erfüllt die Impressumspflicht
+      (§ 5 DDG) in dieser Form <strong>nicht</strong>. Es fehlen:
+    </p>
+    <ul>
+      <li>Firmierung bzw. Name der Inhaberin / des Inhabers</li>
+      <li>Vollständige Anschrift (Straße, Hausnummer, PLZ)</li>
+      <li>Telefonnummer</li>
+      <li>Umsatzsteuer-Identifikationsnummer (falls vorhanden)</li>
+      <li>Registergericht und Registernummer (falls eingetragen)</li>
+    </ul>
+    <p>
+      Keine dieser Angaben wurde erfunden oder geschätzt. Bitte vor
+      Veröffentlichung eintragen und rechtlich prüfen lassen.
+    </p>
+  </div>
+
   <h2>Angaben gemäß § 5 DDG</h2>
   <p>
     <span class="todo">[TODO: Firmenname / Inhaber:in]</span><br />
     <span class="todo">[TODO: Straße und Hausnummer]</span><br />
-    <span class="todo">[TODO: PLZ]</span> Köln
+    <span class="todo">[TODO: PLZ]</span> Köln<br />
+    Deutschland
   </p>
 
   <h2>Kontakt</h2>
   <p>
     Telefon: <span class="todo">[TODO: Telefonnummer]</span><br />
-    E-Mail: <span class="todo">[TODO: E-Mail-Adresse]</span>
+    E-Mail: <a href={`mailto:${site.legalEmail}`}>{site.legalEmail}</a><br />
+    Web: <a href={site.url}>{site.url.replace('https://', '')}</a>
   </p>
 
   <h2>Umsatzsteuer-ID</h2>
   <p>
     Umsatzsteuer-Identifikationsnummer gemäß § 27 a Umsatzsteuergesetz:<br />
-    <span class="todo">[TODO: USt-IdNr. — falls vorhanden, sonst Abschnitt entfernen]</span>
+    <span class="todo"
+      >[TODO: USt-IdNr. — falls vorhanden, sonst Abschnitt entfernen]</span
+    >
+  </p>
+
+  <h2>Handelsregister</h2>
+  <p>
+    <span class="todo"
+      >[TODO: Registergericht und Registernummer — falls eingetragen, sonst
+      Abschnitt entfernen]</span
+    >
   </p>
 
   <h2>Verantwortlich für den Inhalt nach § 18 Abs. 2 MStV</h2>
   <p>
-    <span class="todo">[TODO: Name, Anschrift]</span>
+    <span class="todo">[TODO: Name]</span><br />
+    <span class="todo">[TODO: Anschrift wie oben]</span>
   </p>
 
   <h2>EU-Streitschlichtung</h2>
   <p>
     Die Europäische Kommission stellt eine Plattform zur
     Online-Streitbeilegung (OS) bereit:
-    <a
-      href="https://ec.europa.eu/consumers/odr/"
-      target="_blank"
-      rel="noopener">https://ec.europa.eu/consumers/odr/</a
-    >. Wir sind nicht bereit oder verpflichtet, an Streitbeilegungsverfahren
-    vor einer Verbraucherschlichtungsstelle teilzunehmen.
+    <a href="https://ec.europa.eu/consumers/odr/" target="_blank" rel="noopener"
+      >https://ec.europa.eu/consumers/odr/</a
+    >. Wir sind nicht bereit oder verpflichtet, an Streitbeilegungsverfahren vor
+    einer Verbraucherschlichtungsstelle teilzunehmen.
   </p>
 </Legal>
