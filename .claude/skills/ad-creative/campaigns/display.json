@@ -1,0 +1,55 @@
+{
+  "formats": [
+    "display"
+  ],
+  "ads": [
+    {
+      "src": "airport/airport-lineup.jpg",
+      "out": "01_airport",
+      "eyebrow": "AIRPORT TRANSFER",
+      "headline": [
+        [
+          "Your chauffeur",
+          false
+        ],
+        [
+          "is already there.",
+          true
+        ]
+      ],
+      "subline": [
+        "Live flight tracking. Meet & greet at arrivals.",
+        "Luggage handled. Fixed price, no meter."
+      ],
+      "cta": "GET A QUOTE",
+      "focal": 0.42
+    },
+    {
+      "src": "services/waldorf-pickup.jpg",
+      "out": "02_executive",
+      "eyebrow": "EXECUTIVE CHAUFFEUR",
+      "headline": [
+        [
+          "From the terminal",
+          false
+        ],
+        [
+          "to the lobby.",
+          true
+        ]
+      ],
+      "subline": [
+        "One chauffeur, one contact, one price —",
+        "door to door, anywhere in Europe."
+      ],
+      "cta": "REQUEST A CAR",
+      "precrop": [
+        0.0,
+        0.705,
+        1.0,
+        1.0
+      ],
+      "hfocal": 0.25
+    }
+  ]
+}

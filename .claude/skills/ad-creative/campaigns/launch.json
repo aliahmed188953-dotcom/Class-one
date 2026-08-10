@@ -1,0 +1,191 @@
+{
+  "formats": [
+    "feed",
+    "story"
+  ],
+  "ads": [
+    {
+      "src": "airport/airport-lineup.jpg",
+      "out": "01_airport",
+      "eyebrow": "AIRPORT TRANSFER",
+      "headline": [
+        [
+          "Your chauffeur",
+          false
+        ],
+        [
+          "is already there.",
+          true
+        ]
+      ],
+      "subline": [
+        "Live flight tracking. Meet & greet at arrivals.",
+        "Luggage handled. Fixed price, no meter."
+      ],
+      "cta": "GET A QUOTE",
+      "focal": 0.42
+    },
+    {
+      "src": "airport/airport-lineup.jpg",
+      "out": "01_airport_b",
+      "eyebrow": "AIRPORT TRANSFER",
+      "headline": [
+        [
+          "Flight delayed?",
+          false
+        ],
+        [
+          "The price holds.",
+          true
+        ]
+      ],
+      "subline": [
+        "Arrivals tracked in real time; waiting time included.",
+        "Quoted before you book — no meter, no surcharge."
+      ],
+      "cta": "GET A QUOTE",
+      "focal": 0.42
+    },
+    {
+      "src": "services/waldorf-pickup.jpg",
+      "out": "02_executive",
+      "eyebrow": "EXECUTIVE CHAUFFEUR",
+      "headline": [
+        [
+          "From the terminal",
+          false
+        ],
+        [
+          "to the lobby.",
+          true
+        ]
+      ],
+      "subline": [
+        "One chauffeur, one contact, one price —",
+        "door to door, anywhere in Europe."
+      ],
+      "cta": "REQUEST A CAR",
+      "precrop": [
+        0.0,
+        0.705,
+        1.0,
+        1.0
+      ],
+      "hfocal": 0.25
+    },
+    {
+      "src": "rotterdam/team-fleet-lineup.jpg",
+      "out": "03_tours",
+      "eyebrow": "ARTISTS · TOURS · PRODUCTION",
+      "headline": [
+        [
+          "43 vehicles.",
+          false
+        ],
+        [
+          "One point of contact.",
+          true
+        ]
+      ],
+      "subline": [
+        "Convoys, crew shuttles, backline.",
+        "From load-in to after-show, on the minute."
+      ],
+      "cta": "PLAN YOUR TOUR",
+      "hfocal": 0.42,
+      "dark": 0.05
+    },
+    {
+      "src": "rotterdam/team-fleet-lineup.jpg",
+      "out": "03_tours_b",
+      "eyebrow": "ARTISTS · TOURS · PRODUCTION",
+      "headline": [
+        [
+          "Your tour manager",
+          false
+        ],
+        [
+          "keeps one number.",
+          true
+        ]
+      ],
+      "subline": [
+        "Convoys, crew shuttles and backline in one plan.",
+        "One coordinator from load-in to after-show."
+      ],
+      "cta": "PLAN YOUR TOUR",
+      "hfocal": 0.42,
+      "dark": 0.05
+    },
+    {
+      "src": "rotterdam/chauffeur-sunset.jpg",
+      "out": "04_trust",
+      "eyebrow": "WHEN TIMING IS EVERYTHING",
+      "headline": [
+        [
+          "For schedules that",
+          false
+        ],
+        [
+          "allow no mistakes.",
+          true
+        ]
+      ],
+      "subline": [
+        "Trusted with touring artists, royal delegations",
+        "and senior political figures."
+      ],
+      "cta": "TALK TO US",
+      "precrop": [
+        0.0,
+        0.3,
+        1.0,
+        1.0
+      ],
+      "dark": 0.04
+    },
+    {
+      "src": "v-class/interior-lounge-04.jpg",
+      "out": "05_cabin",
+      "eyebrow": "THE V-CLASS CABIN",
+      "headline": [
+        [
+          "The journey",
+          false
+        ],
+        [
+          "is the destination.",
+          true
+        ]
+      ],
+      "subline": [
+        "Individual seats, starlight ceiling, Wi-Fi.",
+        "Up to 7 guests in complete privacy."
+      ],
+      "cta": "VIEW THE FLEET",
+      "dark": 0.1
+    },
+    {
+      "src": "transporter/sprinter-interior.jpg",
+      "out": "06_group",
+      "eyebrow": "PREMIUM TRANSPORTER",
+      "headline": [
+        [
+          "For the entire",
+          false
+        ],
+        [
+          "entourage.",
+          true
+        ]
+      ],
+      "subline": [
+        "Crew, team or delegation — up to 19 guests",
+        "at the same standard as the V-Class."
+      ],
+      "cta": "CHECK AVAILABILITY",
+      "focal": 0.42,
+      "dark": 0.08
+    }
+  ]
+}
