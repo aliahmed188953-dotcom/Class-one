@@ -1,0 +1,337 @@
+---
+import Base from '../layouts/Base.astro';
+import { site, phoneUnassigned, waLink } from '../data/site';
+
+/**
+ * Digital business card — shared by link or QR, opened mostly on phones.
+ * Deliberately standalone: no site header, footer or sticky bar, so the card
+ * is the whole surface. Kept out of the sitemap and set to noindex because it
+ * carries a personal address; it is meant to be handed out, not found.
+ */
+const card = {
+  name: 'Haytham Ali Ahmed',
+  title: 'General Manager',
+};
+const domain = site.url.replace('https://', '');
+---
+
+<Base
+  title={`${card.name} — ${card.title}, ${site.name}`}
+  description={`Digital business card — ${card.name}, ${card.title} at ${site.name}. ${site.motto}`}
+  noindex
+>
+  <main id="main" class="card">
+    <article class="cd">
+      <header class="cd-brand">
+        <span class="cd-mark" aria-hidden="true">Nº1</span>
+        <span class="cd-wm">CLASS ONE</span>
+        <span class="cd-wms">Services</span>
+      </header>
+
+      <div class="cd-rule" aria-hidden="true"></div>
+
+      <h1 class="cd-name">{card.name}</h1>
+      <p class="cd-role">{card.title}</p>
+
+      <ul class="cd-links">
+        <li>
+          <a href={`mailto:${site.legalEmail}`}>
+            <span class="cd-k" aria-hidden="true">E</span>
+            <span class="cd-v">{site.legalEmail}</span>
+          </a>
+        </li>
+        <li>
+          <a href={site.url}>
+            <span class="cd-k" aria-hidden="true">W</span>
+            <span class="cd-v">{domain}</span>
+          </a>
+        </li>
+        {
+          !phoneUnassigned && (
+            <>
+              <li>
+                <a href={`tel:${site.phoneE164}`}>
+                  <span class="cd-k" aria-hidden="true">T</span>
+                  <span class="cd-v">{site.phoneDisplay}</span>
+                </a>
+              </li>
+              <li>
+                <a href={waLink} target="_blank" rel="noopener">
+                  <span class="cd-k" aria-hidden="true">M</span>
+                  <span class="cd-v">WhatsApp</span>
+                </a>
+              </li>
+            </>
+          )
+        }
+      </ul>
+
+      <div class="cd-actions">
+        <a class="btn btn-solid" href="/haytham-ali-ahmed.vcf" download
+          >Save to contacts</a
+        >
+        <button class="btn" type="button" id="shareBtn">Share card</button>
+      </div>
+      <p class="cd-status" role="status" aria-live="polite"></p>
+
+      <div class="cd-qr">
+        <!--
+          PNG rather than SVG on purpose: the raster is verified to decode to
+          the card URL, and at 574px it is ~4x oversampled for the 132px slot.
+        -->
+        <img
+          src="/card-qr.png"
+          alt={`QR code linking to the digital business card of ${card.name}`}
+          width="574"
+          height="574"
+        />
+        <p>Scan to open this card</p>
+      </div>
+
+      <footer class="cd-foot">
+        <em>{site.motto}</em>
+        <span class="cd-badge">24 / 7</span>
+      </footer>
+    </article>
+  </main>
+
+  <script>
+    const btn = document.getElementById('shareBtn');
+    const status = document.querySelector('.cd-status') as HTMLElement | null;
+
+    const say = (msg: string) => {
+      if (!status) return;
+      status.textContent = msg;
+      status.classList.add('on');
+      setTimeout(() => status.classList.remove('on'), 2600);
+    };
+
+    btn?.addEventListener('click', async () => {
+      const url = window.location.href;
+      const data = {
+        title: document.title,
+        text: 'Class One Services — One number. Every journey.',
+        url,
+      };
+      // Native sheet where available (phones); clipboard everywhere else.
+      if (navigator.share) {
+        try {
+          await navigator.share(data);
+          return;
+        } catch (err) {
+          // User dismissed the sheet — not an error worth reporting.
+          if ((err as Error)?.name === 'AbortError') return;
+        }
+      }
+      try {
+        await navigator.clipboard.writeText(url);
+        say('Link copied to clipboard.');
+      } catch {
+        say(url);
+      }
+    });
+  </script>
+
+  <style>
+    /* Standalone surface — the site's scroll rail would be noise here. */
+    :global(.route) {
+      display: none;
+    }
+    .card {
+      min-height: 100svh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: clamp(1.5rem, 6vw, 4rem) var(--pad);
+      background:
+        radial-gradient(
+          120% 70% at 50% 0%,
+          #17171b 0%,
+          var(--ink) 62%
+        ),
+        var(--ink);
+    }
+    .cd {
+      width: 100%;
+      max-width: 26rem;
+      border: 1px solid var(--hairline);
+      background: rgba(14, 14, 16, 0.72);
+      padding: clamp(2rem, 7vw, 2.8rem) clamp(1.4rem, 6vw, 2.4rem)
+        clamp(1.6rem, 5vw, 2rem);
+      position: relative;
+      text-align: center;
+    }
+    /* Gold tick at the top edge, as on the printed card. */
+    .cd::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 44px;
+      height: 2px;
+      background: var(--gold);
+    }
+
+    .cd-brand {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      line-height: 1;
+    }
+    .cd-mark {
+      font-family: var(--display);
+      font-weight: 600;
+      font-size: 2.9rem;
+      color: var(--gold);
+      font-variant-numeric: lining-nums;
+      letter-spacing: 0.01em;
+    }
+    .cd-wm {
+      font-family: var(--display);
+      font-weight: 600;
+      font-size: 1.05rem;
+      letter-spacing: 0.3em;
+      padding-left: 0.3em;
+      margin-top: 0.9rem;
+    }
+    .cd-wms {
+      font-size: 8.5px;
+      letter-spacing: 0.58em;
+      padding-left: 0.58em;
+      text-transform: uppercase;
+      color: var(--stone);
+      margin-top: 0.5rem;
+    }
+
+    .cd-rule {
+      width: 46px;
+      height: 1px;
+      background: var(--gold);
+      opacity: 0.75;
+      margin: 1.8rem auto 1.6rem;
+    }
+
+    .cd-name {
+      font-family: var(--display);
+      font-weight: 600;
+      font-size: clamp(1.75rem, 7vw, 2.15rem);
+      letter-spacing: 0.02em;
+      line-height: 1.15;
+    }
+    .cd-role {
+      margin-top: 0.6rem;
+      font-size: 10.5px;
+      font-weight: 500;
+      letter-spacing: 0.34em;
+      padding-left: 0.34em;
+      text-transform: uppercase;
+      color: var(--stone);
+    }
+
+    .cd-links {
+      list-style: none;
+      margin: 2rem 0 0;
+      padding: 0;
+      border-top: 1px solid var(--hairline);
+    }
+    .cd-links li {
+      border-bottom: 1px solid var(--hairline);
+    }
+    .cd-links a {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      padding: 0.95rem 0.2rem;
+      text-align: left;
+      transition: color 0.25s;
+    }
+    .cd-links a:hover {
+      color: var(--gold);
+    }
+    .cd-k {
+      flex: none;
+      width: 1.4em;
+      font-family: var(--body);
+      font-weight: 500;
+      font-size: 11px;
+      letter-spacing: 0.2em;
+      color: var(--gold);
+    }
+    .cd-v {
+      font-size: 14.5px;
+      letter-spacing: 0.02em;
+      word-break: break-word;
+    }
+
+    .cd-actions {
+      display: grid;
+      gap: 0.7rem;
+      margin-top: 1.9rem;
+    }
+    .cd-actions .btn {
+      width: 100%;
+      text-align: center;
+    }
+    .cd-status {
+      min-height: 1.2em;
+      margin-top: 0.7rem;
+      font-size: 12.5px;
+      letter-spacing: 0.04em;
+      color: var(--gold);
+      opacity: 0;
+      transition: opacity 0.25s;
+    }
+    .cd-status.on {
+      opacity: 1;
+    }
+
+    /* Dark modules on an ivory tile — the reliable way round for scanners. */
+    .cd-qr {
+      margin-top: 1.6rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.7rem;
+    }
+    /* The ivory quiet zone is baked into the file, so no CSS padding needed. */
+    .cd-qr img {
+      display: block;
+      width: 132px;
+      height: 132px;
+    }
+    .cd-qr p {
+      font-size: 10px;
+      letter-spacing: 0.28em;
+      text-transform: uppercase;
+      color: var(--stone);
+    }
+
+    .cd-foot {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      border-top: 1px solid var(--hairline);
+      margin-top: 1.8rem;
+      padding-top: 1.3rem;
+    }
+    .cd-foot em {
+      font-family: var(--display);
+      font-style: italic;
+      font-weight: 500;
+      color: var(--gold);
+      font-size: 15px;
+      text-align: left;
+    }
+    .cd-badge {
+      flex: none;
+      border: 1px solid var(--gold);
+      color: var(--gold);
+      font-size: 9px;
+      letter-spacing: 0.28em;
+      padding: 0.45em 0.6em 0.45em 0.88em;
+      text-transform: uppercase;
+    }
+  </style>
+</Base>
