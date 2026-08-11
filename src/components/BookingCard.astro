@@ -3,7 +3,7 @@ import { bookingOptions } from '../data/services';
 import { site, formspreeEndpoint } from '../data/site';
 ---
 
-<!-- TODO [TBD]: Formspree form ID + WhatsApp number are placeholders — set both in src/data/site.ts -->
+<!-- TODO [TBD]: Formspree form ID is still unset — see src/data/site.ts -->
 <form
   class="book"
   id="book"
@@ -121,10 +121,9 @@ import { site, formspreeEndpoint } from '../data/site';
   >
 
   <p class="form-status" role="status" aria-live="polite"></p>
-  <!-- TODO [TBD]: remove "(demo number)" once the real WhatsApp number is set -->
   <p class="book-note">
     Replies within the hour — day or night. WhatsApp opens with your details
-    pre-filled. <span class="dim">(demo number)</span>
+    pre-filled.
   </p>
 </form>
 

@@ -49,12 +49,16 @@ def site_values():
         m = re.search(rf"^\s*{key}:\s*'([^']*)'", src, re.M)
         return m.group(1) if m else ""
 
+    # Phone stays off the card until it is real — same rule as the website.
+    # Compare the parsed field, not the raw file: the placeholder literal also
+    # appears in the phoneUnassigned comparison further down site.ts.
+    unassigned = field("phoneE164") in ("", "+49000000000")
+
     return {
         "url": field("url"),
         "email": field("legalEmail"),
         "motto": field("motto"),
-        # Phone stays off the card until it is real — same rule as the website.
-        "phone": "" if "+49000000000" in src else field("phoneDisplay"),
+        "phone": "" if unassigned else field("phoneDisplay"),
     }
 
 

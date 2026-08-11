@@ -11,14 +11,12 @@ export const site = {
   /** Confirmed production domain. */
   url: 'https://class-one-services.com',
 
-  // TODO [TBD]: phone number not yet assigned — display format + E.164 for
-  // tel: links. Until then the header, contact block and sticky bar show a
-  // visibly incomplete number; see the placeholder report before launch.
-  phoneDisplay: '+49 (0)000 000 000',
-  phoneE164: '+49000000000',
+  /** Confirmed. Display format, plus E.164 for tel: links. */
+  phoneDisplay: '+49 172 4196949',
+  phoneE164: '+491724196949',
 
-  // TODO [TBD]: WhatsApp number not yet assigned — international digits, no "+".
-  whatsapp: '49000000000',
+  /** Same number on WhatsApp — international digits, no "+". */
+  whatsapp: '491724196949',
 
   /** Public booking address — site, footer and form replies. */
   email: 'booking@class-one-services.com',
