@@ -12,7 +12,6 @@
       ]
     },
     {
-      "comment": "Static hosts infer MIME from the extension; pin it so iOS and Android open the vCard in the address book instead of as plain text.",
       "source": "/(.*).vcf",
       "headers": [
         { "key": "Content-Type", "value": "text/vcard; charset=utf-8" },
