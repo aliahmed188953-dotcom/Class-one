@@ -1,43 +1,37 @@
 ---
 import Legal from '../layouts/Legal.astro';
 import { site } from '../data/site';
+
+const l = site.legal;
 ---
 
 <!--
-  TODO [TBD]: Diese Erklärung ist ein Gerüst, kein geprüfter Rechtstext.
-  Alle mit [TODO: …] markierten Angaben ersetzen und die Erklärung vor
-  Veröffentlichung anwaltlich bzw. datenschutzrechtlich prüfen lassen.
-  Bestätigt und eingetragen: Domain, Kontakt-E-Mail.
+  TODO [TBD]: Rechtstext vor Veröffentlichung datenschutzrechtlich prüfen
+  lassen. Verantwortlicher, Formularanbieter und Hoster sind eingetragen;
+  die Auftragsverarbeitungsverträge (AVV) sind noch abzuschließen.
 -->
 <Legal
   heading="Datenschutzerklärung"
   eyebrow="Rechtliches"
   title={`Datenschutz — ${site.name}`}
-  description="Datenschutzerklärung der Class One Services, Köln — Umgang mit personenbezogenen Daten auf dieser Website."
+  description={`Datenschutzerklärung der ${l.company} — Umgang mit personenbezogenen Daten auf dieser Website.`}
 >
   <div class="todo-block">
-    <h2>Vor Launch zu vervollständigen</h2>
+    <h2>Vor Veröffentlichung prüfen</h2>
     <p>
-      Diese Erklärung ist ein Gerüst und noch <strong>nicht</strong> geprüft.
-      Es fehlen:
-    </p>
-    <ul>
-      <li>Vollständige Angaben zum Verantwortlichen (Firmierung, Anschrift, Telefon)</li>
-      <li>Name des Hosting-Anbieters und Auftragsverarbeitungsvertrag (AVV)</li>
-      <li>AVV bzw. Datenübermittlungsgrundlage für den Formularanbieter</li>
-      <li>Ggf. Datenschutzbeauftragte:r</li>
-    </ul>
-    <p>
-      Keine dieser Angaben wurde erfunden. Bitte eintragen und rechtlich
-      prüfen lassen.
+      Dieser Text ist ein sorgfältig ausgefülltes Gerüst, aber
+      <strong>keine Rechtsberatung</strong>. Vor dem Launch bitte prüfen lassen
+      und die Auftragsverarbeitungsverträge (AVV) mit Hoster und
+      Formularanbieter abschließen.
     </p>
   </div>
 
   <h2>1. Verantwortlicher</h2>
   <p>
-    <span class="todo">[TODO: Firmenname / Inhaber:in]</span><br />
-    <span class="todo">[TODO: Straße und Hausnummer]</span><br />
-    <span class="todo">[TODO: PLZ]</span> Köln<br />
+    {l.company}<br />
+    {l.street}<br />
+    {l.postalCode}&nbsp;{l.city}<br />
+    Telefon: <a href={`tel:${site.phoneE164}`}>{site.phoneDisplay}</a><br />
     E-Mail: <a href={`mailto:${site.legalEmail}`}>{site.legalEmail}</a>
   </p>
 
@@ -50,22 +44,23 @@ import { site } from '../data/site';
 
   <h2>3. Hosting</h2>
   <p>
-    Diese Website wird bei <span class="todo">[TODO: Hosting-Anbieter mit Anschrift]</span>
-    gehostet. Beim Aufruf der Seiten verarbeitet der Hoster technisch
-    notwendige Server-Logdaten (z.&nbsp;B. IP-Adresse, Zeitpunkt des Abrufs)
-    auf Grundlage von Art. 6 Abs. 1 lit. f DSGVO, um die Website sicher und
-    stabil bereitzustellen. <span class="todo">[TODO: AVV abschließen und hier referenzieren]</span>
+    Diese Website wird bei der Vercel Inc., 340 S Lemon Ave #4133, Walnut, CA
+    91789, USA gehostet. Beim Aufruf der Seiten verarbeitet der Hoster technisch
+    notwendige Server-Logdaten (z.&nbsp;B. IP-Adresse, Zeitpunkt des Abrufs) auf
+    Grundlage von Art. 6 Abs. 1 lit. f DSGVO, um die Website sicher und stabil
+    bereitzustellen.
   </p>
 
   <h2>4. Anfrageformular</h2>
   <p>
     Wenn Sie unser Buchungsformular nutzen, werden die von Ihnen eingegebenen
     Daten (Service, Fahrzeugwunsch, Strecke, Datum, Name, Kontaktdaten,
-    Nachricht) über einen externen Formulardienst an uns übermittelt. Die
-    Verarbeitung erfolgt auf Grundlage Ihrer Einwilligung (Art. 6 Abs. 1 lit. a
-    DSGVO), die Sie mit dem Absenden des Formulars erteilen. Wir verwenden die
-    Daten ausschließlich zur Bearbeitung Ihrer Anfrage.
-    <span class="todo">[TODO: Anbieter benennen, Sitz angeben, AVV und Übermittlungsgrundlage ergänzen]</span>
+    Nachricht) über den Dienst Formspree (Formspree, Inc., USA) an uns
+    übermittelt. Die Verarbeitung erfolgt auf Grundlage Ihrer Einwilligung
+    (Art. 6 Abs. 1 lit. a DSGVO), die Sie mit dem Absenden des Formulars
+    erteilen. Wir verwenden die Daten ausschließlich zur Bearbeitung Ihrer
+    Anfrage. Sie können Ihre Einwilligung jederzeit mit Wirkung für die Zukunft
+    widerrufen.
   </p>
 
   <h2>5. Kontakt per WhatsApp, Telefon oder E-Mail</h2>

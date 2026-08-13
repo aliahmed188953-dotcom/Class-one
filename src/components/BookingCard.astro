@@ -3,7 +3,6 @@ import { bookingOptions } from '../data/services';
 import { site, formspreeEndpoint } from '../data/site';
 ---
 
-<!-- TODO [TBD]: Formspree form ID is still unset — see src/data/site.ts -->
 <form
   class="book"
   id="book"
@@ -16,6 +15,13 @@ import { site, formspreeEndpoint } from '../data/site';
   <h2 class="book-title">Plan your journey</h2>
 
   <input type="hidden" name="_subject" value="Quote request — Class One Services" />
+  <!--
+    Formspree sets the reply-to of the notification mail from this field, so a
+    reply goes straight back to the customer. Populated by script only when the
+    contact value is actually an email — the field accepts a phone number too,
+    and a phone in _replyto would make the notification unrepliable.
+  -->
+  <input type="hidden" name="_replyto" id="replyTo" value="" />
 
   <!-- Honeypot — humans never see it, bots fill it and get silently dropped. -->
   <p class="hp" aria-hidden="true">
@@ -186,12 +192,18 @@ import { site, formspreeEndpoint } from '../data/site';
       }
 
       if (!endpoint) {
-        // TODO [TBD]: goes away once the Formspree ID is set in src/data/site.ts
         setStatus(
           'Direct requests are not live yet — please use the WhatsApp button or call us.',
           'err'
         );
         return;
+      }
+
+      // Reply-to only when the contact value is an email address.
+      const replyTo = document.getElementById('replyTo') as HTMLInputElement | null;
+      if (replyTo) {
+        const contact = val('contact');
+        replyTo.value = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(contact) ? contact : '';
       }
 
       submitBtn.disabled = true;
