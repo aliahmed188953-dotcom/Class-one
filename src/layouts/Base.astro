@@ -34,8 +34,7 @@ const jsonLd = JSON.stringify({
   description: site.description,
   image: ogImage.href,
   legalName: site.legal.company,
-  // Registered office. The service is marketed as Cologne-based and areaServed
-  // stays Cologne + Europe, but the postal address has to be the real one.
+  // Registered office, matching the Handelsregister entry.
   address: {
     '@type': 'PostalAddress',
     streetAddress: site.legal.street,
@@ -44,7 +43,7 @@ const jsonLd = JSON.stringify({
     addressCountry: site.legal.countryCode,
   },
   areaServed: [
-    { '@type': 'City', name: 'Cologne' },
+    { '@type': 'City', name: 'Bonn' },
     { '@type': 'Place', name: 'Europe' },
   ],
   openingHoursSpecification: {

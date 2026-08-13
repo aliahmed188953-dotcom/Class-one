@@ -31,8 +31,8 @@ export const site = {
   /** Confirmed Formspree form — receives the booking form POSTs. */
   formspreeId: 'xaewbwdq',
 
-  serviceArea: 'Cologne — Europe-wide',
-  city: 'Cologne',
+  serviceArea: 'Bonn — Europe-wide',
+  city: 'Bonn',
 
   /** Quote only — no prices are shown anywhere on the site. */
   pricing: 'quote-only',
@@ -47,11 +47,13 @@ export const site = {
   /**
    * Registered company data — drives the Impressum, the Datenschutz
    * "Verantwortlicher" block and the JSON-LD postal address.
-   * Note the registered office is Bonn while the service is marketed as
-   * Cologne-based; areaServed stays Cologne + Europe.
    */
   legal: {
     company: 'Class One Services GmbH',
+    // TODO [TBD]: ADDRESS UNCONFIRMED. Two candidates were given
+    // (Königswintererstr. 39 vs Maarstr. 25) and the Impressum must match the
+    // Handelsregister entry exactly. Kept as-is pending confirmation — not
+    // guessed. Verify against HRB 29768 (Amtsgericht Bonn) before promoting.
     street: 'Maarstr. 25',
     postalCode: '53227',
     city: 'Bonn',
@@ -65,9 +67,9 @@ export const site = {
     vatId: '',
   },
 
-  title: 'Class One Services — First-Class Chauffeur & Concierge, Cologne | 24/7',
+  title: 'Class One Services — First-Class Chauffeur & Concierge, Bonn | 24/7',
   description:
-    'One number. Every journey. First-class chauffeur & concierge for artists, executives and discerning clients — 24/7, Cologne-based, Europe-wide.',
+    'One number. Every journey. First-class chauffeur & concierge for artists, executives and discerning clients — 24/7, Bonn-based, Europe-wide.',
 } as const;
 
 /** wa.me deep link base for the WhatsApp CTAs. */

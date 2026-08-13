@@ -41,7 +41,7 @@ export const services: Service[] = [
   },
   {
     title: 'Medical & Clinic Transfers',
-    text: 'Discreet arrivals and gentle returns. Door-to-door accompaniment before and after treatment, in full privacy.',
+    text: 'Travel to and from clinics, treatments and medical appointments, with help arranging the details. Not an emergency or ambulance service.',
     icon: '<path d="M12 4v16M4 12h16"/><circle cx="12" cy="12" r="9.5"/>',
     image: images.services.medical,
   },
@@ -53,7 +53,7 @@ export const services: Service[] = [
   },
   {
     title: 'Security & Discretion',
-    text: 'Security-trained drivers through licensed partners. NDAs signed before the first mile, on request.',
+    text: 'Security services arranged through licensed partners. NDAs signed before the first mile, on request.',
     icon: '<path d="M12 3l7.5 3v5.5c0 4.6-3.1 8-7.5 9.5-4.4-1.5-7.5-4.9-7.5-9.5V6L12 3z"/>',
     image: images.services.security,
   },
