@@ -24,16 +24,16 @@ const year = new Date().getFullYear();
       <a href="/#fleet">Fleet</a>
       <a href="/#faq">FAQ</a>
       <a href="/#contact">Contact</a>
-      <!-- TODO [TBD]: careers page — placeholder link kept from the prototype -->
-      <a href="#">Careers</a>
     </nav>
     <nav class="foot-col" aria-label="Footer — contact">
       <h2>Contact</h2>
       <a href={`tel:${site.phoneE164}`}>{site.phoneDisplay}</a>
       <a href={`mailto:${site.email}`}>{site.email}</a>
-      <!-- TODO [TBD]: social profiles — set URLs in src/data/site.ts -->
-      <a href={site.socials.instagram || '#'}>Instagram</a>
-      <a href={site.socials.linkedin || '#'}>LinkedIn</a>
+      {
+        /* Careers, AGB and the social profiles are intentionally absent:
+           no destination exists yet, and a dead anchor on a production site
+           is worse than no link. Add them back with real hrefs. */
+      }
     </nav>
   </div>
   <div class="foot-legal">
@@ -41,8 +41,6 @@ const year = new Date().getFullYear();
     <span>
       <a href="/impressum">Impressum</a>
       <a href="/datenschutz">Datenschutz</a>
-      <!-- TODO [TBD]: AGB page — placeholder link kept from the prototype -->
-      <a href="#">AGB</a>
     </span>
   </div>
 </footer>

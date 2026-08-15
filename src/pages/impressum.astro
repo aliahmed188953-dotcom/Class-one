@@ -40,14 +40,7 @@ const directors = l.managingDirectors.join(', ');
   <h2>Umsatzsteuer-ID</h2>
   <p>
     Umsatzsteuer-Identifikationsnummer gemäß § 27 a Umsatzsteuergesetz:<br />
-    {
-      l.vatId ? (
-        l.vatId
-      ) : (
-        /* TODO [TBD]: replace with the real VAT ID once supplied. */
-        <span>USt-IdNr.: wird nachgereicht</span>
-      )
-    }
+    USt-IdNr.: {l.vatId}
   </p>
 
   <h2>Verantwortlich für den Inhalt nach § 18 Abs. 2 MStV</h2>

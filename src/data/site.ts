@@ -50,21 +50,15 @@ export const site = {
    */
   legal: {
     company: 'Class One Services GmbH',
-    // TODO [TBD]: ADDRESS UNCONFIRMED. Two candidates were given
-    // (Königswintererstr. 39 vs Maarstr. 25) and the Impressum must match the
-    // Handelsregister entry exactly. Kept as-is pending confirmation — not
-    // guessed. Verify against HRB 29768 (Amtsgericht Bonn) before promoting.
-    street: 'Maarstr. 25',
+    /** Confirmed against the Handelsregister entry (HRB 29768, AG Bonn). */
+    street: 'Königswintererstr. 39',
     postalCode: '53227',
     city: 'Bonn',
     countryCode: 'DE',
     register: 'HRB 29768',
     registerCourt: 'Amtsgericht Bonn',
     managingDirectors: ['Dalya Salih', 'Ehsan Bshara'],
-    // TODO [TBD]: VAT ID still to be supplied. While this is empty the
-    // Impressum states "wird nachgereicht" rather than showing a blank or an
-    // invented number — honest and complete until the real ID arrives.
-    vatId: '',
+    vatId: 'DE37452142',
   },
 
   title: 'Class One Services — First-Class Chauffeur & Concierge, Bonn | 24/7',
